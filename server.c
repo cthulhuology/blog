@@ -16,15 +16,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 // headers
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/times.h>
-#include <resolv.h>
-#include <arpa/nameser.h>
+#include <netdb.h>
 #include <string.h>
 
 ////////////////////////////////////////////////////////////////////////////////
