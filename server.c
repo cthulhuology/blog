@@ -20,6 +20,9 @@
 #include <stdlib.h>
 #include <netdb.h>
 #include <string.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/epoll.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // defines
@@ -69,31 +72,40 @@ struct addrinfo* lookup(char* host, char* port) {
 //	listens on the port returning a socket
 //
 int serve(struct addrinfo* server) {
-	int flags = 1;
+	int flags;
 	int fd = socket(server->ai_family, server->ai_socktype, server->ai_protocol);
 	if (fd < 0) error("Failed to create server socket");
+	flags = 1;
 	if (setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &flags, sizeof(flags))) error("Failed to set reuseaddr flag");
+	flags = fcntl(fd,F_GETFL,0);
+	if (fcntl(fd, F_SETFL, flags | O_NONBLOCK)) error("Failed to set nonblocking flag on socket");
 	if (bind(fd, server->ai_addr, server->ai_addrlen)) error("Failed to bind to address");
 	return fd;	
+}
+
+
+// reap
+//	collects child processes
+void reap() {
+	int pid, status = 0;
+	pid = waitpid(-1,&status,WNOHANG); 
+	if (pid < 0) return;
+	if (pid) fprintf(stderr,"Child %d exited with status %d\n", pid, status);
 }
 
 // process
 //	forks off a child process that provides the associated service
 //
 void process(int client, char* service) {
-	int pid;
-	if (pid = fork()) {
-		// parent
- 
-	} else {
-		// child
-		char *args[] = { service, NULL };
+	char *args[] = { service, NULL };
+	if (!fork()) {
+		// in child
 		close(0);
 		close(1);
 		dup2(client,0);	// set client socket to stdin
 		dup2(client,1);	// set client socket to stdout
-		// run the supplied service
-		if (execvp(service,args)) error("Failed to spawn service");
+		if (execvp(service,args)) error("Failed to spawn service"); // run the supplied service
+		exit(0);	// if we failed to spawn, kill child
 	}
 }
 
@@ -102,13 +114,22 @@ void process(int client, char* service) {
 //	and then forks off a process to handle the connection
 //
 void monitor(int sock, char* service) {
+	int fd, active = 0, client;
+	struct epoll_event ev;
 	struct sockaddr client_addr;
 	socklen_t client_addr_len;
 	if (listen(sock,255)) error("Failed to listen on socket");	
+	fd = epoll_create(1);
+	ev.events = EPOLLIN;
+	ev.data.fd = sock;
+	if (epoll_ctl(fd,EPOLL_CTL_ADD,sock,&ev)) error("Failed to epoll socket");
 	while(!done) {
-		int client = accept(sock,&client_addr,&client_addr_len);
-		if (client < 0) error("Failed to accept incoming connection");
-		process(client,service);
+		if ((active = epoll_wait(fd,&ev,1,100)) < 0) error("Failed to wait for socket activity");
+		if (active > 0) {
+			client = accept(sock,&client_addr,&client_addr_len);
+ 			if (client) process(client,service);
+		}
+		reap();
 	}
 }
 
