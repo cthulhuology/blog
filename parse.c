@@ -162,7 +162,7 @@ int ctrl(char c) {
 //	returns 2 if the next 2 characters are \r\n
 //	return 0 if they are not
 //
-int crlf(char *s) {
+int crlf(char* s) {
 	if (s && s[0] && cr(s[0]) && nl(s[1]) return 2;
 	return 0;
 }
@@ -171,7 +171,7 @@ int crlf(char *s) {
 //
 //	returns the length of any matching characters
 //
-int any(int (*test)(char), char *s) {
+int any(int (*test)(char), char* s) {
 	int i = 0;
 	while(s && s[i] && test(s[i])) ++i;
 	return i;
@@ -181,7 +181,7 @@ int any(int (*test)(char), char *s) {
 //
 //	returns the length of characters until test
 //
-int until(int (*test)(char), char *s) {
+int until(int (*test)(char), char* s) {
 	int i = 0;
 	while(s && s[i] && !test(s[i])) ++i;
 	return i;
@@ -192,7 +192,7 @@ int until(int (*test)(char), char *s) {
 // 	returns length if string s is string x
 // 	otherwise returns 0
 //
-int is(const char *x, char *s) {
+int is(const char* x, char* s) {
 	int i = strlen(x);
 	if (strncmp(x,s,i)) return 0;
 	return i;
@@ -200,6 +200,6 @@ int is(const char *x, char *s) {
 
 // eol
 //
-int eol(char *s) {
+int eol(char* s) {
 	return crlf(s) | nl(s[0]);
 }

@@ -69,7 +69,7 @@ int terminator(char c) {
 // 	returns the count of characters in the token
 // 	returns 0 if no valid token
 // 	
-int token(char *s) {
+int token(char* s) {
 	return until(terminator,s);
 }
 
@@ -77,7 +77,7 @@ int token(char *s) {
 //
 // 	returns the length of the method or 0 
 // 	
-int method(char *s) {
+int method(char* s) {
 	return token(s);		// extension-method must conform to token
 }
 
@@ -85,7 +85,7 @@ int method(char *s) {
 //
 // 	returns the length of the path or 0
 //
-int path(char *s) {
+int path(char* s) {
 	return until(space,s);
 }
 
@@ -94,7 +94,7 @@ int path(char *s) {
 // 	returns the length of the version string if it is a version string
 // 	returns 0 otherwise
 //
-int version(char *s) {
+int version(char* s) {
 	int i = 0;
 	i += is("HTTP/",s);
 	if (!i) return 0;
