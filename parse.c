@@ -1,4 +1,4 @@
-// parse.h
+// parse.c
 //
 // Copyright (C) 2016 David J. Goehrig
 //
@@ -26,7 +26,7 @@
 // 	returns true if between min and max
 //
 int between(char n, char x, char c) {
-	return x <= c && c <= x;
+	return (n <= c) && (c <= x);
 }
 
 
@@ -102,6 +102,13 @@ int colon(char c) {
 	return c == ':';
 }
 
+// semi
+//
+//	returns true if the character is a colon
+//
+int semi(char c) {
+	return c == ';';
+}
 // slash
 //
 //	returns true if the character is a slash
@@ -138,7 +145,7 @@ int question(char c) {
 //
 //	return true if the character is 0-9 | a-f | A-F
 int hex(char c) {
-	return digit(c) || between('a','f',c) || between('A','F',c);
+	return num(c) || between('a','f',c) || between('A','F',c);
 }
 
 // decimal
@@ -163,8 +170,14 @@ int ctrl(char c) {
 //	return 0 if they are not
 //
 int crlf(char* s) {
-	if (s && s[0] && cr(s[0]) && nl(s[1]) return 2;
+	if (s && s[0] && cr(s[0]) && nl(s[1])) return 2;
 	return 0;
+}
+
+// eol
+//
+int eol(char* s) {
+	return !s[0] || crlf(s) | nl(s[0]);
 }
 
 // any
@@ -198,8 +211,16 @@ int is(const char* x, char* s) {
 	return i;
 }
 
-// eol
+// upto 
+// 
+// 	returns the length upto the matching string test
 //
-int eol(char* s) {
-	return crlf(s) | nl(s[0]);
+int upto(int (*test)(char*), char* s) {
+	int i = 0;
+	while (s && s[i] && !test(s+i)) ++i;
+	return i;
 }
+
+// through
+//
+//
