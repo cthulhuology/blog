@@ -10,3 +10,12 @@ http : http.c
 .PHONY: clean
 clean:
 	rm server http
+
+
+.PHONY: test tests
+	
+test:
+	cd test && $(MAKE)
+
+tests:
+	cd test && $(MAKE)

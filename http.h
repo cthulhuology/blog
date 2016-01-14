@@ -1,4 +1,4 @@
-// parse.h
+// http.h
 //
 // Copyright (C) 2016 David J. Goehrig
 //
@@ -14,32 +14,16 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __HAVE_PARSE_H__
-#define __HAVE_PARSE_H__
+#ifndef __HAVE_HTTP_H__
+#define __HAVE_HTTP_H__
 
-int between(char n, char x, char c);
-int num(char c);
-int alpha(char c);
-int alphanum(char c);
-int space(char c);
-int tab(char c);
-int nl(char c);
-int cr(char c);
-int whitespace(char c);
-int colon(char c);
-int semi(char c);
-int slash(char c);
-int dot(char c);
-int star(char c);
-int question(char c);
-int hex(char c);
-int decimal(char c );
-int ctrl(char c);
-int crlf(char* s);
-int eol(char* s);
-int any(int (*test)(char), char* s);
-int until(int (*test)(char), char* s);
-int is(const char* x, char* s);
-int upto(int (*test)(char*), char* s);
+int separator(char c);
+int terminator(char c);
+int token(char* s);
+int method(char* s);
+int path(char* s);
+int version(char* s);
+int request_line(char* s);
 
 #endif
+

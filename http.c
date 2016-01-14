@@ -23,12 +23,22 @@
 #include <stdlib.h>
 #include <string.h>
 #include "parse.h"
+#include "http.h"
+#include "str.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // defines
 
 ////////////////////////////////////////////////////////////////////////////////
 // globals
+
+struct _request {
+	str method;
+	str path;
+	str version;
+	str body;
+	str* headers;
+} request;
 
 ////////////////////////////////////////////////////////////////////////////////
 // functions
@@ -56,9 +66,14 @@ int separator(char c) {
 		c == '=' ||
 		c == '{' ||
 		c == '}' ||
-		|| space(c)
-		|| tab(c);
+		space(c) ||
+		tab(c);
 }
+
+// terminator
+//
+// 	returns 1 if the character is a terminator for a token
+// 	else 0
 
 int terminator(char c) {
 	return separator(c) || ctrl(c);
@@ -102,25 +117,21 @@ int version(char* s) {
 	return i;
 }
 
+// request_line
+//
+// 	parses the request line, populating:
+// 		request.method
+// 		request.path
+// 		request.version
+//
 int request_line(char* s) {
-	int i = 0;
-	i += method(s);
-	if (!space(s[i])) return 0;
-	i = path(&s[i+1]);
-	if (!space(s[i])) return 0;
-	i += version(&s[i+1]);
-	if (!clrf(&s[i]) || nl(s[i])) return 0;
-	i += crlf(&s[i]) + nl(s[i]);
-	return
+	
+
 }
 
-int end_of_headers(char* s) {
-	int i = 0;
-	if (i = eol(s)) 
-		if(i += eol(s+i))
-			return i;
-	return 0;
-}
+
+// don't compile main if we're in test mode
+#ifndef TEST
 
 // main 
 //
@@ -128,3 +139,5 @@ int main (int argc, char** argv) {
 	printf("HTTP/1.1 200 OK\nContent-Length:11\n\nhello world");
 	return 0;
 }
+
+#endif

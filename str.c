@@ -1,4 +1,4 @@
-// parse.h
+// str.c
 //
 // Copyright (C) 2016 David J. Goehrig
 //
@@ -14,32 +14,34 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __HAVE_PARSE_H__
-#define __HAVE_PARSE_H__
+#include <unistd.h> 
+#include <string.h>
+#include "str.h"
 
-int between(char n, char x, char c);
-int num(char c);
-int alpha(char c);
-int alphanum(char c);
-int space(char c);
-int tab(char c);
-int nl(char c);
-int cr(char c);
-int whitespace(char c);
-int colon(char c);
-int semi(char c);
-int slash(char c);
-int dot(char c);
-int star(char c);
-int question(char c);
-int hex(char c);
-int decimal(char c );
-int ctrl(char c);
-int crlf(char* s);
-int eol(char* s);
-int any(int (*test)(char), char* s);
-int until(int (*test)(char), char* s);
-int is(const char* x, char* s);
-int upto(int (*test)(char*), char* s);
+// out
+//
+// 	writes a string out to the given stdout
+//
+int out(str* s) {
+	write(1,s->data,s->length);
+}
 
-#endif
+// in
+//
+// 	reads string from stdin
+//
+str* in() {
+	str* retval = (str*)malloc(sizeof(str));
+	retval->data = (char*)malloc(4096);
+	retval->length = read(0, retval->data, 4096);
+	return retval;
+}
+
+// release
+//
+// 	frees the string and it's memory
+//
+void release(str* s) {
+	if (s && s->data) free(s->data);
+	if (s) free(s);
+}
