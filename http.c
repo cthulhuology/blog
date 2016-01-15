@@ -165,13 +165,78 @@ int header(char* s) {
 	return i;		
 }
 
+void parse_request(str* s) {
+	int i,h;
+	i = request_line(s->data);	// parse the request line
+	i += eol(s->data + i);	// advance to the next line
+	while(i < s->length && (h = header(s->data + i))) {
+		i += h;
+		i += eol(s->data + i);
+	}	// at this point i should point at the body, regardless
+	request.body = ref(s->data + i, s->length - i);
+}
+
+void print_request() {
+	int i;
+	printf("Method: ");
+	fflush(stdout);
+	out(request.method);
+	printf("\n");
+	fflush(stdout);
+	printf("Path: ");
+	fflush(stdout);
+	out(request.path);
+	printf("\n");
+	fflush(stdout);
+	printf("Version: ");
+	fflush(stdout);
+	out(request.version);
+	printf("\n");
+	fflush(stdout);
+	printf("Headers: (%d)\n", request.headers);
+	fflush(stdout);
+	for( i = 0; i < request.headers; ++i) {
+		printf("\t");
+		fflush(stdout);
+		out(request.header[i*2]);
+		printf(": ");
+		fflush(stdout);
+		out(request.header[i*2 + 1]);
+		printf("\n");
+		fflush(stdout);
+	}
+	printf("Body:\n");
+	fflush(stdout);
+	out(request.body);
+}
+
+void clear_request() {
+	int i;
+	release(request.method);
+	request.method = NULL;
+	release(request.path);
+	request.path = NULL;
+	release(request.version);
+	request.version = NULL;
+	release(request.body);
+	request.body = NULL;
+	for (i = 0; i < request.headers; ++i) {
+		release(request.header[i*2]);
+		release(request.header[i*2+1]);
+	}
+	request.headers = 0;
+	memset(request.header,0,sizeof(request.header));
+}
+
 // don't compile main if we're in test mode
 #ifndef TEST
 
 // main 
 //
 int main (int argc, char** argv) {
-	printf("HTTP/1.1 200 OK\nContent-Length:11\n\nhello world");
+	str* buffer = in();		// read the initial request in
+	parse_request(buffer);		// parse the initial request
+	printf("HTTP/1.1 200 OK\nContent-Length: 11\n\nhello world");	
 	return 0;
 }
 

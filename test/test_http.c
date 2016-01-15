@@ -122,5 +122,8 @@ int main(int argc, char** argv) {
 	value(10,header("Ignore: me\r\n"), "ignore a header past max");
 	value(3,request.headers, "verify max_headers cf. -DMAX_HEADERS=3 in Makefile");
 
+	// clear request
+	
+
 	return done("test_http");
 }
