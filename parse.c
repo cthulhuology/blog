@@ -177,7 +177,7 @@ int crlf(char* s) {
 // eol
 //
 int eol(char* s) {
-	return !s[0] || crlf(s) | nl(s[0]);
+	return crlf(s) || nl(s[0]) || !s[0];
 }
 
 // any

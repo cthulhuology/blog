@@ -18,6 +18,29 @@
 #include <string.h>
 #include "str.h"
 
+// allot
+//
+// 	allocates a string of a given size
+//
+str* allot(int len) {
+	str* s = (str*)malloc(sizeof(str) + len);
+	s->length = (size_t)len;
+	s->data = s->buffer;	
+	return s;
+}
+
+// ref
+//
+// 	creates a string that refers to another
+//
+
+str* ref(char* data, int len) {
+	str* s = (str*)malloc(sizeof(str));
+	s->data = data;
+	s->length = (size_t)len;
+	return s;
+}
+
 // out
 //
 // 	writes a string out to the given stdout
@@ -31,17 +54,16 @@ int out(str* s) {
 // 	reads string from stdin
 //
 str* in() {
-	str* retval = (str*)malloc(sizeof(str));
-	retval->data = (char*)malloc(4096);
-	retval->length = read(0, retval->data, 4096);
-	return retval;
+	str* s = (str*)malloc(sizeof(str) + 4096);
+	s->data = s->buffer;
+	s->length = read(0, s->data, 4096);
+	return s;
 }
 
 // release
 //
-// 	frees the string and it's memory
+// 	frees the string 
 //
 void release(str* s) {
-	if (s && s->data) free(s->data);
 	if (s) free(s);
 }

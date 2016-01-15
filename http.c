@@ -32,13 +32,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // globals
 
-struct _request {
-	str method;
-	str path;
-	str version;
-	str body;
-	str* headers;
-} request;
+struct _request request;
 
 ////////////////////////////////////////////////////////////////////////////////
 // functions
@@ -125,10 +119,51 @@ int version(char* s) {
 // 		request.version
 //
 int request_line(char* s) {
-	
-
+	int v, p, m, i;
+	i = any(whitespace,s);		// skip any leading whitespace
+	m = method(s+i);		// grab the method
+	request.method = ref(s+i,m);	// save a reference
+	i += m;				// advance the pointer past the method
+	i += any(whitespace,s+i);	// skip any whitespace (spec says just one sp)
+	p = path(s+i);			// grap the path
+	request.path = ref(s+i,p);	// save a refence
+	i += p;				// advance the pointer past the path
+	i += any(whitespace,s+i);	// skip any whitespace (spec says just one sp)
+	v = version(s+i);		// grab the version
+	request.version = ref(s+i,v);	// save a refence
+	i += v;				// advance to eol
+	return i;
 }
 
+// headers
+//
+// 	parses the headers if any populating:
+// 		request.headers and request.header
+//
+int header(char* s) {
+	int k, v, i;
+	str* key;
+	str* val;
+	i = any(whitespace,s);		// if whitespace exists extend prior def
+	if (i && request.headers > 0) {	// and we have a prior header
+		v = upto(eol,s+i);
+		request.header[(request.headers-1)*2+1]->length += v + i;	// extend it
+		return i+v;		// and return the length to skip
+	} 
+	k = token(s+i);			// grab the key
+	if (k == 0) return 0;		// if we have an empty line we're done!
+	key = ref(s+i,k);		// save a reference
+	i += k;				// advance pointer to separator	
+	i += any(separator,s+i);	// skip any separators
+	v = upto(eol,s+i);		// grab the remainder of the line
+	val = ref(s+i,v);		// grab the value
+	i += v;
+	if (request.headers >= MAX_HEADERS) return i;	// just skip if maxed out
+	request.header[request.headers*2] = key;
+	request.header[request.headers*2+1] = val;
+	++request.headers;		// increment the headers
+	return i;		
+}
 
 // don't compile main if we're in test mode
 #ifndef TEST

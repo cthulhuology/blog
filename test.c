@@ -62,7 +62,7 @@ void value(int expect, int result, char* test) {
 		++passed;
 		return;
 	}
-	printf("failed %s\n", test);
+	printf("failed %s expected: %d got: %d\n", test, expect, result);
 	++failed;
 }
 

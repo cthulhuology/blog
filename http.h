@@ -17,6 +17,13 @@
 #ifndef __HAVE_HTTP_H__
 #define __HAVE_HTTP_H__
 
+#include "str.h"
+
+// define a maximum number of header rows we're willing to consider
+#ifndef MAX_HEADERS
+#define MAX_HEADERS 512
+#endif
+
 int separator(char c);
 int terminator(char c);
 int token(char* s);
@@ -24,6 +31,16 @@ int method(char* s);
 int path(char* s);
 int version(char* s);
 int request_line(char* s);
+
+extern struct _request {
+	str* method;
+	str* path;
+	str* version;
+	str* header[MAX_HEADERS*2];	// we store them key, value in pairs
+	int headers; 
+	str* body;
+} request;
+
 
 #endif
 

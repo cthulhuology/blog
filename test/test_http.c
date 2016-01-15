@@ -103,5 +103,24 @@ int main(int argc, char** argv) {
 	value(8, version(&("GET / HTTP/1.1")[6]), "HTTP/1.1 version");
 	value(9, version(&("GET / HTTP/2.11")[6]), "HTTP/2.11 version");
 
+	// request_line
+	value(22,request_line("hello-world / HTTP/1.1\r\n"), "request_line with extension methodd");
+	value(11,request.method->length, "request.method->length");
+	value(0,strncmp(request.method->data,"hello-world",11), "method content");
+	value(1,request.path->length, "request.path->length");
+	value(0,strncmp(request.path->data,"/",1), "path content");
+	value(8,request.version->length, "request.version->length");
+	value(0,strncmp(request.version->data,"HTTP/1.1",8), "version content");
+	value(26,request_line("  hello-world  /  HTTP/1.1\r\n"), "request_line with invalid padding");
+
+	// header
+	value(25,header("  User-Agent: curl/7.38.0\r\n"),"User-Agent header with buggy spacing");
+	value(20,header("Host: 127.0.0.1:8080\r\n"),"Host header");
+	value(11,header("Accept: */*\n"),"Accept header");
+	value(6,header("\t,gzip\r\n"),"extended Accept header");
+	value(9,request.header[5]->length, "updated accept header length");
+	value(10,header("Ignore: me\r\n"), "ignore a header past max");
+	value(3,request.headers, "verify max_headers cf. -DMAX_HEADERS=3 in Makefile");
+
 	return done("test_http");
 }

@@ -23,8 +23,11 @@
 typedef struct {
 	char* data;
 	size_t length;	
+	char buffer[0];
 } str;
 
+str* allot(int len);
+str* ref(char* data, int len);
 int out(str* s);
 str* in();
 void release(str* s);

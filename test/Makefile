@@ -8,8 +8,8 @@ test_parse: test_parse.c ../parse.c ../test.c ../test.h
 	./test_parse
 	rm test_parse
 
-test_http: test_http.c ../http.c ../parse.c ../test.c ../test.h 
-	gcc $(CFLAGS) -o test_http test_http.c ../http.c ../parse.c ../test.c
+test_http: test_http.c ../http.c ../parse.c ../test.c ../test.h ../str.c
+	gcc $(CFLAGS) -DMAX_HEADERS=3 -o test_http test_http.c ../http.c ../parse.c ../test.c ../str.c
 	./test_http
 	rm test_http
 
