@@ -45,7 +45,7 @@ str* ref(char* data, int len) {
 //
 // 	writes a string out to the given stdout
 //
-int out(str* s) {
+int out(const str* s) {
 	write(1,s->data,s->length);
 }
 
@@ -66,4 +66,21 @@ str* in() {
 //
 void release(str* s) {
 	if (s) free(s);
+}
+
+// strnum
+// 
+// 	returns a string version of a number
+// 	use immediately or it might be mutated
+//
+str* strnum(int i) {
+	str* _numstr = allot(16);
+	_numstr->length = snprintf(_numstr->buffer,16,"%ld",i);
+	return _numstr;
+}
+
+// empty
+//
+str* empty() {
+	return ref(NULL,0);
 }

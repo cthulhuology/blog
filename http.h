@@ -31,15 +31,26 @@ int method(char* s);
 int path(char* s);
 int version(char* s);
 int request_line(char* s);
+void respond();
+void sp();
 
 extern struct _request {
 	str* method;
 	str* path;
 	str* version;
-	str* header[MAX_HEADERS*2];	// we store them key, value in pairs
 	int headers; 
+	str* header[MAX_HEADERS*2];	// we store them key, value in pairs
 	str* body;
 } request;
+
+extern struct _response {
+	str* version;
+	str* code;
+	str* reason;
+	int headers;
+	str* header[MAX_HEADERS*2];
+	str* body;	
+} response;
 
 
 #endif

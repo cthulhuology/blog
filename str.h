@@ -18,7 +18,9 @@
 #define __HAVE_STR_H__
 
 #include <unistd.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct {
 	char* data;
@@ -28,8 +30,10 @@ typedef struct {
 
 str* allot(int len);
 str* ref(char* data, int len);
-int out(str* s);
+int out(const str* s);
 str* in();
 void release(str* s);
+str* strnum(int i);
+str* empty();
 
 #endif

@@ -33,6 +33,7 @@
 // globals
 
 struct _request request;
+struct _response response;
 
 ////////////////////////////////////////////////////////////////////////////////
 // functions
@@ -213,19 +214,80 @@ void print_request() {
 void clear_request() {
 	int i;
 	release(request.method);
-	request.method = NULL;
+	request.method = empty();
 	release(request.path);
-	request.path = NULL;
+	request.path = empty();
 	release(request.version);
-	request.version = NULL;
+	request.version = empty();
 	release(request.body);
-	request.body = NULL;
+	request.body = empty();
 	for (i = 0; i < request.headers; ++i) {
 		release(request.header[i*2]);
 		release(request.header[i*2+1]);
 	}
 	request.headers = 0;
-	memset(request.header,0,sizeof(request.header));
+	memset(&request.header,0,sizeof(request.header));
+}
+
+static str _space = { " ", 1 };
+void sp() {
+	out(&_space);
+}
+
+static str _nl = { "\n", 1 };
+void endl() {
+	out(&_nl);
+}
+
+void clear_response() {
+	response.version = empty();
+	response.code = empty();
+	response.reason = empty();
+	response.headers = 0;
+	response.body = empty();
+	memset(&response.header,0,sizeof(response.header));
+}
+
+void response_line() {
+	if (!response.version->length && !response.code->length && !response.reason->length) {
+		out(ref("HTTP/1.1 200 OK\n",16));
+		return;
+	}
+	out(response.version);
+	sp();
+	out(response.code);
+	sp();
+	out(response.reason);
+	endl();
+}
+
+void response_headers() {
+	int i;
+	if (!response.headers) {
+		out(ref("Content-Length: ",16));	
+		out(strnum(response.body->length));
+		endl();
+		out(ref("Connection: close",17));
+		endl();
+		endl();
+		return;
+	}
+	for(i = 0; i < response.headers; ++i) {
+		out(response.header[i*2]);
+		out(response.header[i*2+1]);
+		endl();
+	}
+	endl();
+}
+
+void response_body() {
+	out(response.body);
+}
+
+void respond() {
+	response_line();
+	response_headers();
+	response_body();		
 }
 
 // don't compile main if we're in test mode
@@ -235,8 +297,10 @@ void clear_request() {
 //
 int main (int argc, char** argv) {
 	str* buffer = in();		// read the initial request in
+	clear_request();		// ensure request is clear
+	clear_response();		// ensure response is clear
 	parse_request(buffer);		// parse the initial request
-	printf("HTTP/1.1 200 OK\nContent-Length: 11\n\nhello world");	
+	respond();
 	return 0;
 }
 

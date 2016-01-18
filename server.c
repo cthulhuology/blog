@@ -90,7 +90,7 @@ void reap() {
 	int pid, status = 0;
 	pid = waitpid(-1,&status,WNOHANG); 
 	if (pid < 0) return;
-	if (pid) fprintf(stderr,"Child %d exited with status %d\n", pid, status);
+	if (pid && status) fprintf(stderr,"Child %d exited with status %d\n", pid, status);
 }
 
 // process
@@ -140,6 +140,7 @@ int main (int argc, char** argv) {
 	usage(argc,argv);
 	struct addrinfo* server = lookup(argv[1],argv[2]);
 	int sock = serve(server);
+	printf("serve %ld\n", getpid());
 	monitor(sock,argv[3]);
 	freeaddrinfo(server);	// free structure returned by lookup
 	return 0;
