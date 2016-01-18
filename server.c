@@ -118,7 +118,7 @@ void monitor(int sock, char* service) {
 	struct epoll_event ev;
 	struct sockaddr client_addr;
 	socklen_t client_addr_len;
-	if (listen(sock,255)) error("Failed to listen on socket");	
+	if (listen(sock,128)) error("Failed to listen on socket");	// cf.  /proc/sys/net/core/somaxconn
 	fd = epoll_create(1);
 	ev.events = EPOLLIN;
 	ev.data.fd = sock;
