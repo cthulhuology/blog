@@ -1,4 +1,4 @@
-// str.h
+// html.h
 //
 // Copyright (C) 2016 David J. Goehrig
 //
@@ -14,28 +14,20 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __HAVE_STR_H__
-#define __HAVE_STR_H__
+#ifndef __HAVE_HTML_H__
+#define __HAVE_HTML_H__
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct {
-	char* data;
-	size_t length;	
-	char buffer[0];
-} str;
-
-str* allot(int len);
-str* ref(char* data, int len);
-int out(const str* s);
-int outs(const char* s, int i);
-int outn(int i );
-str* in();
-void release(str* s);
-str* strnum(int i);
-str* empty();
+void h1(str* s);
+void h2(str* s);
+void h3(str* s);
+void h4(str* s);
+void h5(str* s);
+void p(str* s);
+void pre(str* s);
+void li(str* s);
+void bld(str* s);
+void itc(str* s);
+void href(str* u, str* l);
+void img(str* u, str* l);
 
 #endif

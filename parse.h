@@ -32,6 +32,10 @@ int slash(char c);
 int dot(char c);
 int star(char c);
 int question(char c);
+int lbracket(char c);
+int rbracket(char c);
+int lsquigle(char c);
+int rsquigle(char c);
 int hex(char c);
 int decimal(char c );
 int ctrl(char c);
@@ -41,5 +45,6 @@ int any(int (*test)(char), char* s);
 int until(int (*test)(char), char* s);
 int is(const char* x, char* s);
 int upto(int (*test)(char*), char* s);
+int all(int (*test)(char), char* s);
 
 #endif

@@ -147,5 +147,8 @@ int main(int argc, char** argv) {
 	value(0, upto(eol, "\r\n\r\n"), "0 characters to end of line");
 	value(12, upto(eol, "hello world!"), "12 characters to eol");
 
+	// all test
+	value(5, all(dot, ".....\r\n"), "there are 5 dots");
+
 	return done("test_parse");
 }

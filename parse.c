@@ -141,6 +141,38 @@ int question(char c) {
 	return c == '?';
 }
 
+// lbracket
+//
+//	returns true if the character is a [
+//
+int lbracket(char c) {
+	return c == '[';
+}
+
+// rbracket
+//
+//	returns true if the character is a ]
+//
+int rbracket(char c) {
+	return c == ']';
+}
+
+// lsquigle
+//
+//	returns true if the character is a {
+//
+int lsquigle(char c) {
+	return c == '{';
+}
+
+// rsquigle
+//
+//	returns true if the character is a }
+//
+int rsquigle(char c) {
+	return c == '}';
+}
+
 // hex
 //
 //	return true if the character is 0-9 | a-f | A-F
@@ -200,6 +232,8 @@ int until(int (*test)(char), char* s) {
 	return i;
 }
 
+
+
 // is
 //
 // 	returns length if string s is string x
@@ -221,6 +255,17 @@ int upto(int (*test)(char*), char* s) {
 	return i;
 }
 
-// through
+// all
 //
+// 	tests if all the characters on a line match a test
+//	if the whole line matches test then the length is returned
+//	otherwise it returns 0
 //
+int all(int (*test)(char), char* s) {
+	int i;
+	int l = upto(eol, s);
+	for (i = 0; i < l; ++i) {
+		if (!s[i] || !test(s[i])) return 0;
+	}
+	return i;
+}

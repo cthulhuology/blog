@@ -49,6 +49,24 @@ int out(const str* s) {
 	write(1,s->data,s->length);
 }
 
+// outs
+//
+// 	writes a static string
+//
+int outs(const char* s, int i) {
+	write(1,s,i);
+}
+
+// outn
+//
+// 	writes an integer out
+//
+int outn(int i) {
+	char buffer[16];
+	int l = snprintf(buffer,16,"%ld",i);	
+	write(1,bufffer,l);
+}
+
 // in
 //
 // 	reads string from stdin

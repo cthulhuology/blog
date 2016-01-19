@@ -20,7 +20,8 @@
 #include "str.h"
 #include "md.h"
 
-int convert(char* filename);
+int equal(char c);
+int dash(char c);
 int title(char* s);
 int section(char* s);
 int paragraph(char* s);
@@ -28,7 +29,8 @@ int pre(char* s);
 int list(char* s);
 int bold(char* s);
 int italic(char* s);
-int link(char* s);
+int url(char* s);
 int image(char * s);
+int convert(char* filename);
 
 #endif

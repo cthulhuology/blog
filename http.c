@@ -179,35 +179,26 @@ void parse_request(str* s) {
 
 void print_request() {
 	int i;
-	printf("Method: ");
-	fflush(stdout);
+	outs("Method: ",8);
 	out(request.method);
-	printf("\n");
-	fflush(stdout);
-	printf("Path: ");
-	fflush(stdout);
+	outs("\n",1);
+	outs("Path: ",6);
 	out(request.path);
-	printf("\n");
-	fflush(stdout);
-	printf("Version: ");
-	fflush(stdout);
+	outs("\n",1);
+	outs("Version: ",9);
 	out(request.version);
-	printf("\n");
-	fflush(stdout);
-	printf("Headers: (%d)\n", request.headers);
-	fflush(stdout);
+	outs("\n",1);
+	outs("Headers: (",10);
+	outn(request.headers);
+	outs(")\n",2);
 	for( i = 0; i < request.headers; ++i) {
-		printf("\t");
-		fflush(stdout);
+		outs("\t",1);
 		out(request.header[i*2]);
-		printf(": ");
-		fflush(stdout);
+		outs(": ",2);
 		out(request.header[i*2 + 1]);
-		printf("\n");
-		fflush(stdout);
+		outs("\n",1);
 	}
-	printf("Body:\n");
-	fflush(stdout);
+	outs("Body:\n",6);
 	out(request.body);
 }
 
@@ -229,14 +220,12 @@ void clear_request() {
 	memset(&request.header,0,sizeof(request.header));
 }
 
-static str _space = { " ", 1 };
 void sp() {
-	out(&_space);
+	outs(" ",1);
 }
 
-static str _nl = { "\n", 1 };
 void endl() {
-	out(&_nl);
+	outs("\n",1);
 }
 
 void clear_response() {
@@ -250,7 +239,7 @@ void clear_response() {
 
 void response_line() {
 	if (!response.version->length && !response.code->length && !response.reason->length) {
-		out(ref("HTTP/1.1 200 OK\n",16));
+		outs("HTTP/1.1 200 OK\n",16);
 		return;
 	}
 	out(response.version);
@@ -264,10 +253,10 @@ void response_line() {
 void response_headers() {
 	int i;
 	if (!response.headers) {
-		out(ref("Content-Length: ",16));	
+		outs("Content-Length: ",16);
 		out(strnum(response.body->length));
 		endl();
-		out(ref("Connection: close",17));
+		outs("Connection: close",17);
 		endl();
 		endl();
 		return;
