@@ -154,37 +154,68 @@ int image(char* s) {
 	return i;
 }
 
+// render_title
+//
+// 	detects if the next element is a title
+// 	and then renders the appropriate html
+//
+int render_title(char* s) {
+	int l = 0;
+	int i = title(s);
+	if (!i) return 0;
+	l = upto(eol,s);
+	h1(ref(s,l));
+	return i + any(whitespace,s+i);
+}
 
+// render_section
+//
+// 	detects if the next element is a title
+// 	and then renders the appropriate html
+//
+int render_section(char* s) {
+	int l = 0;
+	int i = section(s);
+	if (!i) return 0;
+	l = upto(eol,s);
+	h2(ref(s,l));
+	return i + any(whitespace,s+i);
+}
+
+// render_list
+//
+// 	detects if the nex line is a list
+// 	and renders the appropriate html
+//
+int render_list(char* s) {
+
+}
+
+// render_paragraph
+//
+// 	treats the next section as a paragraph
+// 	and renders the appropriate html
+int render_paragraph(char* s) {
+	int i = upto(blank,s);
+	p(ref(s,i));
+	return i + any(whitespace,s+i);
+}
 
 // render
 //
 // 	render an .md file, and attempts  
 //
 int render(str* doc) {
-	int i = 0, t, l;
+	int i = 0, t = 0;
 	char* s = doc->data;
 	while (i < doc->length) {
-		if (t = title(s+i)) { 		// we have a title
-			l = upto(eol,s+i);
-			h1(ref(s+i,l));
-			i += t;
-			i += any(whitespace,s+i);
-			continue;
-		}
-		if (t = section(s+i)) {		// we have a section
-			l = upto(eol,s+i);
-			h2(ref(s+i,l));
-			i += t;
-			i += any(whitespace,s+i);
-			continue;
-		}
-		if (t = paragraph(s+i)) {
-			p(ref(s+i,t));
-			i += t;
-			i += any(whitespace,s+i);
-			continue;
-		}
-		++i;
+		i += (t = render_title(s+i));
+		if (t) continue;
+		i += (t = render_section(s+i));
+		if (t) continue;
+		i += (t = render_paragraph(s+i));	 // should be last renderer
+		if (t) continue;
+		++i;	// unknown structure skip
 	}
 }
 
