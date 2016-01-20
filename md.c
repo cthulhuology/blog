@@ -167,11 +167,36 @@ int render(str* doc) {
 		if (t = title(s+i)) { 		// we have a title
 			l = upto(eol,s+i);
 			h1(ref(s+i,l));
-			i += t;			// advance the pointer	
+			i += t;
+			i += any(whitespace,s+i);
+			continue;
 		}
-		
-	
+		if (t = section(s+i)) {		// we have a section
+			l = upto(eol,s+i);
+			h2(ref(s+i,l));
+			i += t;
+			i += any(whitespace,s+i);
+			continue;
+		}
+		if (t = paragraph(s+i)) {
+			p(ref(s+i,t));
+			i += t;
+			i += any(whitespace,s+i);
+			continue;
+		}
+		++i;
 	}
-	
 }
 
+
+
+#ifndef TEST
+
+// main
+
+int main (int argc, char** argv) {
+	str* s = in();
+	render(s);
+}
+
+#endif

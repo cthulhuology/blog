@@ -64,7 +64,7 @@ int outs(const char* s, int i) {
 int outn(int i) {
 	char buffer[16];
 	int l = snprintf(buffer,16,"%ld",i);	
-	write(1,bufffer,l);
+	write(1,buffer,l);
 }
 
 // in

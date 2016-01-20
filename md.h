@@ -25,7 +25,7 @@ int dash(char c);
 int title(char* s);
 int section(char* s);
 int paragraph(char* s);
-int pre(char* s);
+int preformat(char* s);
 int list(char* s);
 int bold(char* s);
 int italic(char* s);
