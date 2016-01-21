@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ANS=`diff $1 $2`
+
+if [[ -z "$ANS" ]]; then
+	echo "ok $1";
+	exit 0
+else
+	echo "fail $1";
+	exit 0
+fi
