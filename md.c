@@ -71,6 +71,7 @@ int blank(char* s) {
 	int i,j;
 	i = eol(s);
 	if (!i) return 0;
+	i += any(hs,s);	// skip any stray horizontal spaces
 	j = eol(s+i);
 	if (!j) return 0;
 	return i+j;	
@@ -188,7 +189,10 @@ int render_section(char* s) {
 // 	and renders the appropriate html
 //
 int render_list(char* s) {
-
+	int i = list(s);
+	if (!i) return 0;
+	li(ref(s+2,i-2));	// skip the * 
+	return i + eol(s+i);	
 }
 
 // render_paragraph
@@ -197,6 +201,7 @@ int render_list(char* s) {
 // 	and renders the appropriate html
 int render_paragraph(char* s) {
 	int i = upto(blank,s);
+	i += any(whitespace,s);	// skip leading whitepsace
 	p(ref(s,i));
 	return i + any(whitespace,s+i);
 }
@@ -208,10 +213,13 @@ int render_paragraph(char* s) {
 int render(str* doc) {
 	int i = 0, t = 0;
 	char* s = doc->data;
+	i += any(whitespace,s);	// skip leading whitespace
 	while (i < doc->length) {
 		i += (t = render_title(s+i));
 		if (t) continue;
 		i += (t = render_section(s+i));
+		if (t) continue;
+		i += (t = render_list(s+i));
 		if (t) continue;
 		i += (t = render_paragraph(s+i));	 // should be last renderer
 		if (t) continue;
@@ -228,6 +236,7 @@ int render(str* doc) {
 int main (int argc, char** argv) {
 	str* s = in();
 	render(s);
+	return 0;
 }
 
 #endif

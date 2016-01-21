@@ -24,7 +24,7 @@ md : md.c str.c parse.c html.c
 
 .PHONY: clean
 clean:
-	rm server http
+	rm -f server http md
 
 
 .PHONY: test tests

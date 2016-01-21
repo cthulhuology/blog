@@ -94,6 +94,14 @@ int whitespace(char c) {
 	return space(c) || tab(c) || nl(c) || cr(c);
 }
 
+// hs
+//
+// 	returns true if the character is sp or tab
+//
+int hs(char c) {
+	return space(c) || tab(c);
+}
+
 // colon
 //
 //	returns true if the character is a colon

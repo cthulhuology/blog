@@ -26,6 +26,7 @@ int tab(char c);
 int nl(char c);
 int cr(char c);
 int whitespace(char c);
+int hs(char c);
 int colon(char c);
 int semi(char c);
 int slash(char c);
