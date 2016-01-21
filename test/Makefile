@@ -1,9 +1,9 @@
 CFLAGS=-I. -I../ -DTEST
 
-.PHONY: test
+.PHONY: test render
 test: all
 
-all: test_parse test_http test_md
+all: test_parse test_http test_md render
 
 test_parse: test_parse.c ../parse.c ../test.c ../test.h 
 	gcc $(CFLAGS) -o test_parse test_parse.c ../parse.c ../test.c
@@ -15,11 +15,14 @@ test_http: test_http.c ../http.c ../parse.c ../test.c ../test.h ../str.c
 	./test_http
 	rm test_http
 
-test_md: test_md.c ../md.c ../parse.c ../test.c ../test.h ../str.c
-	gcc $(CFLAGS) -o test_md test_md.c ../md.c ../parse.c ../test.c ../str.c
+test_md: test_md.c ../md.c ../parse.c ../test.c ../test.h ../str.c ../html.c
+	gcc $(CFLAGS) -o test_md test_md.c ../md.c ../parse.c ../test.c ../str.c ../html.c
 	./test_md
 	rm test_md
 
+
+render:
+	cd render && $(MAKE) test
 
 .PHONY: clean
 clean:

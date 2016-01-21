@@ -211,10 +211,36 @@ int render_list(char* s) {
 // 	treats the next section as a paragraph
 // 	and renders the appropriate html
 int render_paragraph(char* s) {
-	int i = upto(blank,s);
-	i += any(whitespace,s);	// skip leading whitepsace
-	p(ref(s,i));
-	return i + any(whitespace,s+i);
+	int t = 0;
+	int l = paragraph(s);
+	int i = any(whitespace,s);	// skip leading whitepsace
+	outs("<p>",3);
+	while ( i < l ) {
+		if (t = bold(s+i)) {				// bold
+			bld(ref(s+i+1,t-2)); 
+			i += t;
+			continue;
+		}
+		if (t = italic(s+i)) {				// italic
+			itc(ref(s+i+1,t-2));
+			i += t;
+			continue;
+		}
+		if (t = url(s+i)) {				// urls
+			href(ref(s+i+1, t - 2), NULL);
+			i += t;
+			continue;
+		}
+		if (t = image(s+i)) {				// images
+			img(ref(s+i+1, t - 2), NULL);
+			i += t;
+			continue;
+		}
+		outs(s+i,1);					// text
+		++i;
+	}
+	outs("</p>\n",5);
+	return l + any(whitespace,s+l);
 }
 
 // render
@@ -233,7 +259,6 @@ int render(str* doc) {
 		i += (t = render_list(s+i));
 		if (t) continue;
 		while(t = trailing(s+i)) i += t;	// skip blank lines
-		fprintf(stderr,"[%s]\n", s+i);
 		i += (t = render_paragraph(s+i));	 // should be last renderer
 		if (t) continue;
 		++i;	// unknown structure skip

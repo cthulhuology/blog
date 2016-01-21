@@ -55,9 +55,9 @@ int main(int argc, char** argv) {
 	value(7,paragraph("abc\ndef\n\nghi"), "2 lines with follow on paragraph");
 
 	// pre tests
-	value(0,pre("abc\r\n"),"not pre");
-	value(5,pre("\tabc\n"), "pre");
-	value(15,pre("\tabc\n\tdef\n\tghi\nfoobar\n"), "3 lines of pre");
+	value(0,preformat("abc\r\n"),"not pre");
+	value(5,preformat("\tabc\n"), "pre");
+	value(15,preformat("\tabc\n\tdef\n\tghi\nfoobar\n"), "3 lines of pre");
 
 	// list
 	value(0,list("abc\r\n"), "not a list");
