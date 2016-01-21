@@ -77,6 +77,17 @@ int blank(char* s) {
 	return i+j;	
 }
 
+// trailing
+//
+// 	returns the length of an empty line if found
+// 	
+int trailing(char* s) {
+	int i = 0;
+	i += any(hs,s);
+	i += eol(s+i);
+	return i;
+}
+
 // paragraph
 //
 // 	parses a paragraph which is text followed by
@@ -213,7 +224,7 @@ int render_paragraph(char* s) {
 int render(str* doc) {
 	int i = 0, t = 0;
 	char* s = doc->data;
-	i += any(whitespace,s);	// skip leading whitespace
+	i += any(whitespace,s);			// skip leading whitespace
 	while (i < doc->length) {
 		i += (t = render_title(s+i));
 		if (t) continue;
@@ -221,12 +232,13 @@ int render(str* doc) {
 		if (t) continue;
 		i += (t = render_list(s+i));
 		if (t) continue;
+		while(t = trailing(s+i)) i += t;	// skip blank lines
+		fprintf(stderr,"[%s]\n", s+i);
 		i += (t = render_paragraph(s+i));	 // should be last renderer
 		if (t) continue;
 		++i;	// unknown structure skip
 	}
 }
-
 
 
 #ifndef TEST
