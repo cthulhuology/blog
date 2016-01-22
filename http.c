@@ -280,7 +280,7 @@ void respond() {
 }
 
 // don't compile main if we're in test mode
-#ifndef TEST
+#ifdef HTTP
 
 // main 
 //

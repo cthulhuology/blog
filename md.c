@@ -266,7 +266,7 @@ int render(str* doc) {
 }
 
 
-#ifndef TEST
+#ifdef MD
 
 // main
 
