@@ -27,6 +27,11 @@ md : md.c str.c parse.c html.c
 blog : blog.c http.c str.c parse.c file.c
 	gcc $(CFLAGS) -DBLOG -o blog blog.c http.c str.c parse.c file.c
 
+mkpath: dir.c str.c list.c
+	gcc $(CFLAGS) -o mkpath -DDIRTOOLS dir.c list.c str.c
+
+lspath: dir.c str.c list.c
+	gcc -ggdb $(CFLAGS) -o lspath -DDIRTOOLS dir.c list.c str.c
 
 .PHONY: clean
 clean:

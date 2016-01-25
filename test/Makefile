@@ -20,6 +20,9 @@ test_md: test_md.c ../md.c ../parse.c ../test.c ../test.h ../str.c ../html.c
 	./test_md
 	rm test_md
 
+test_list: test_list.c ../list.c ../str.c ../test.h ../test.c ../list.h ../str.h
+	gcc $(CFLAGS) -o test_list test_list.c ../list.c ../str.c ../test.c
+
 
 render:
 	cd render && $(MAKE) test

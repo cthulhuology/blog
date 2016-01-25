@@ -102,3 +102,16 @@ str* strnum(int i) {
 str* empty() {
 	return ref(NULL,0);
 }
+
+// sortorder
+//
+int sortorder(str** a, str** b) {
+	outs("cmp: ",5);
+	out(*a);
+	outs(" vs ",4);
+	out(*b);
+	outs("\n",1);
+	if ((*a)->length < (*b)->length) return 1;
+	if ((*a)->length > (*b)->length) return -1;
+	return -strncmp((*a)->data,(*b)->data,(*a)->length);
+}

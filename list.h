@@ -1,4 +1,4 @@
-// str.h
+// list.h
 //
 // Copyright (C) 2016 David J. Goehrig
 //
@@ -14,29 +14,25 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __HAVE_STR_H__
-#define __HAVE_STR_H__
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#ifndef __HAVE_LIST_H__
+#define __HAVE_LIST_H__
+
+#include "str.h"
 
 typedef struct {
-	char* data;
-	size_t length;	
-	char buffer[0];
-} str;
+	size_t start;
+	size_t end;
+	size_t size;
+	str* data[0];
+} list;	
 
-str* allot(int len);
-str* ref(char* data, int len);
-int out(const str* s);
-int outs(const char* s, int i);
-int outn(int i );
-str* in();
-void release(str* s);
-str* strnum(int i);
-str* empty();
-int sortorder(str** a, str** b);
+list* new_list(size_t i);
+void push(list* l, str* s);
+str* pop(list* l);
+list* each(list* l, void(*op)(str* s));
+list* map(list* l, str*(*op)(str* s));
+void release_list(list* l);
+list* sort(list* l);
 
 #endif
