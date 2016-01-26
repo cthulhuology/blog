@@ -1,0 +1,4 @@
+Static References and Modules
+=============================
+
+One of the problems that we make for ourselves that consistently crops up in nearly every system is the coupling of identity with naming. This is historically mostly an accident derived out of a need to marry symbolic references across programs (human domain) with their corresponding machine representations (linker domain). If I write a C program, there is a predictable 1-to-1 correspondence between a symbol, a symbol table entry, and a region of memory. We "fix up" references at link time by populating a static address in the symbol table which allows our position independent code to dispatch to the right location. Now there is no good reason that we can&#39;t overwrite this symbol table at runtime, and when we use dlopen and friends we can implement exactly this kind of behavior. <br>

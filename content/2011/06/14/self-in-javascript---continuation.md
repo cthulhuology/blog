@@ -1,0 +1,3 @@
+Self In Javascript : Continuation
+=================================
+
