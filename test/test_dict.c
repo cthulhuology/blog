@@ -1,4 +1,4 @@
-// str.h
+// test_dict.c
 //
 // Copyright (C) 2016 David J. Goehrig
 //
@@ -14,31 +14,31 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __HAVE_STR_H__
-#define __HAVE_STR_H__
+#include "test.h"
+#include "dict.h"
+#include "list.h"
+#include "str.h"
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-typedef struct {
-	char* data;
-	size_t length;	
-	char buffer[0];
-} str;
+// This is the main test progie for the dict
 
-str* allot(int len);
-str* ref(char* data, int len);
-int out(const str* s);
-int outs(const char* s, int i);
-int outn(int i );
-str* in();
-void release(str* s);
-str* strnum(int i);
-str* empty();
-int sortorder(str** a, str** b);
-int hash(str* s);
-int eq(str* a, str* b);
+int main(int argc, char** argv) {
+	
+	list* l;
+	dict* d;
+	str* a = ref("hello",5);
+	str* b = ref("world",5);
+	str* c = ref("foobar",6);
 
-#endif
+	ok(NULL == new_dict(0), "allocate an empty dict");
+	ok(NULL == new_dict(1), "allocate a dict with element");
+	ok(NULL != (d = new_dict(2)), "allocate a dict with two element");
+	value(2, d->size, "test the size of the dict");
+	set(d,a,b);
+	ok(eq(empty(),get(d,b)), "fetch an empty result");
+	ok(b == get(d,a), "fetch the key a ");
+	set(d,b,a);
+	ok(a == get(d,b), "fetch key of b");
+	set(d,c,a);
+	done("test_dict");
+}

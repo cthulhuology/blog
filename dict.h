@@ -1,4 +1,4 @@
-// str.h
+// dict.h
 //
 // Copyright (C) 2016 David J. Goehrig
 //
@@ -14,31 +14,20 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __HAVE_STR_H__
-#define __HAVE_STR_H__
+#ifndef __HAVE_DICT_H__
+#define __HAVE_DICT_H__
 
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "str.h"
+#include "list.h"
 
 typedef struct {
-	char* data;
-	size_t length;	
-	char buffer[0];
-} str;
+	size_t size;
+	str* data[0];
+} dict;	
 
-str* allot(int len);
-str* ref(char* data, int len);
-int out(const str* s);
-int outs(const char* s, int i);
-int outn(int i );
-str* in();
-void release(str* s);
-str* strnum(int i);
-str* empty();
-int sortorder(str** a, str** b);
-int hash(str* s);
-int eq(str* a, str* b);
+dict* new_dict(size_t i);
+void set(dict* d, str* k, str* v);
+str* get(dict* d, str* k);
+list* keys(dict* d);
 
 #endif

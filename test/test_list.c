@@ -18,7 +18,7 @@
 #include "list.h"
 #include "str.h"
 
-// This is the main test progie for the parse
+// This is the main test progie for the list
 
 int main(int argc, char** argv) {
 

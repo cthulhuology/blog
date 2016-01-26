@@ -106,12 +106,25 @@ str* empty() {
 // sortorder
 //
 int sortorder(str** a, str** b) {
-	outs("cmp: ",5);
-	out(*a);
-	outs(" vs ",4);
-	out(*b);
-	outs("\n",1);
 	if ((*a)->length < (*b)->length) return 1;
 	if ((*a)->length > (*b)->length) return -1;
 	return -strncmp((*a)->data,(*b)->data,(*a)->length);
 }
+
+// hash
+//
+int hash(str* s) {
+	int i;
+	int h;
+	for (i = 0; i < s->length; ++i)
+		h += s->data[i] + (h<<5);
+	return h;	
+}
+
+// eq
+//
+int eq(str* a, str* b) {
+	if (a->length != b->length) return 0;	
+	return !strncmp(a->data,b->data,a->length);
+}
+
