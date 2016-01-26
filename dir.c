@@ -23,32 +23,48 @@
 #include "str.h"
 #include "list.h"
 
-int mkpath(char* path) {
-	size_t l = strlen(path);
+int mkpath(str* p) {
 	int i = 0;
-	for (i = 0; i < l; ++i) {
-		if (path[i] != '/') continue;
-		path[i] = '\0';
-		mkdir(path,0777);
-		path[i] = '/';
+	for (i = 0; i < p->length; ++i) {
+		if (p->data[i] != '/') continue;
+		p->data[i] = '\0';
+		mkdir(p->data,0777);
+		p->data[i] = '/';
 	}
-	return l;
+	return p->length;
 }
 
-list* listpath(char* path) {
+list* listpath(str* p) {
 	struct stat fs;
 	DIR* d; 
 	struct dirent* dr;
 	list* l = new_list(32);
-	if (stat(path,&fs)) return NULL;
+	if (stat(p->data,&fs)) return NULL;
 	if (!S_ISDIR(fs.st_mode)) return NULL;
-	d = opendir(path);
+	d = opendir(p->data);
 	while (dr = readdir(d)) {
 		if (!strncmp(dr->d_name,".",1)) continue;
-		push(l,ref(dr->d_name,strlen(dr->d_name)));
+		push(l,copy(dr->d_name,strlen(dr->d_name)));
 	}
 	closedir(d);
 	return l;
+}
+
+str* path(list* l) {
+	int i;
+	size_t ll = 0;
+	size_t n = 0;
+	str* s;
+	for (i = l->start; i < l->end; ++i) n += l->data[i%l->size]->length + 1;
+	s = allot(n);
+	n = 0;
+	for (i = l->start; i < l->end; ++i) {
+		memcpy(s->data + n, l->data[i%l->size]->data, l->data[i%l->size]->length);
+		n += l->data[i%l->size]->length;
+		s->data[n++] = '/';
+	}
+	s->data[n] = '\0';
+	return s;
 }
 
 #ifdef DIRTOOLS 

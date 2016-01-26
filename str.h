@@ -30,6 +30,7 @@ typedef struct {
 
 str* allot(int len);
 str* ref(char* data, int len);
+str* copy(char* data, int len);
 int out(const str* s);
 int outs(const char* s, int i);
 int outn(int i );
@@ -40,5 +41,6 @@ str* empty();
 int sortorder(str** a, str** b);
 int hash(str* s);
 int eq(str* a, str* b);
+str* concat(str* a, str* b);
 
 #endif

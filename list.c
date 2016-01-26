@@ -33,9 +33,14 @@ void push(list* l, str* s) {	// push a value on the end
 	l->data[l->end++ % l->size] = s;
 } 
 
-str* pop(list* l) {	// pop an end off the front
+str* shift(list* l) {	// pop a string off the front
 	if (!l) return;
 	return l->data[l->start++ % l->size];
+}
+
+str* pop(list* l) {	// pop a string off the end
+	if (!l) return;
+	return l->data[--l->end % l->size];	
 }
 
 list* each(list* l, void(*op)(str* s)) {

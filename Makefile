@@ -33,6 +33,9 @@ mkpath: dir.c str.c list.c
 lspath: dir.c str.c list.c
 	gcc -ggdb $(CFLAGS) -o lspath -DDIRTOOLS dir.c list.c str.c
 
+generate: generate.c dir.c str.c list.c
+	gcc -ggdb $(CFLAGS) -o generate -DGENERATE generate.c dir.c list.c str.c
+
 .PHONY: clean
 clean:
 	rm -f server http md

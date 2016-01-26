@@ -23,9 +23,10 @@
 // 	allocates a string of a given size
 //
 str* allot(int len) {
-	str* s = (str*)malloc(sizeof(str) + len);
+	str* s = (str*)malloc(sizeof(str) + len + 1);
 	s->length = (size_t)len;
-	s->data = s->buffer;	
+	s->data = s->buffer;
+	s->data[len] = '\0';	// nullpad
 	return s;
 }
 
@@ -38,6 +39,14 @@ str* ref(char* data, int len) {
 	str* s = (str*)malloc(sizeof(str));
 	s->data = data;
 	s->length = (size_t)len;
+	return s;
+}
+
+// copy
+//
+str* copy(char* data, int len) {
+	str* s = allot(len);
+	memcpy(s->data,data,len);
 	return s;
 }
 
@@ -128,3 +137,11 @@ int eq(str* a, str* b) {
 	return !strncmp(a->data,b->data,a->length);
 }
 
+// concat
+//
+str* concat(str* a, str* b) {
+	str* s = allot(a->length + b->length);
+	memcpy(s->data,a->data,a->length);
+	memcpy(s->data + a->length,b->data,b->length);
+	return s;
+}

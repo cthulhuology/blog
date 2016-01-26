@@ -14,39 +14,55 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "str.h"
-#include "html.h"
-#include "http.h"
-#include "file.h"
 #include <limits.h>
+#include "str.h"
+#include "list.h"
+#include "dir.h"
+#include "generate.h"
 
+list* _path;
 
-char _www_path[PATH_MAX];
-char* www(str* s) {
-	memcpy(_www_path,"./www/",6);
-	memcpy(_www_path+6,s->data,s->length);
-	_www_path[s->length + 6 ] = '\0';
-	return _www_path;
+void create_post(str* post) {
+	out(path(_path));
+	out(post);
+	outs("\n",1);
 }
 
-char _content_path[PATH_MAX];
-char* content(str* s) {
-	memcpy(_content_path,"./content/",10);
-	memcpy(_content_path+10,s->data,s->length);
-	_content_path[s->length + 10] = '\0';
-	return _content_path;
+void dir_posts(str* day) {
+	push(_path,day);
+	list* posts = sort(listpath(path(_path)));
+	each(posts, create_post);
+	pop(_path);
+}
+
+void dir_days(str* month) {
+	push(_path,month);
+	list* days = sort(listpath(path(_path)));
+	each(days,dir_posts);
+	pop(_path);
+}
+
+void dir_month(str* year) {
+	push(_path,year);
+	list* months = sort(listpath(path(_path)));
+	each(months,dir_days);
+	pop(_path);
+}
+
+void dir_year() {
+	push(_path, ref("./content",9));
+	list* years = sort(listpath(path(_path)));
+	each(years,dir_month);
+	pop(_path);
 }
 
 
-#ifdef BLOG
+
+#ifdef GENERATE
 
 int main(int argc, char** argv) {
-	str* buffer = in();		// read the initial request in
-	clear_request();		// ensure request is clear
-	clear_response();		// ensure response is clear
-	parse_request(buffer);		// parse the initial request
-	response.body = read_file(www(request.path));
-	respond();
+	_path = new_list(16);
+	dir_year();
 	return 0;
 }
 

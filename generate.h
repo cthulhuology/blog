@@ -1,4 +1,4 @@
-// dir.h
+// generate.h
 //
 // Copyright (C) 2016 David J. Goehrig
 //
@@ -14,14 +14,9 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef __HAVE_DIR_H__
-#define __HAVE_DIR_H__
+#ifndef __HAVE_GENERATE_H__
+#define __HAVE_GENERATE_H__
 
-#include "str.h"
-#include "list.h"
 
-int mkpath(str* p);
-list* listpath(str* p);
-str* path(list* l);
 
 #endif

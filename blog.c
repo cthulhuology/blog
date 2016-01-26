@@ -20,7 +20,6 @@
 #include "file.h"
 #include <limits.h>
 
-
 char _path[PATH_MAX];
 char* www(str* s) {
 	memcpy(_path,"./www/",6);
@@ -28,7 +27,6 @@ char* www(str* s) {
 	_path[s->length + 6 ] = '\0';
 	return _path;
 }
-
 
 
 #ifdef BLOG
