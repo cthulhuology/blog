@@ -35,6 +35,7 @@ int star(char c);
 int question(char c);
 int lbracket(char c);
 int rbracket(char c);
+int bar(char c);
 int lsquigle(char c);
 int rsquigle(char c);
 int hex(char c);

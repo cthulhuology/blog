@@ -39,7 +39,6 @@ void create_post(str* post) {
 
 	mkpath(outpath);
 	run("./md", input(infile), output(outfile), args);
-	
 }
 
 void dir_posts(str* day) {

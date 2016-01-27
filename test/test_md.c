@@ -73,10 +73,10 @@ int main(int argc, char** argv) {
 
 	// italics
 	value(0,italic("abc\n"), "not italic");
-	value(0,italic("abc/\n"), "also not italic");
-	value(5,italic("/abc/\n"), "italic");
-	value(5,italic("/a\nc/\n"), "italic across two lines");
-	value(4,italic("/abc"), "italic short");
+	value(0,italic("abc**\n"), "also not italic");
+	value(7,italic("**abc**\n"), "italic");
+	value(7,italic("**a\nc**\n"), "italic across two lines");
+	value(5,italic("**abc"), "italic short");
 
 	// url
 	value(0,url("abc"), "not a url");

@@ -165,6 +165,11 @@ int rbracket(char c) {
 	return c == ']';
 }
 
+// bar
+int bar(char c) {
+	return c == '|';
+}
+
 // lsquigle
 //
 //	returns true if the character is a {

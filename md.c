@@ -140,8 +140,8 @@ int bold(char* s) {
 //
 int italic(char* s) {
 	int i = 0;
-	if (slash(s[0]) && !whitespace(s[1])) i = 1 + until(slash,s+1);
-	if (i > 0) i += slash(s[i]); // +1 if trailing /
+	if (star(s[0]) && star(s[1])) i = 2 + until(star,s+2);
+	if (i > 0) i += any(star,s+i); // +1 if trailing /
 	return i;
 }
 
@@ -195,6 +195,45 @@ int render_section(char* s) {
 	return i + any(whitespace,s+i);
 }
 
+// inner
+//
+int inner(char *s, int l) {
+	int t;
+	int p;
+	int i = 0;
+	while ( i < l ) {
+		
+		if (t = italic(s+i)) {				// italic
+			itc(ref(s+i+1,t-2));
+			i += t;
+			continue;
+		}
+		if (t = bold(s+i)) {				// bold
+			bld(ref(s+i+1,t-2)); 
+			i += t;
+			continue;
+		}
+		if (t = url(s+i)) {				// urls
+			p = until(bar,s+i+1);
+			if (p && p < t) {
+				href(ref(s+i+1, p), ref(s+i+2+p,t-p-3));
+			} else {
+				href(ref(s+i+1, t - 2), NULL);
+			}
+			i += t;
+			continue;
+		}
+		if (t = image(s+i)) {				// images
+			img(ref(s+i+1, t - 2), NULL);
+			i += t;
+			continue;
+		}
+		outs(s+i,1);					// text
+		++i;
+	}
+	return i;
+}
+
 // render_list
 //
 // 	detects if the nex line is a list
@@ -203,7 +242,9 @@ int render_section(char* s) {
 int render_list(char* s) {
 	int i = list(s);
 	if (!i) return 0;
-	li(ref(s+2,i-2));	// skip the * 
+	outs("<li>",4);
+	inner(s+2,i-2);
+	outs("</li>\n",6);
 	return i + eol(s+i);	
 }
 
@@ -216,30 +257,7 @@ int render_paragraph(char* s) {
 	int l = paragraph(s);
 	int i = any(whitespace,s);	// skip leading whitepsace
 	outs("<p>",3);
-	while ( i < l ) {
-		if (t = bold(s+i)) {				// bold
-			bld(ref(s+i+1,t-2)); 
-			i += t;
-			continue;
-		}
-		if (t = italic(s+i)) {				// italic
-			itc(ref(s+i+1,t-2));
-			i += t;
-			continue;
-		}
-		if (t = url(s+i)) {				// urls
-			href(ref(s+i+1, t - 2), NULL);
-			i += t;
-			continue;
-		}
-		if (t = image(s+i)) {				// images
-			img(ref(s+i+1, t - 2), NULL);
-			i += t;
-			continue;
-		}
-		outs(s+i,1);					// text
-		++i;
-	}
+	inner(s+i,l);
 	outs("</p>\n",5);
 	return l + any(whitespace,s+l);
 }

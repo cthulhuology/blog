@@ -15,8 +15,8 @@ test_http: test_http.c ../http.c ../parse.c ../test.c ../test.h ../str.c
 	./test_http
 	rm test_http
 
-test_md: test_md.c ../md.c ../parse.c ../test.c ../test.h ../str.c ../html.c
-	gcc $(CFLAGS) -o test_md test_md.c ../md.c ../parse.c ../test.c ../str.c ../html.c
+test_md: test_md.c ../md.c ../parse.c ../test.c ../test.h ../str.c ../html.c ../file.c
+	gcc $(CFLAGS) -o test_md test_md.c ../md.c ../parse.c ../test.c ../str.c ../html.c ../file.c
 	./test_md
 	rm test_md
 
