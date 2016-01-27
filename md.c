@@ -18,6 +18,7 @@
 #include "parse.h"
 #include "md.h"
 #include "html.h"
+#include "file.h"
 
 // equal
 //
@@ -265,14 +266,29 @@ int render(str* doc) {
 	}
 }
 
+str* _header = NULL;
+void header() {
+	if (! _header) _header = read_file(ref("./www/header.html",17));
+	out(_header);
+}
+
+str* _footer = NULL;
+void footer() {
+	if (! _footer) _footer = read_file(ref("./www/footer.html",17));
+	out(_footer);
+}
 
 #ifdef MD
 
 // main
 
 int main (int argc, char** argv) {
-	str* s = in();
+	str* t;
+	str* s = empty();
+	while ((t = in()) && t->length) s = concat(s,t);
+	header();
 	render(s);
+	footer();
 	return 0;
 }
 

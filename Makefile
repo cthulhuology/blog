@@ -21,8 +21,8 @@ server : server.c
 http : http.c str.c parse.c
 	gcc $(CFLAGS) -DHTTP -o http http.c str.c parse.c
 
-md : md.c str.c parse.c html.c
-	gcc $(FLAGS) -DMD -o md md.c str.c parse.c html.c
+md : md.c str.c parse.c html.c file.c
+	gcc $(FLAGS) -DMD -o md md.c str.c parse.c html.c file.c
 
 blog : blog.c http.c str.c parse.c file.c
 	gcc $(CFLAGS) -DBLOG -o blog blog.c http.c str.c parse.c file.c
@@ -33,8 +33,16 @@ mkpath: dir.c str.c list.c
 lspath: dir.c str.c list.c
 	gcc -ggdb $(CFLAGS) -o lspath -DDIRTOOLS dir.c list.c str.c
 
-generate: generate.c dir.c str.c list.c
-	gcc -ggdb $(CFLAGS) -o generate -DGENERATE generate.c dir.c list.c str.c
+generate: generate.c dir.c str.c list.c worker.c file.c
+	gcc -ggdb $(CFLAGS) -o generate -DGENERATE generate.c dir.c list.c str.c worker.c file.c
+
+
+worker: worker.c file.c str.c
+	gcc -DWORKER -o worker worker.c file.c str.c
+
+echo: echo.c
+	gcc -o echo echo.c
+
 
 .PHONY: clean
 clean:

@@ -19,50 +19,72 @@
 #include "list.h"
 #include "dir.h"
 #include "generate.h"
+#include "file.h"
+#include "worker.h"
+#include <stdlib.h>
 
-list* _path;
+list* _in_path;
+list* _out_path;
 
 void create_post(str* post) {
-	out(path(_path));
-	out(post);
-	outs("\n",1);
+	char* args[] = { NULL };
+	str* s = allot(post->length+2);
+	str* outpath = path(_out_path);
+	str* infile = concat(path(_in_path),post);
+	str* outfile;
+
+	memcpy(s->data,post->data,post->length -2);
+	memcpy(s->data + post->length - 2, "html", 4);	
+	outfile = concat(outpath,s);
+
+	mkpath(outpath);
+	run("./md", input(infile), output(outfile), args);
+	
 }
 
 void dir_posts(str* day) {
-	push(_path,day);
-	list* posts = sort(listpath(path(_path)));
+	push(_in_path,day);
+	push(_out_path,day);
+	list* posts = sort(listpath(path(_in_path)));
 	each(posts, create_post);
-	pop(_path);
+	pop(_in_path);
+	pop(_out_path);
 }
 
 void dir_days(str* month) {
-	push(_path,month);
-	list* days = sort(listpath(path(_path)));
+	push(_in_path,month);
+	push(_out_path,month);
+	list* days = sort(listpath(path(_in_path)));
 	each(days,dir_posts);
-	pop(_path);
+	pop(_in_path);
+	pop(_out_path);
 }
 
 void dir_month(str* year) {
-	push(_path,year);
-	list* months = sort(listpath(path(_path)));
+	push(_in_path,year);
+	push(_out_path,year);
+	list* months = sort(listpath(path(_in_path)));
 	each(months,dir_days);
-	pop(_path);
+	pop(_in_path);
+	pop(_out_path);
 }
 
 void dir_year() {
-	push(_path, ref("./content",9));
-	list* years = sort(listpath(path(_path)));
+	push(_in_path, ref("./content",9));
+	push(_out_path, ref("./www",5));
+	list* years = sort(listpath(path(_in_path)));
 	each(years,dir_month);
-	pop(_path);
+	pop(_in_path);
+	pop(_out_path);
 }
-
-
 
 #ifdef GENERATE
 
 int main(int argc, char** argv) {
-	_path = new_list(16);
+	_in_path = new_list(16);
+	_out_path = new_list(16);
 	dir_year();
+	reap();
 	return 0;
 }
 

@@ -21,16 +21,16 @@
 #include "file.h"
 
 
-str* read_file(char* filename) {
+str* read_file(str* filename) {
 	str* s;
 	struct stat fs;
 	size_t fd, i = 0;
 
-	if (stat(filename,&fs)) return empty();	// if the file don't exist empty
+	if (stat(filename->data,&fs)) return empty();	// if the file don't exist empty
 
 	if (!fs.st_size) return empty();	// return empty if file empty
 	
-	fd = open(filename,O_RDONLY);		// readonly fd
+	fd = open(filename->data,O_RDONLY);		// readonly fd
 	if (fd < 0) return empty();
 	
 	s = allot(fs.st_size);			// a buffer the size of the file
@@ -40,4 +40,25 @@ str* read_file(char* filename) {
 	}
 
 	return s;
+}
+
+int input(str* filename) {
+	struct stat fs;
+	size_t fd;
+	if (stat(filename->data,&fs)) return -1;
+	fd = open(filename->data,O_RDONLY);
+	return fd;
+}
+
+int output(str* filename) {
+	size_t fd;
+	fd = open(filename->data,O_WRONLY|O_CREAT|O_TRUNC,0600);
+	return fd;
+
+}
+
+int exists(str* filename) {
+	struct stat fs;
+	if (stat(filename->data,&fs)) return 0;
+	return S_ISREG(fs.st_mode);	// should be a regular file
 }

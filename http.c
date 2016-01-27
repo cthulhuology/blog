@@ -263,6 +263,7 @@ void response_headers() {
 	}
 	for(i = 0; i < response.headers; ++i) {
 		out(response.header[i*2]);
+		out(ref(": ",2));
 		out(response.header[i*2+1]);
 		endl();
 	}

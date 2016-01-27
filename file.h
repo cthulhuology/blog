@@ -19,6 +19,9 @@
 
 #include "str.h"
 
-str* read_file(char* filename);
+str* read_file(str* filename);
+int output(str* filename);
+int input(str* filename);
+int exists(str* filename);
 
 #endif
