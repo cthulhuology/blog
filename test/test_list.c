@@ -40,11 +40,11 @@ int main(int argc, char** argv) {
 	value(0, l->start, "test pushing second  start value");
 	value(2, l->end, "test pushing second end value");
 	value(2, length(l), "has one element");
-	ok(a == pop(l), "pop a");
+	ok(a == shift(l), "shift a");
 	value(1, length(l), "has one element");
-	ok(b == pop(l), "pop b");
+	ok(b == shift(l), "shift b");
 	value(0, length(l), "has one element");
-	ok(a == pop(l), "pop a again");
+	ok(a == shift(l), "shift a again");
 	value(-1, length(l), "has negative one elements");
 	
 	return done("test_list");

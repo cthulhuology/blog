@@ -122,9 +122,9 @@ int sortorder(str** a, str** b) {
 
 // hash
 //
-int hash(str* s) {
+size_t hash(str* s) {
 	int i;
-	int h;
+	size_t h = 0;
 	for (i = 0; i < s->length; ++i)
 		h += s->data[i] + (h<<5);
 	return h;	

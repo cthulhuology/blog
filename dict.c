@@ -29,7 +29,7 @@ dict* new_dict(size_t i) {
 
 void set(dict* d, str* k, str* v) {
 	int i;
-	int h = hash(k);
+	size_t h = hash(k);
 	for (i = 0; i < d->size; ++i) {
 		if (d->data[((i+h)%d->size)*2] && !eq(k,d->data[((i+h)%d->size)*2])) continue;
 		d->data[((i+h)%d->size)*2] = k;
@@ -41,10 +41,9 @@ void set(dict* d, str* k, str* v) {
 
 str* get(dict* d, str* k) {
 	int i;
-	int h = hash(k);
+	size_t h = hash(k);
 	for (i = 0; i < d->size; ++i) {
-		if (d->data[((i+h)%d->size)*2] && !eq(k,d->data[((i+h)%d->size)*2])) 
-			continue;
+		if (d->data[((i+h)%d->size)*2] && !eq(k,d->data[((i+h)%d->size)*2])) continue;
 		if (!d->data[((i+h)%d->size)*2]) return empty();
 		return d->data[((i+h)%d->size)*2 + 1];
 	}

@@ -39,7 +39,7 @@ void release(str* s);
 str* strnum(int i);
 str* empty();
 int sortorder(str** a, str** b);
-int hash(str* s);
+size_t hash(str* s);
 int eq(str* a, str* b);
 str* concat(str* a, str* b);
 
