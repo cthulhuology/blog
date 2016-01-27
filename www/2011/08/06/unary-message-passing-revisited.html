@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>Unary Message Passing Revisited</h1>
+<p>More progress and more interesting linguistic artifacts, I was busy last night. I finally finished implementing an idea I had a couple weeks ago, which was to turn _() into a wrapper function that produced function objects to represent built-ins like Number, String, and Array. What it now does is generate a function with an eval property that performs the internal dynamic dispatch. I also override its valueOf and toString methods to return the value of a static closure. This has the downside of producing 2 functions per string or number, but it makes it possible to write:<br><br>  _(2)(&#39;+&#39;)<br><br>Such that this function call returns:<br><br>  function(y)<img src=" return x+y " alt=" return x+y " /><br><br>where x is bound to 2. <br><br>I also took = and made it an equality operator ( not identity === ) and turned assignment into a right associative operator with a compile time look ahead. The look ahead is operator specific and prevents the dereferencing by default logic:<br><br>  1 + 2 -> foo<br><br>Will generate:<br><br>  _(1)(&#39;+&#39;)(2)(&#39;->&#39;)(&#39;foo&#39;)<br><br>which basically in English does the following:<ul><li>create a closure function object with a valueOf 1</li><li>evaluate its &#39;+&#39; method returning a function returning _(1 + y)</li><li>pass 2 to the function which returns a closure function with valueOf 3</li><li>evaluate that function&#39;s -> method returns a binding function</li><li>the binding function binds window<a href="&#39;foo&#39;">&#39;foo&#39;</a> to _(3)</li></ul><br>You can then evaluate foo and get 3. Granted this is a special valueOf 3 so it responds to all the core function methods as well.  Since the valueOf 3 result is also extended with Number methods like the wrapper function, it too can respond to <a href=""></a>() style invocations. <br><br>This is also working with Arrays. I have added the forth fetch @ operator to fetch the nth index of the array so:<br><br>  <a href="3,4,5">3,4,5</a> @ 2<br><br>Returns:<br><br>  _(5)<br><br>This also works with strings such that:<br><br>  &#39;hello&#39; @ 2<br><br>Returns<br><br>  _(&#39;l&#39;)<br><br>There is still work to be done on Object wrappers, writing a better parser, and a lot of edge cases to consider. But this is very close to providing an interesting opportunity to produce new message based flow control constructors. Take &#39;;&#39; which in the current incarnation<br><br>  function(y) <img src=" return _(y) " alt=" return _(y) " /><br><br>Ie it replaces the top of the stack with it&#39;s right hand argument, effectively producing a new statement within a chained function call. This is a vital operator for doing a basic context change. <br><br>  _(1)(&#39;;&#39;)(&#39;foo&#39;)<br><br>Drops 1 and replaces it with &#39;foo&#39; which is then the current context for this. <br><br>If you think about it, nearly all flow control can be modeled in this fashion, and since every partial application returns a function we could do things like:<br><br>  0 - -> negate ; <a href="1,2,3">1,2,3</a> map negate<br>  1 / -> reciprocal ; <a href="1,2,3">1,2,3</a> map reciprocal<br><br>Where in Array map generates a function that walks the elements of the array applying the argument function to it. <br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

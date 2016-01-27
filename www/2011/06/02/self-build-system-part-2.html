@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>Self Build System part 2</h1>
+<p>Back in the early 90s when I first encountered Self, my reaction was one of "my god I can move stuff around!". Being able to just move a slot from one object to another, for me, solved the very obvious problem of cut and paste programming. Our linear source files make any sort of reorganization a chore, and collapsing editors make terribly poor use of lateral space.   If you are like me, you probably want to treat block of code like blocks of Lego. Self got much closer to that. <br><br>When I started working on Phos, my "ad hoc" JavaScript programming environment, I really wanted to capture that sense. Drag and drop, direct manipulation, and remove syntax that was only there to make linear source files easier to parse. (as a side note most of my qualms with coffeescript fall in that category or the everything should be a message send one).  I then started playing around with editing my C projects in the same way. In stead of source files in version control, just have a database of functions, all named, numbered, and annotated so that you could pick and choose versions at compile time. I wrote some simple tools to grab a dependency graph and walk it to pluck out and build multiple versions of the same program. This made building and testing multiple versions of a project really easy. Rather than guess which build is the best, it could be tested empirically. <br><br>My thinking about the Self build system runs along those lines.  Each functional module of code should be well named, via a URI, and be swappable for any other version of that code which maintains the same API. If two or more developers have functional implementations, a build configuration can be used to simply address which one you want to include. The other bit of this is that unlike distribution via GIT, the assembly of the source base can be delayed until the last possible moment, and in some cases delayed until the feature is needed. You could think of the build system as a proxy stub which could on demand load and build new built-in functionality by dynamically fetching and loading modules. You can do this in Perl by hacking CPAN I to your autoloader, but lazy loading features you may never use seems even smarter. <br><br>When trying to build distributed systems, one of the hardest tasks is validating that each component in the system has all of it&#39;s dependencies met on every node where the code may run. Having a node segfault repeatably because the wrong version of a shared library was installed can become an exercise in pure frustration. This gets progressively more complex as the system grows in application space. The more teams and requirements placed upon a shared environment leads to lower stability and greater potential for disastrous change. Building a build system that can intelligently discover a solution adapted to each specific environment may provide an organic method for building systems which adapt rather than fail. <br><br>But ultimately, the goal of my build system is to break the build down into the smallest sensible chunks and dynamically assemble a functional system from those bits. Until a project like Klien is complete, the reality is that Self will need to work with a build system rooted in anachronistic practices and traditions rooted in yesteryear. But from the standpoint of opening up the old code base to new eyes and the possibility of change, a networked boostraping build system make make a difference. </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

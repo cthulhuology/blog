@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>Porting my blog to Ghost</h1>
+<p>This past week, I decided to port my blog to Ghost.  In part because I've been using it for professional blog work for most of the past year, and the old blog software was getting a bit long in the tooth.  My old blog ran on a custom Couchdb couchapp, that had grown organically over the past 6 years.  It was rather responsive, and it worked like a charm, but I found it harder and harder to get any of the tooling I once had working working again.  Eventually, when Ubunutu failed to gracefully upgrade for the umpteenth time, I had no choice but to cut over to a new platform.</p>
+<p>As I had just spun up Ghost on a new FreeBSD box for a new project I'm working on, I already had a deployment handy.  This box I learned the unfortunate reality of clang as your primary compiler, as it failed to compile the nodejs dependencies for Ghost on a machine with 512MB or RAM.  The issue at hand is clang is a shitty compiler that chews memory like there's no tomorrow.  On a separate build that week, I couldn't even get tensorflow to build on a machine with 8GB or RAM (12GB finally did it), which leads me to believe the LLVM compiler suite is a great failure in engineering.  So I'm not blaming Ghost here for that issue, although it means I have to dedicate 2x the resources of my old blog. (including 2x the money per month)</p>
+<p>To port the blog, I needed the help of a friendly Perl script, which extracted the sitemap view from the CouchDB database, and then extracted each blog post, running them through some regular expressions to convert the one markdown to another.  After a dozen runs of trial and error, I finally had a set of SQL statements that were output what looked like correct blog posts.  Everything looked ok, and the spot check of the blog output looked fine too.  As most of my images aren't hosted on the blog itself, transferring image data wasn't an issue.</p>
+<p>The real issue was ordering.  Reading through the Sqlite3 schema for the posts table, it appeared that the dates created_at, modified_at, and published_at were of type datetime.  They all correctly imported the timestamps that I had in my sitemap file as they were generated to the same standard format.  But Ghost was outputting the articles out of order.  Looking at it, I finally realized that the sort order used in Ghost as a string comparison sort.  Importing the dates ended up with the articles imported in asciibetical order, not at all what you want for over 200+ blog post.  After some trial an error publishing new posts in a sample database, I realized they were generating a Javascript date with getTime() to produce a milliseconds since UNIX epoch timestamp and storing it in a datetime field.  In fact, their ordering code made no use of the database datatype, and it might have well been a string.</p>
+<p>After the import of all of the articles was done, I then spent a bunch of time hacking up the various template files, removing features I don't want to use, and styling it.  Overall it took about a day.  In the end, I got a fairly modern looking blog, that had all the bells and whistles that will allow me to edit it for the next couple years.</p>
+<p>But that's not enough, how does it perform?  Well just check out the monitoring graphs:</p>
+<p>!<a href=""></a>(https://dl.dropboxusercontent.com/u/22644134/monitoring.png)</p>
+<p>Well it doesn't perform well.  Before I cut the blog over, the page fetch was almost instantaneous locally, as the blog was largely served from cache.  The new Ghost platform added over 150ms latency to the homepage request, as it is now dynamically generated each time.  I could activate caching at the nginx layer, but I merely used the same pass through I had been using before.  The variability of the latency is also a little concerning too.  And then there is the issue of this is running on a machine with 2x the RAM and CPU.  Maybe it is FreeBSD's fault, but it is running on a better hypervisor as well.  All I can say, is I guess the numbers prove that Erlang is better than Node at serving my blog :)</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>Riak Pipes and the Joy of Rebar</h1>
+<p>So a few days ago <a href="http://github.com/basho/riak_pipe">riak_pipe</a> was announced and naturally, all I could think is "you know this is great timing". I happened to be evaluating components for a new project which involved processing large numbers of large files. I was originally leaning towards riak/luwak for storage + rabbitmq for messaging + Mojolicious for the c&c interface. I was ging to build a set of perl daemons that processed each request and PUT the resulting binaries back into riak under different buckets. <br><br>All that changed three days ago when I got a chance to read through the pipes code base. It solved a few big problems:<ul><li>how to distribute work</li><li>how to gather status</li><li>how to notify later stages in the chain</li><li>how to keep data local in the cluster</li></ul><br>So yesterday and today I built a functioning prototype. Rebar took care of building the base OTP application and grabbing the 3 modules I needed from github and all of their dependencies.  It took about 5 minutes to work through the right order for specifying the applications for the OTP app, bit once I got them sorted, and fixed the retool config to point at the right dirs, I had a deployable skeleton running mochiweb, riak_pipe, and the rest off their deps.  That is really a killer feature of <a href="http://github.com/basho/rebar">rebar</a> which we have Bob Ippolito to blame for. (funny how much of his code is in this stack). <br><br>Then there was two functional bits to write:<ul><li>a gen_server which managed the work queue interface and managed the pipes. </li><li>a riak_pipe_vnode_worker which created the fitting and handled the processing</li></ul><br>I decided to add a create/0 method to the worker as it knows what it is and allows for using a  ?MODULE macro in the #fitting_spec.  I also chose to bundle the riak_pipe:exec/2 call in the create method as it seemed a good place to do it. In the next iteration, I will probably add a create/2 method to pass in a Sink and Options allowing for chaining creates together. Since my process/3 method could fetch, process, and upload all in one step, I delayed this breakout. <br><br>After about 8 hours of reading, playing, and coding I had a working 5 node cluster processing a good number of files. The hashing allowed to keep the workers local to the storage vnodes, and playing with the hash function I could steer work to certain nodes (and compare performance without data locality). I also could easily build a version w/o riak_kv for worker only nodes. Overall it was a joy. Next step is a c&c interface in mochiweb. <br><br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

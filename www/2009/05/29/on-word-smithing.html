@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>On word smithing</h1>
+<p>Part of what separates a good program from a mediocre one is the words the programmer selects to express the concepts contained within the code.  Consider the following two examples of PostScript™ code:<div><br /></div><div><blockquote>/frobinate <img src=" dup /foo get exch /bar get " alt=" dup /foo get exch /bar get " /> def</blockquote><br /><blockquote>/at <img src=" dup /x get exch /y get " alt=" dup /x get exch /y get " /> def</blockquote></div>Now both can be though of doing the exact same thing.  Each takes a dictionary on the top of the stack and returns the values associated with two keys.  Both work exactly the same way, the only difference is the choice of names used to convey meaning to other programmers.  To the computer it makes no difference if the key is called <b>foo</b>  or <b>x</b>. Neither have any particular import to the computer.  Similarly, <b>frobinate</b> is as good a word as any, when dealing with meaningless qualities like <b>foo</b> and <b>bar</b>.  <div><div></div><div><span class="Apple-style-span"  style="font-size:6;"><span class="Apple-style-span"  style="font-size:24px;"><br /></span></span></div><div><span class="Apple-style-span"  style="font-size:x-large;">The Semantic Gap</span></div><div><span class="Apple-style-span"  style="font-size:6;"><span class="Apple-style-span"  style="font-size:24px;"><br /></span></span></div><div></div><div><span class="Apple-style-span"  style="font-size:medium;">This example illustrates how the observer&#39;s preconceptions influence the meanings of the words chosen.  Structurally, these two statements were identical, performing the same operations with the same types of values in the exact same order.   Semantically, however, the second example more clearly expresses the programmer&#39;s intentions and the likely usage of these routines.  For example, we could define a class of dictionaries that all respond to our procedure <b>at</b> as all dictionaries which posses the keys <b>x </b>and <b>y:</b></span></div><div><blockquote>/is <img src=" true exch { 2 index exch known and " alt=" true exch { 2 index exch known and " /> forall } def</blockquote><blockquote>/locatable <a href=" /x /y "> /x /y </a> def</blockquote><blockquote>/scalable <a href=" /width /height "> /width /height </a> def</blockquote>In this code segment we define a routine <b>is</b> which will test to see if each of the keys in an array passed on the top of the stack exist within the dictionary which is next on the stack.  So say we define a dictionary <b>B</b><b>ox</b> which is both <b>l</b><b>ocatable</b> and <b>s</b><b>calable</b>:</div><div><blockquote>/Box << /x 100 /y 200 /width 30 /height 40 >> def</blockquote>Not only will these routines work for our dictionary <b>B</b><b>ox</b> it will work with any dictionary which has these keys. For example, all <b>l</b><b>ocatable</b> elements could be <b>moved</b>:</div><div><br /></div><div><blockquote>/to <img src=" 2 index exch /y exch put /x exch put " alt=" 2 index exch /y exch put /x exch put " /> def</blockquote><br /></div></div><br />This will allow us to make sensible statements such as:<br /><blockquote>Box locatable is <img src=" 400 300 to " alt=" 400 300 to " /> if</blockquote>While it may read like Ciceronian Latin, it clearly mimics the semantics of the English sentence:<div><br /></div><div><blockquote>If the box is locatable, move the box to coordinate (400,300).</blockquote>Syntactically there are are differences between what we would like to say, and what we can easily say in PostScript™, but semantically the gap can be kept incredibly narrow.  What makes all the difference is our choice of words, and the manner in which we structure our idioms.  These same techniques can be applied to other languages as well, bringing what you wish to say in English into harmony with what the language designers allowed.</div><div><br /></div><div><span class="Apple-style-span"  style="font-size:x-large;">A Different View of Classes</span></div><div><br /></div><div>In the previous example, I demonstrated what could be considered object oriented style programming in PostScript™.   Rather than using a traditional concept of <i>class,</i> I used a concept similar to <i>traits</i> as found in <i>Self</i> and <i>Smalltalk</i>.  If you are familiar with protocols in <i>Objective-C</i> or interfaces in <i>Java, </i> those concepts are similar as well.  This style of <i>classiness</i> is particularly useful for languages that heavily use associative datatypes: <i>dictionaries, hashes, assoc-lists, </i>in order to represent <i>objects.</i>  By checking to see if an entity has the correct properties at runtime, and applying logic based on the results of the test, you can effectively manage polymorphism in ways where traditional class hierarchies quickly break down.</div><div><br /></div><div><i>Javascript</i> programmers man make particularly strong use of this approach, as all objects in <i>Javascript</i> are <i>Self</i> style key-value slot based objects.  Rather than manipulating a long prototype chain, inheritance can be done with a direct slot copy methodology.  And since protocol chain inheritance can quickly become opaque, through use of anonymous functions, implementing the <b>is</b> function in <i>Javascript</i> as a property of the <i>Object.prototype </i>object can make all of your objects <i>classy</i>.</div></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

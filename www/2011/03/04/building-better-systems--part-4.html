@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>Building Better Systems: Part 4</h1>
+<p>So you&#39;ve decided to start social engineering...<br /><br />Social engineering is a bit like magic (which is probably the best example of applied psychology humans have ever developed). You goal is not to deceive your audience, but to make them want to believe in the illusion and suspend any sense of disbelief. You can&#39;t make someone believe something, but you can make it easy for them to want to believe. This is a principle that all organized religions exploit when spreading their dogma. Advertisers exploit this concept in everything they do as well. When was the last time someone bought a product because it did not fit their lifestyle and had a negative effect on their social standing?<br /><br />Buy my shit and you&#39;ll be cool too. <br /><br />The primary mechanism behind this is memory, which is fungible, creative, and constantly reforming. We remember things not by themselves, but by association with other things. Our brains evolved to track hundreds of social relationships, and we have a tendency to see agency at work in all things. Any time you anthropomorphize an inanimate object, you are appling this sort of association in the extreme. Any time you swear at your computer, you&#39;re treating it as if it had a human will and desires. This is also the same root that advertising taps into when it associates a product with a lifestyle or social group a member of the audience aspires to be a member.   It is the same association people have with professional sports teams for which they will never play, and only fork over cash to and by which have their eyeballs sold to advertisers. Every wonder why beer adverts at football games cost 10s of millions of dollars?  Because the power of suggestion and association work incredibly well. <br /><br /><br />One easy way to use this to your advantage is to jump on a technology bandwagon that firms your executive team envy. This is the "nobody was ever fired for buying IBM" mentality. And it is because middle management is often rewarded for managing an ever larger budget in large firms, that entire careers have revolved around spending other people&#39;s money. But since you are probably building something specifically because management believes there is more value in building rather than buying, you definitely can not base your career on that sort of a decision. This then falls to "the next best thing"TM, Open Source. Now ESR is a fine fellow, and scary with a gun. He also understood implicitly that business dislikes free, but loves not having their balls in a vice due to vendor lock-in. The perceived value of having the ability to switch vendors, even if they never actually will, can be quite high. <br /><br />Designing a system around open standards and open source means you get to pick and choose bits of your solution from a big bin of LEGO. Any one piece can with reasonable effort be swapped out for a functional equivalent that implements the same protocol or standard. In the world of system design, this is the Holy Grail. Care must be taken when tailoring bits of the solution to any one platform, but modularization and well defined interfaces can remove much of the burden of a future migration. <br /><br />For example, when writing a new server I typically implement an event stack, with a layer of abstraction that wraps the underlying kqueue implementation on <b>BSD.  When the inevitable port to Linux comes along, I end up implementing several different interfaces such as epoll, and VFS hooks to handle the same event functionality, but none of the event consumer code needs to change. Since the peculiarities of an operating system can even manifest on an individual hardware device driver, it is sometimes advantageous to write driver specific code at that layer as well. In embedded devices, being able to pick and choose where you put your hooks can be very important. <br /><br />The downside of this flexibility is that your solution will always be sub optimal for your particular problem. The designers who wrote the open package you are using, may have had different useage patterns, different design goals, or even an incorrect understanding of how their application worked. There are plenty of pieces of core infrastructure used by millions of people that are not understood by the people who wrote it. But as a system designer, your job is to understand how the system functions and responds to various environmental factors. Not knowing how your tools work is fine for the user, but not fine for the designer. <br /><br />It might seem that this problem is insurmmountable at first glance. Any system of sufficient complexity is incomprehensible by any human on the planet. But this proposition is flawed. As a designer you do not need to know how your tool works internally, but how the tool works in the context in which you placed it. This is where testing comes in. Knowing the theoretical behavior of a system is insufficient knowledge. To build better systems one must have empirical knowledge</b></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

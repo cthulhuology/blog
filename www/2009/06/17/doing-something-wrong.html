@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>Doing Something Wrong</h1>
+<p>So how do you know when you&#39;re doing something wrong?  The first indication is probably going to show up when you do an average lines of code per function analysis on your code.  Currently, Phosphor&#39;s complete code base is hovering around 480 lines of code, and has around 220 functions.  This means that it contains slightly more than 2 lines of code per function on average. If javascript were a better language, we could drive this down to under 2, but there&#39;s still a lot of API wrangling that goes on.<br /><br /><h3>x.x million lines of code</h3><br /><p>So why do we have projects that consist of x.x million lines of code?  Is it because these projects are so irreducibly complex that there is no better representation of the solutions?  Is it because the programming languages we choose are insufficient to the task?  Are the engineers simply incompetent or just perversely incentivized towards excessive verbosity?  My guess it is a fair smattering of each of these, but more due to habit and custom than anything else.<br /></p><p><br />When you look at what a x.x million lines of code project represents, the irreducibly complex argument is doubtful.  Consider that a line of code is approximately 80 characters.  Even with an excessively verbose language, that should easily be able to contain 10  terms each, which is more than sufficient to define most operations.  Since each term itself may represent<br /></p><blockquote><pre><br />           terms per function = average lines per function * terms per line<br />           10 to 50 = (1 to 5) * 10<br /></pre></blockquote><br />some where between 10 and 50 terms, we can increase the number of operations represented by an order of magnitude every 1-5 lines of code.   An application that consists of 200 functions, represents between 200 and 10^200 operations.<br /><blockquote><pre><br />100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000 operations<br /></pre></blockquote><br />A program with x.x million lines of code, should have x.x to x.x/5 million functions, and would represent between x.x/5 million operations to 10^(x.x million) operations.  To put that in perspective, if your machine were capable of operating 1 trillion operations per second, your computer would evaporate due to the heat death of the universe before long it executed every instruction once.  Obviously, if you need x.x million lines of code, you&#39;re doing something wrong.<br /><h3>a different perspective</h3><br /><p>Rather than bragging about how many lines of code you write, it is probably better to brag about how many lines of code you didn&#39;t.  In any project, you should quickly reach a critical mass of code at which all future revisions result in a smaller code base than the one that came before.  This can be done through a continual process of refactoring and redesigning your code in successive revisions.  Often you will find that once you refactor your code in one location, you can gain knock-on effects which require subsequent removal of then unnecessary glue and support code. </p><br /><p>For example, today I removed the 2 switch statements from the Phosphor code base, moving them into a new HotKeys object.  As a result of that change, I was able  to remove all of the hotkey tests from the Text widget, and run them only once per event cycle.  This prompted two changes to the state machine, which resulted in another 20 lines or so of code disappearing from the code base.  Not only did the user gain the ability to add new hot keys at run time, but also typically over 5000 function calls per second were avoided.</p><br /><p>By reducing the size of your code base, you make it easier to re-read, easier to maintain, easier to re-write, easier to re-factor, and easier to explain. Even if you suffer a slight performance decrease due to a refactoring, it is rarely worth the added complexity in the final code to retain the optimization.  In fact, any optimization which comes at the expense of comprehensibility is better considered a de-optimization towards the lifespan of the code.  When considered in the context of the life span of the software vs. the hardware on which it runs, any such optimizations may only be of temporary value, but impose great cost in the long run.</p></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

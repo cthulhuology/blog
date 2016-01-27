@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>The End Game</h1>
+<p>One of the things which is shaping the development of software for the web is the need for a platform suitable for monetization. The proliferation of app stores provided by the vendor of the hardware will radically transform users expectations of how software is purchased and delivered. As these types of application distribution mechanisms become entrenched, hardware vendors are hoping that app store lock-in will make brand loyalty nigh absolute due to necessity. Software vendors also benefit in that their must have wares become part of the switching cost, which helps ensure some baseline of sales. <br><br>The result of this in the Android space is a proliferation of platforms. Each vendor is producing their own app store, their own distribution mechanism, and to various degrees making it difficult to know exactly what is required to transfer an application. While on most devices it is about 4-5 clicks to find the option to save an application to an sdcard, you need to have an sdcard, know where to put it, make sure it is mounted (several tablets have issues with sdcard formatting and detection). Finally, once you have moved you apk the general user will find it near impossible to ensure that it will install. Because the App Store model makes it so much easier to buy and install software, few users will be bothered to find the time to learn how to manage their near little bundles of code.  The cost in time and fiddling around will usually be greater than the cost of just buying it again. <br><br>This thought will make most geeks cry out in anger frustration and confusion. But it can be a purely rational decision for anyone who doesn&#39;t know how these things work. If the cost of learning how something works exceeds the return on that investment or the opportunity costs associated with it, a rational person will go where the money, time, or opportunity is. For the vast majority of the population who have little to no knowledge of the inner workings, and lack the natural ability to learn it quickly, the only role they can play in this ecosystem is that of a consumer. This is not to belittle them in any way, but merely to point out that the pressure to specialize in our society on a global level makes it untenable for most people to master multiple domains. <br><br>The web is going to flourish in this environment too. Contrary to what many pundits working for trashy popular tech mags have posited, the app store model is going to drive web development. Due to the pressure of vendor supplied system updates, and the wide variey of bugs on different implementations and versions of Android, developers will increasingly turn to webkit based applications to manage change. Rather than add per-system bug fixes for each new device that comes on the market, HTML5 will provide a common API that can be easily updated server side without any additional software install process. This becomes the end game for web developers, sell you access through the app store and deliver via the net. With subscription billing coming to most platforms, and LTE carrier support, the web 3.0 will be paywalled on the device and everyone will take their cut. <br><br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

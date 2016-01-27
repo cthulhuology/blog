@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>PgProc.lua and the Joy of Reflection</h1>
+<p>Tonight I&#39;ve released a bit of code derived from the some of the work that went into Evangelizmo. Back in 2010, I wrote a set of C functions which bound the stored procedures in an application specific schema for <a href="http://github.com/cthulhuology/Jawas">Jawas</a> to the globall namespace of the Lua or JavaScript runtime with the same names. With the <a href="http://luajit.org/ext_ffi.html">LuaJIT FFI extension</a>, I have ported the C + Lua code of the original to a pure Lua implementation as <a href="http://github.com/cthulhuology/pgproc.lua">pgproc.lua</a>.  The design of the API is to minimize those layers of code necessary to maintain in multiple places for any application.  Consider the code:<br><br>  require(&#39;pgproc&#39;).bind(&#39;object&#39;)<br>  print(object.create(&#39;<img src=" "some" : "json" " alt=" "some" : "json" " />&#39;)<a href="&#39;create&#39;">&#39;create&#39;</a>))<br><br>This code will automatically connect to the database as specified by e <b>DB_CONNECT_STRING</b> environment variable, read the stored procedures out of the <I>objects</I> schema, and generate the appropriate Lua global <I>object</I> table with the associated functions as closures wrapping the stored procedure function call. If we create a <I>object.create</I> stored procedure in our database, that functionality is the immediately available by restarting the Lua process. It is possible to call <b>bind(schema)</b> at runtime to pick up additional changes as they occur. A long running process may periodically rebind the stored procedures every hour or so with little impact on performance. <br><br>If you&#39;ve never used a stored procedure, you&#39;re missing out on one of the greatest database design tools available. Rather than relying upon every programmer being a SQL ninja who can explain and analyze every query and data model to optimum performance, you can separate concerns between different programmers. Let&#39;s say your Big Data Architect has a crazy shared database architecture with dozens of individual machines coordinated via a set of proxies. As modern Postgres servers can define external resources, which themselves may be other Postgres databases, your simple join statement in your SQL query could be unintentionally spanning multiple datacenters. How are you to know you can&#39;t safely make that join in production with risking taking down the company?  After all, you&#39;re just trying to get a report to work for finance. Enter the stored procedure.  Rather than dealing with the data model directly and writing SQL, you invoke a function stored in the database which had been hand crafted by a domain expert. As the complexity of the infrastructure grows and the volume of queries exceeds what a handful of  smiple master/slave databases can handle, it becomes impractical for every member of every team which may consume that data to have to become a subject matter expert. Instead, the only way tomscalemthe human knowledge gap is to architect APIs with the limitations of the humans in mind.   Rather than know how it all works, all you need to know is the signature of the function.<br><br>With that in mind, pgproc.lua is designed to make the transition from a DB engine running on one machine to a globally distributed cluster of machines as painless as possible. Typically stored procedures still require you write the tedious wrapper functions to interface with your database. Since the catalog tables in Postgres already know all about the stored procedures and we can query the catalog tables from SQL, we can automate the binding process. Similarly, as LuaJIT FFi knows how to automate lithe binding process to the C routines of libpq, pgproc.lua even doesn&#39;t go any further than translating the minimal number of C header bits to support building the wrappers.  Most of the methods only exist to make it slightly easier to integrate the database connections with different configuration schemes.  Once bound, however, you need never even think of the database again.<br><br>One of the cool applications you can create with pgproc.lua is a simple CRUD application. By implementing create, read, update, and delete procedures and binding to a schema associated to a data type, you can trivially store objects in the DB. When used in conjunction with projects like <a href="http://github.com/cthulhuology/amqp.lua">amqp.lua</a>, you can further extend he reach of the simple CRUD pgproc.lua wrapper to a highly available distributed application. In about 10 lines of code, you can wire up your entire world. <br><br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

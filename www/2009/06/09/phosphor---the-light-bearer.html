@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<img class="title" src="/title-2.png">
+</header>
+<main>
+<h1>Phosphor - the Light Bearer</h1>
+<p><p><a href="http://www.dloh.org">Phosphor</a> is a new Javascript development environment, written in Javascript, and runs in <a href="http://www.apple.com/safari/download/">Safari 4</a>.    It provides a direct manipulation model for editing Javascript objects using a multi-purpose text block.  It allows you to inspect and edit live Javascript objects. </p><br /><p>Phosphor uses Phos as its underlying object framework / display subsystem.  It also adds support for interactive Image, Movie, and Sound objects.  These objects are likely to be rolled back into the Phos system in future versions, and provide an easy means to rapidly prototype Javascript interfaces. </p><br /><h3>Future Direction</h3><br /><p>There is still some work left to do to package widgets up for sharing and embedding in webpages.  While Phos adds AJAX support to all of the objects, there is still some work necessary to make the json deserialization process properly reinitialize saved object state.  Once that is done, however, it will be possible to trade live objects across browsers and deploy static applications using Phosphor.</p><br /><p>The goal of this project is to create an interactive programming environment that is suitable for teaching children of all ages how to program.  It is loosely inspired by <a href="http://www.squeakland.org/">Squeak Etoys</a> and the of UI is based on the work of <a href="http://research.sun.com/self/papers/programming-as-experience.html">Randall Smith and David Ungar</a>.  Specifically, the concept that Javascript objects are represented as a collection of slots, and each slot is directly manipulable.  There is no need for creepy action at a distance, typical of the edit, compile, run cycle common to most development environments.</p><br /><h3>Getting the Code</h3><br /><p>You can either use the <a href="http://www.dloh.org/">current web app</a> or download the code from the source repository using git:</p><br /><blockquote><pre><br />          git clone git://github.com/cthulhuology/Phos.git<br /></pre></blockquote><br /><p>There are a few minor variations between the two code bases mostly to account for the changes required to run it on Google Apps.  The tutorial code has been removed from the version in git, as it isn&#39;t really applicable to everyday use.  If you wish to use Phosphor in your own applications, I recommend using the version stored in git.</p></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>
