@@ -1,6 +1,10 @@
 all :  dev
 
-.PHONY: dev prod
+.PHONY: dev prod publish
+
+publish:
+	./generate
+	rsync -avz ./ dave@dloh:~/blog
 
 dev:
 	CFLAGS=

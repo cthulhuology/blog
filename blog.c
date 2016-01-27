@@ -26,8 +26,8 @@ str* www(str* s) {
 
 void redir(str* p) {
 	response.version = ref("HTTP/1.1",8);
-	response.code = ref("301",3);
-	response.reason = ref("Moved Permanently",17);
+	response.code = ref("302",3);
+	response.reason = ref("Moved Temporarily",17);
 	response.headers++;
 	response.header[0] = ref("Location",8);
 	response.header[1] = ref("/index.html",11);
