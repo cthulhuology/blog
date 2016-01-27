@@ -24,31 +24,18 @@ str* www(str* s) {
 	return concat(ref("./www/",6),s);
 }
 
-void redir(str* p) {
-	response.version = ref("HTTP/1.1",8);
-	response.code = ref("302",3);
-	response.reason = ref("Moved Temporarily",17);
-	response.headers++;
-	response.header[0] = ref("Location",8);
-	response.header[1] = ref("/index.html",11);
-	respond();
-}
-
 #ifdef BLOG
 
 int main(int argc, char** argv) {
 	str* p;
+	str* indexp = ref("./www/index.html",16);
 	str* buffer = in();		// read the initial request in
 	clear_request();		// ensure request is clear
 	clear_response();		// ensure response is clear
 	parse_request(buffer);		// parse the initial request
 	p = www(request.path);
-	if (exists(p)) {
-		response.body = read_file(www(request.path));
-		respond();
-	} else {
-		redir(p);
-	}
+	response.body = read_file(exists(p) ? p :  indexp);
+	respond();
 	return 0;
 }
 
