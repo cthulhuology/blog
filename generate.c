@@ -77,12 +77,18 @@ void dir_year() {
 	pop(_out_path);
 }
 
+void indexes() {
+	char* args[] = { NULL };
+	run("./md",input(ref("./nav.md",8)),output(ref("./www/index.html",16)),args);
+}
+
 #ifdef GENERATE
 
 int main(int argc, char** argv) {
 	_in_path = new_list(16);
 	_out_path = new_list(16);
 	dir_year();
+	indexes();
 	reap();
 	return 0;
 }
