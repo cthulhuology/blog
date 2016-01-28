@@ -204,7 +204,7 @@ int inner(char *s, int l) {
 	while ( i < l ) {
 		
 		if (t = italic(s+i)) {				// italic
-			itc(ref(s+i+1,t-2));
+			itc(ref(s+i+2,t-4));
 			i += t;
 			continue;
 		}

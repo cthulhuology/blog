@@ -20,6 +20,7 @@ body {
 	max-height: 100%;
 	margin: 0;
 	padding: 0;
+	line-height: 1.5em;
 
 }
 
@@ -33,7 +34,6 @@ h4, h5, h6 {
 	 -moz-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
 	 -o-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
 	 color: #E2E2E2;
-	 line-height: 1.15em;
 	 margin: 0 0 0.4em 0;
 	 font-family: "Open Sans", sans-serif;
 	 text-rendering: geometricPrecision;
@@ -81,9 +81,9 @@ blockquote {
 a {
 	color: #A4A4A4;
 	transition: color 0.3s ease;
-	text-decoration: none;
 	margin: 1em;
-
+	text-decoration: none;
+	border-bottom: 1px solid #A4A4A4;
 }
 
 span {
@@ -91,6 +91,11 @@ span {
 
 a:hover {
 	 color: #ddd;
+}
+
+.fa {
+	border-bottom: 0px;	
+	text-decoration: none;
 }
 
 ::-moz-selection {
