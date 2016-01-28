@@ -23,5 +23,6 @@ str* read_file(str* filename);
 int output(str* filename);
 int input(str* filename);
 int exists(str* filename);
+str* etag(str* filename);
 
 #endif

@@ -24,18 +24,45 @@ str* www(str* s) {
 	return concat(ref("./www/",6),s);
 }
 
+void respond_304(str* p) {
+	fprintf(stderr,"respond 304 %s\n", p->data);
+	response.version = ref("HTTP/1.1",8);
+	response.code = ref("304",3);
+	response.reason = ref("Not Modified",12);
+	response.body = empty();
+	respond();
+}
+
+void respond_200(str* p, str* e) {
+	fprintf(stderr,"respond 200 %s etag: %s\n", p->data, e->data);
+	response.body = read_file(p);
+	response.header[0] = ref("Content-Length",14);
+	response.header[1] = strnum(response.body->length);
+	response.header[2] = ref("Connection",10);
+	response.header[3] = ref("close",5);
+	response.header[4] = ref("ETag",4);
+	response.header[5] = e;
+	response.headers = 3;
+	respond();
+}
+
 #ifdef BLOG
 
 int main(int argc, char** argv) {
+	int f;
 	str* p;
+	str* e;
 	str* indexp = ref("./www/index.html",16);
 	str* buffer = in();		// read the initial request in
+//	fprintf(stderr,"%s\n", buffer->data);
 	clear_request();		// ensure request is clear
 	clear_response();		// ensure response is clear
 	parse_request(buffer);		// parse the initial request
 	p = www(request.path);
-	response.body = read_file(exists(p) ? p :  indexp);
-	respond();
+	f = exists(p);
+	e = etag(f ? p : indexp);
+	if (not_modified(e)) respond_304(p);
+	else respond_200(f ? p : indexp, e);
 	return 0;
 }
 

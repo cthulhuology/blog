@@ -62,3 +62,9 @@ int exists(str* filename) {
 	if (stat(filename->data,&fs)) return 0;
 	return S_ISREG(fs.st_mode);	// should be a regular file
 }
+
+str* etag(str* filename) {
+	struct stat fs;
+	if (stat(filename->data,&fs)) return empty();
+	return strnum(fs.st_mtime);
+}
