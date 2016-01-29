@@ -66,6 +66,14 @@ int outs(const char* s, int i) {
 	write(1,s,i);
 }
 
+// oute
+//
+// 	writes a static string
+//
+int oute(const str* s) {
+	write(2,s->data,s->length);
+}
+
 // outn
 //
 // 	writes an integer out

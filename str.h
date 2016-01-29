@@ -33,6 +33,7 @@ str* ref(char* data, int len);
 str* copy(char* data, int len);
 int out(const str* s);
 int outs(const char* s, int i);
+int oute(const str* s);
 int outn(int i );
 str* in();
 void release(str* s);
