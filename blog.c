@@ -43,7 +43,7 @@ void respond_200(str* p, str* e) {
 	response.header[4] = ref("ETag",4);
 	response.header[5] = e;
 	response.header[6] = ref("Cache-Control",13);
-	response.header[7] = ref("public, max-age=86400",13);
+	response.header[7] = ref("public, max-age=86400",21);
 	response.headers = 4;
 	respond();
 }
