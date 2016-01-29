@@ -24,8 +24,8 @@ str* www(str* s) {
 	return concat(ref("./www/",6),s);
 }
 
-void respond_304(str* p) {
-	fprintf(stderr,"respond 304 %s\n", p->data);
+void respond_304(str* p, str* e) {
+	fprintf(stderr,"respond 304 %s etag: %s\n", p->data, e->data);
 	response.version = ref("HTTP/1.1",8);
 	response.code = ref("304",3);
 	response.reason = ref("Not Modified",12);
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
 	p = www(request.path);
 	f = exists(p);
 	e = etag(f ? p : indexp);
-	if (not_modified(e)) respond_304(p);
+	if (not_modified(e)) respond_304(p, e);
 	else respond_200(f ? p : indexp, e);
 	return 0;
 }
