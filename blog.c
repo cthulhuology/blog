@@ -19,6 +19,12 @@
 #include "http.h"
 #include "file.h"
 #include <limits.h>
+#include <unistd.h>
+
+void timeout(int s) {
+	fprintf(stderr,"Timeout on request\n");
+	exit(0);
+}
 
 str* www(str* s) {
 	return concat(ref("./www/",6),s);
@@ -56,6 +62,7 @@ int main(int argc, char** argv) {
 	str* e;
 	str* indexp = ref("./www/index.html",16);
 	str* buffer = in();		// read the initial request in
+	alarm(10);			// timeout in 10 seconds
 //	fprintf(stderr,"%s\n", buffer->data);
 	clear_request();		// ensure request is clear
 	clear_response();		// ensure response is clear
