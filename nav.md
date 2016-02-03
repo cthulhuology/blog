@@ -1,3 +1,4 @@
+* [/2016/02/03/optimizing-assumptions.html|Optimizing Assumptions]
 * [/2016/01/27/blog-arch-revisited.html|Blog Archiecture Revisited]
 * [/2016/01/15/new-blog-engine.html|New Blog Engine]
 * [/2016/01/04/j1a-with-icestorm-on-novena.html|J1a with Icestorm on Novena]

@@ -1,6 +1,12 @@
 all :  dev
 
-.PHONY: dev prod publish
+.PHONY: dev prod publish tables
+
+tables: 
+	iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+
+run:
+	./monitor ./server 0.0.0.0 8080 ./blog
 
 publish:
 	./generate
@@ -8,16 +14,21 @@ publish:
 
 dev:
 	CFLAGS=
+	$(MAKE) monitor
 	$(MAKE) server
 	$(MAKE) http
 	$(MAKE) md
 	$(MAKE) blog
 
 prod: clean
+	CFLAGS=-O3 $(MAKE) monitor
 	CFLAGS=-O3 $(MAKE) server
 	CFLAGS=-O3 $(MAKE) http
 	CFLAGS=-O3 $(MAKE) md
 	CFLAGS=-O3 $(MAKE) blog
+
+monitor: monitor.c
+	gcc $(CFLAGS) -o monitor monitor.c
 
 server : server.c
 	gcc $(CFLAGS) -o server server.c

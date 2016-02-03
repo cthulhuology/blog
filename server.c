@@ -22,6 +22,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/epoll.h>
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -49,6 +50,14 @@ void usage(int argc, char** argv) {
 void error(char* message) {
 	fprintf(stderr,"%s\n", message);
 	exit(1);
+}
+
+// hup
+// 
+// 	cleanly quits and restarts
+void hup(int s) {
+	fprintf(stderr,"exiting due to hup\n");
+	exit(0);
 }
 
 // lookup 
@@ -139,6 +148,7 @@ void monitor(int sock, char* service) {
 int main (int argc, char** argv) {
 	usage(argc,argv);
 	struct addrinfo* server = lookup(argv[1],argv[2]);
+	signal(SIGHUP,hup);
 	int sock = serve(server);
 	printf("serve %ld\n", getpid());
 	monitor(sock,argv[3]);
