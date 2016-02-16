@@ -116,6 +116,7 @@ void process(int client, char* service) {
 		if (execvp(service,args)) error("Failed to spawn service"); // run the supplied service
 		exit(0);	// if we failed to spawn, kill child
 	}
+	close(client);	// parent doesn't need this anymore
 }
 
 // monitor
