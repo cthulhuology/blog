@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Care and maintenance of long running apps</h1>
+<p>One of the great design decisions behind Erlang&#39;s process model lies not in the processing, but in it&#39;s roots in Prolog. While other languages often try to optimize through single static assignment analysis, and a great amount of research has gone into making this safe, Erlang bypasses this entirely by only allowing static assignment. <br /><br />This design decision means that any process that manages state over the long term must pass along state in it&#39;s parameter list. It is a common pattern entrenched in OTP, and necessitated by the fact you can not mutate the binding of a variable. <br /><br />This also means that it is easy to upgrade a process in place. OTP allows you to define a transformation for your module to upgrade an old state representation to the new one as part of the code change process. Since the VM can maintain two versions of a module at once in active processes, it can manage the migration over time without stopping the world. <br /><br />This morning I started playing around with trying to do the same thing in JavaScript. While upgrades usually occur as a page reload, doing so requires dumping all state and manually attempting to resume where the system left off. While this is possible in the asynchronous process code from last night&#39;s post, it does not help the cases where you have any processes running in typical synchronous mode. Since JS does not provide us a way to identify and halt all processes, we must be careful to only use our own. <br /><br />Once you do that however, it is possible not only to dump state, including th continuations for each process, but also to upgrade in place. Since ALL of the methods of one of these process functions are available via messaging we can send messages to even mutate the processes themselves:<br /><pre><br />myProcess(&#39;does&#39;,&#39;alert&#39;, function(x) <img src=" alert(&#39;new alert &#39;+ x)" alt=" alert(&#39;new alert &#39;+ x)" />)<br /></pre><br />This will upgrade alert only after all the existing items in the queue have completed. We can then safely mutate the rest and use our new interface.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

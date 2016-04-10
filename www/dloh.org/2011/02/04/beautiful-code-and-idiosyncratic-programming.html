@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Beautiful Code and Idiosyncratic Programming</h1>
+<p>Recently I showed a friend some code that looked like this:<br /><br /><a onblur="try <img src="parent.deselectBloggerImageGracefully();" alt="parent.deselectBloggerImageGracefully();" /> catch(e) <img src="" alt="" />" href="http://2.bp.blogspot.com/_XCDTVvEbBMU/TUy2UfN28zI/AAAAAAAAAFs/ufgiV49Jh-4/s1600/Screen%2Bshot%2B2011-02-04%2Bat%2B9.29.43%2BPM.png"><img style="display:block; margin:0px auto 10px; text-align:center;cursor:pointer; cursor:hand;width: 400px; height: 46px;" src="http://2.bp.blogspot.com/_XCDTVvEbBMU/TUy2UfN28zI/AAAAAAAAAFs/ufgiV49Jh-4/s400/Screen%2Bshot%2B2011-02-04%2Bat%2B9.29.43%2BPM.png" border="0" alt=""id="BLOGGER_PHOTO_ID_5570027302243726130" /></a><br /><br />When executed it does:<br /><br /><a onblur="try <img src="parent.deselectBloggerImageGracefully();" alt="parent.deselectBloggerImageGracefully();" /> catch(e) <img src="" alt="" />" href="http://1.bp.blogspot.com/_XCDTVvEbBMU/TUy2h7UX65I/AAAAAAAAAF0/WXm6uNuFDJk/s1600/Screen%2Bshot%2B2011-02-04%2Bat%2B9.29.51%2BPM.png"><img style="display:block; margin:0px auto 10px; text-align:center;cursor:pointer; cursor:hand;width: 400px; height: 145px;" src="http://1.bp.blogspot.com/_XCDTVvEbBMU/TUy2h7UX65I/AAAAAAAAAF0/WXm6uNuFDJk/s400/Screen%2Bshot%2B2011-02-04%2Bat%2B9.29.51%2BPM.png" border="0" alt=""id="BLOGGER_PHOTO_ID_5570027533125544850" /></a><br /><br />And then:<br /><br /><a onblur="try <img src="parent.deselectBloggerImageGracefully();" alt="parent.deselectBloggerImageGracefully();" /> catch(e) <img src="" alt="" />" href="http://3.bp.blogspot.com/_XCDTVvEbBMU/TUy2qLeYptI/AAAAAAAAAF8/aRv2VdLRm2M/s1600/Screen%2Bshot%2B2011-02-04%2Bat%2B9.29.57%2BPM.png"><img style="display:block; margin:0px auto 10px; text-align:center;cursor:pointer; cursor:hand;width: 400px; height: 144px;" src="http://3.bp.blogspot.com/_XCDTVvEbBMU/TUy2qLeYptI/AAAAAAAAAF8/aRv2VdLRm2M/s400/Screen%2Bshot%2B2011-02-04%2Bat%2B9.29.57%2BPM.png" border="0" alt=""id="BLOGGER_PHOTO_ID_5570027674901456594" /></a><br /><br />This example displays how a String that looks like a URL can work like a URL.  It also shows how we can asynchronously define a callback for an asynchronous fetch.  It also demonstrates how we can chain callbacks to define a progression of states.  It all starts with a very simple bit of code:<br /><br /><pre><br />String.prototype.get = function(cb,data) <img src=" return this.request("GET") " alt=" return this.request("GET") " /><br /></pre><br /><br />Which invokes a slightly more complex bit of code, that does a XHR fetch<br /><br /><pre><br />String.prototype.request = function(method,data) <img src="<br />        var _request = XMLHttpRequest ? new XMLHttpRequest(): _doc.createRequest();<br />        var cb = function () {<br />                if (this.readyState != 4) return;<br />                if (this.status == 404) cb.process(null);<br />                if (this.status == 200) cb.process(this.responseText);<br />        " alt="<br />        var _request = XMLHttpRequest ? new XMLHttpRequest(): _doc.createRequest();<br />        var cb = function () {<br />                if (this.readyState != 4) return;<br />                if (this.status == 404) cb.process(null);<br />                if (this.status == 200) cb.process(this.responseText);<br />        " />;<br />        _request.onreadystatechange =  cb;<br />        _request.open(method,this,true);<br />        _request.setRequestHeader(&#39;Content-Type&#39;,&#39;text/plain&#39;);<br />        _request.send(data ? data : &#39;&#39;);<br />        return cb;<br />}<br /></pre><br /><br />The key bit here is that the closure invokes <b>cb.process()</b> and returns the callback as the final operation.  The way that the process method works:<br /><br /><pre><br />Function.prototype.process = function() <img src="<br />        if (typeof(this.Pending) == "function") <br />                this.Pending.apply(this.Pending,arguments);<br />" alt="<br />        if (typeof(this.Pending) == "function") <br />                this.Pending.apply(this.Pending,arguments);<br />" /><br /></pre><br /><br />Which simply calls the "Pending" property of the callback function, which holds the chain of callbacks.  We set this property in the original bit using the <b>then()</b> function:<br /><br /><pre><br />Function.prototype.then = function(f) <img src=" <br />        var me = this;<br />        this.Pending = function() { <br />                var results = f.apply(f, arguments); <br />                if (!results) results = [];<br />                f.process(results);<br />        " alt=" <br />        var me = this;<br />        this.Pending = function() { <br />                var results = f.apply(f, arguments); <br />                if (!results) results = [];<br />                f.process(results);<br />        " /><br />        return f;<br />}       <br /></pre><br /><br />where in we wrap the callback we&#39;re passed in another function which knows how to apply it to whatever arguments we pass to it via <b>process()</b>.  For the chain, we pass the results of each function as the arguments to the next, allowing us to perform a sequence of transformations and share state.  <br /><br />This technique also works beautifully for adding timer callbacks for generating asynchronous processing using the setTimeout interface.  In this way we can declare behavior in a straight forward manner.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

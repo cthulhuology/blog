@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Plan for 2016</h1>
+<p>With the sale of wot.io complete, I find myself once again with a plethora of free time and too many things I still want to do.  Coming back from spending New Years, in NYC, I can't help but think that the new year will be any less interesting than the last. </p>
+<p>The first thing I want to do is get my gaming rigs up and running. I have't done any serious game programming in years now, and the next 3 months seem like a good time to refamiliarize myself with 3D engine programming. I have the <a href="OSVR">OSVR</a>(OSVR.org) rig hooked up to a <a href="LeapMotion">LeapMotion</a>(LeapMotion.com) hand tracker, and a fresh copy of <a href="VisualStudio">VisualStudio</a>() and <a href="Unity3D">Unity3D</a>() installed.  I have played around with a few 3D scenes, but haven't figured out a fun gestural game yet. </p>
+<p>The second thing I want to do is finish some home improvements. I'm going to start demolition on the 1st floor kitchen this month, and hope to have a new kitchen by spring. I also want to finish installing the CCTV system I started building, and see if I can get some machine learning to recognize behaviors of passers by. We've had a lot of car break-ins in the neighborhood last year, and a computer aided monitor would probably help. Big brother is watching posters could be fun too. </p>
+<p>Third, I am finally going to get my hackerspace for kids off the ground. I have a tentative agreement for a location, and I am finishing up the initial curriculum. I have most of the parts I need for the first class, and a potential relationship with a school which may adopt the program as well. </p>
+<p>Fourth, I am planning on starting company, number 5 or 6 depending on how you're counting. Since calling it 6 gives me 3 successful exits, 1 break even, and 1 total write off, I'm calling it 6. For the next company I am going back to my roots in hardware, automation, and open source. The economics of crowd funding are making it possible to finance a hardware startup through debt. I like the idea of debt funding, especially since I have enough personal capital to jumpstart it without having to go straight for venture financing. Over the next couple months, I am going to be working with a number of open source developers helping them work out their business plans, set up COGS models, write PR plans and marketing copy, and talk to vendors to get parts sourced.  Basically, my plan is to do the tedious bits of running a business so other open hardware developers don't have to. </p>
+<p>Depending on how these projects come together, I may also do some consulting in the IoT space in 2016. The past 3 years have given me a wonderful opportunity to see the breadth of the industry, and there are a number of interesting projects I would love to help succeed.  That said, I am in no hurry to return to the consulting grind, and do not intend to return to full time contract engineering any time soon.  Money will tell. </p>
+<p>So overall, my plan for 2016 has a pretty full dance card.  There are a couple stretch goals on my wish list.  I hope to take the family to Europe this summer for a working vacation in another country. Also, I hope to get another couple things for the lab, new work benches, a 3D printer, maybe a CNC milling machine. And I also hope to acquire another income property for my wife. Just don't tell her I said that. </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

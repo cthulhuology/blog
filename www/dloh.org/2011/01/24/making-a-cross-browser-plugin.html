@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Making a cross browser plugin</h1>
+<p>This weekend I spent a few hours writing a browser plugin for webkit, and was surprised how easy it was to get up and running, and then equally surprised at the behavior. For kicks, I hooked up a listen on a port and accepted incomming tcp/ip connections and echoed back the content. This worked well for as long as the plugin was instantiated, but I could not reliably predict when it would be finalized. This meant that. Further testing is necessary, but it appears that the plugin is not finalized until the browser closes. <br /><br />If this is true, then it is trivial to write a small page that instantiates a plugin that provides JS with the infrastructure to run a node.js server. Or even better provide the means to run a node in a distributed key value store.  A cool proof of concept implementation would take the Amazon Dynamo paper and implement anpartitioned ring. In theory, if the plugin were used by enough high traffic sites, the robustness would improve as more nodes were added, and the size of any one node decreased. <br /><br />My intended use for all of this is to serve as a backing store for what I am building in Phos3D. Right now it looks like the code will only be a few k bytes and when compressed won&#39;t be that much smaller. What is going to take up space are all of the models, shaders, images, and user generated content. Having a nice way to store it across as many nodes as possible is a great idea. <br /><br />Hopefully this week I will port Jawas to live in a npapi environment and have an honest high performance cross platform webserver that can be embedded in most browsers. Then with Phos as the application framework and webgl as the rendering engine, I can build an large scale p2p distributed 3d world application using http and websockets in the browser only. Further more, with the webserver built into the client we can use the built in web db interface for all our storage needs. <br /><br />Then if you add in web workers, message events, and a decent routing layer, you can then have a distributed programming model, complete with free roaming intelligent agents. Since JavaScript is the one true run anywhere language, we cam leverage the power of the aggregate Internet (clients and all) to build much richer and larger applications. <br /><br />In the end, we might end up with the Shadowrun / Neuromancer matrix sooner than expected.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

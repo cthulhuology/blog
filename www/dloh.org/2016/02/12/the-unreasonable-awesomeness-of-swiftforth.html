@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>The Unreasonable Awesomeness of SwiftForth</h1>
+<p>For the past couple weeks, I have been building programs with <a href="http://forth.com">SwiftForth</a> and found myself constantly amazed
+by the system.  While the $399 price tag might put off many would be programmers, the quality of the entire system easily 
+justifies the investment.  And it is an investment.</p>
+<p>Over the past several years, I've occasionally toyed with using the evaluation version that Forth Inc. provides for free,
+but each time I ended up choosing an open alternative, or going with another language entirely.  Quite frankly, the experience
+of using the evaluation version doesn't do the full version justice.  It is not that the evaluation version lacks the ability
+to produce programs, it is actually surprisingly featureful.  No what is missing is the most important part of the system,
+the complete source code.</p>
+<h2>Locating and Editing Code</h2>
+<p>When working in the SwiftForth environment, everything in your environment is interactive.  You want to find the source code
+to a function, method, word, you simply type <b>locate word</b>:</p>
+<p><pre>
+	locate set-brightness
+	/home/desktop/Code/backlight/backlight.f
+	   38: : set-brightness ( n -- )
+	   39:  0 <# #s #> set-brightness-file write-file
+	   40:  if ." failed to set brightness " then ;
+	   41:
+</pre></p>
+<p>It will then print out the file from which the word is included, and the contents of that source with line numbers.  If you
+want to make a change to it you can type <b>edit word</b>, and it will open up your default editor with the cursor at the 
+correct line number:</p>
+<p><img src="vim.png" alt="vim.png" /></p>
+<p>This allows you not only to edit your own code, but bits of the core system itself! If you type <b>locate word</b> on any of
+the core words defined in the system, it will work exactly as if it were your own code:</p>
+<p><img src="locate.png" alt="locate.png" /></p>
+<p>You can also <b>edit</b> the core system code as well.  This applies to every aspect of the SwiftForth system.  The full system
+is written in Forth, and is fully self hosted, meaning you can build and rebuild SwiftForth within SwiftForth.  By being 
+able to modify and build the base system dynamically, it becomes possible to experiment with changes to the core of the
+language and the environment itself.</p>
+<p>This dynamism also extends to other aspects of development.  Let's say we have a typical typo bug in our source. When we
+load it via a <b>requires file</b> statement, we will be presented with a error message:</p>
+<p><img src="error.png" alt="error.png" /></p>
+<p>By pressing <b>g enter</b> SwiftForth will open our editor at exactly the offending line:</p>
+<p><img src="edit.png" alt="edit.png" /></p>
+<p>It is then a simple matter of making your edits and testing it again.  And testing is something the Forth programming
+language excells at.  Since Forth encourages writing small definitions which do only one thing well, it is easy to 
+test each definition as you go.  It is not unusual to write a word, and then refactor it into smaller words, testing
+each as you write them interactively, and then copying your tested code into the source file.</p>
+<p>The Forth environment also supports finding all instances of a word used in your program.  By typing <b>where word</b> and
+you'll find all the instances of that word in your system.  Not only will it display all of the places you used it
+in your code, it will also show all of the places in the system that rely upon it as well:</p>
+<p><img src="where.png" alt="where.png" /></p>
+<h2>Disassembling and Debugging Programs</h2>
+<p>While being able to locate and edit your code is nice, there are times when you need to know how your code actually
+works under the hood.  This is another area in which SwiftForth excells far beyond the competition.  Should you want
+to see what the definition of your word compiles to you simply type <b>see word</b>:</p>
+<p><img src="see.png" alt="see.png" /></p>
+<p>This will show you the output of the built in disassembler, complete with comments referencing the Forth definitions
+when found.  Unlike most programming environments, this system uses a compile as you code strategy.  This means the
+assembler output is available for inspection during edit time.  This means you can verify that the output of the
+optimizer is doing the right thing for your use case.  Should the optimizer do something screwy, you also can 
+dynamically turn it on and off with <b>+OPTIMIZER</b> and <b>-OPTIMIZER</b> words (or the shorter <b>+OPT</b> and <b>-OPT</b>).  When
+compared with trying to debug a similar issue with GCC, the SwiftForth is incredible.  If you've ever tried to 
+track down an optmizer bug in a complex C++ application, you'll understand how advantageous this approach is.</p>
+<p>Now disassembling is pretty useful, and the <b>DASM</b> keyword will generate disassembler readouts for any address in
+memory.  However, it is sometimes handy to just dump a region of memory to inspect data.  The <b>dump</b> word does
+just that:</p>
+<p><img src="dump.png" alt="dump.png" /></p>
+<p>It takes an address and a run length to dump out in a format similar to that of the hexdump utility on most Unix 
+systems.  There are also words <b>wdump</b>, <b>udump</b>, <b>idump</b> and <b>hdump</b> which output different interpretations of the
+data, as either collections of shorts, unsigned integers, signed integers, or hexadecimal integers respectively.
+Any area of program memory can be dynamically inspected, tweaked, and observed durning development.  This makes
+debugging a wide range of memory usage errors much easier than in typical debugger environments.</p>
+<p>And for those times when you need to step through the execution of a particular hairy bit of logic, there is 
+a traditional step based debugger which you can include via the <b>requires singlestep</b>.  Unlike most environments,
+however, you can scope which definitions the single stepper applies to by using the <b>[DEBUG</b> and <b>DEBUG]</b> words
+to encapsulate the words you want to debug.  This is incredibly handy when you don't want to try and figure
+out where you need to add breakpoints.  You can then also interactively start single stepping from any given
+definition contained within those delimiting words by issuing the command <b>debug word</b>.  </p>
+<p><img src="debug.png" alt="debug.png" /></p>
+<p>This makes debugging code interactively more pleasurable than any other debugger I've had the pleasure of using.
+It has the immediacy of the Smalltalk / Self debugger, but due to the ability quickly get to the lowest levels
+of the code, it allows you to truly understand how your program is working in a way most systems don't.</p>
+<h2>Some closing thoughts</h2>
+<p>A large part of why I titled this post <b>unreasonable</b> is that after working with SwiftForth for two weeks,
+I can't for the life of me explain why we should expect any less from any of our programming environments.
+SwiftForth is <b>unreasonably awesome</b> because so many other tools are <b>unreasonably bad</b>.  I have programmed
+in over 20 languages professionally over the past 16 years, and I have yet to find a more comprehendsive
+system for developing software.  The supplied documentation is excellent, the system is discoverable, the
+source code is comprehendible, and the system is elegant.  It demonstrates what 43 years of continuous
+development and improvement can acheive.  </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

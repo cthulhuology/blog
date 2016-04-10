@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Immediacy and the Web and our Toughtful Bad Habits</h1>
+<p>Yesterday while working on a project, I found myself in a muddle. I had been operating under a self imposed constraint to use classical inheritance for everything in the system.  The reason for this constraint was largely one of ease of understanding for the people who I need to impress with the demo. I was already walking on dangerous ground, cooking up a "feast for thought", and didn&#39;t want to confuse the issue further.   This self imposed constraint meant that:<ul><li>a prototype object (née class) must be created for each kind of thing</li><li>a class must be pluggable enough so that different instances can do different things</li><li>instances must be created for each element & initialized with the correct behavior</li></ul><br>Ostensibly the purpose of this system is "reuse", but the real goal of this system is classification. If things that shared behavior have a common base class, the theory goes, we can reason about those two entities as being equivalent for a certain domain. Two images, a jpg and a png, are equivalent, as long as we limit our reasoning to all actions common to all images.  This in a specific academic sense turns into a very powerful tool for unlocking all sorts of categorical logic. <br><br>Now in reality in the project I&#39;m building, there is only 1 instance of 1 class in any 1 context. Additionally, there is only one class that is ever instantiated twice, and it is so hooked with per instance overrides that that class might as well be two different ones (the code would be 20% smaller!). So since the objects in the interface have a 1-1 correspondence with the unique behaviors of the system, and each object has infinite extent (within the context of the running application). Classical inheritance provides no tangible benefit, and produces a more fragile system.<br><br>This last claim can be understood in terms of the number of overridden behaviors and the number of points that must be corrected when a change occurs to the structure ofthe system.  Since each class method depends upon state information embodied in the instance to negotiate any instance specific behavior, the class object must understand and modify the instance object&#39;s structure.  Now normally modifying an object&#39;s internal state would break encapsulation, but a special exception is made for class objects and called inheritance.  This is really what we are saying when we say "extends", we really means "allows full access to". This generally works fine as long as you always build behavior up from the base class, never modify a base class, and never depend on anything other than class methods for behavior.  If an object is based on a class with many hooks, each of the delegation points provide opportunities for runtime extension of behavior, and by extension run time permission grants to arbitrary code. <br><br><br><br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Assemblage - a framework for object networks</h1>
+<p>The premise behind Assemblage is that all of the objects in the world are connected. These connections are expressed as flows of information, which is transmitted between objects via messages. Each object itself is a function, which maps incoming messages to outbound messages. Each message sent to an object may result in 0 or more outbound messages. <br><br>  O(m) -> m<b><br><br>A message once sent into the ether may be received by any number of objects. The semantics of a message consist of:<br><br>  [ subject, verb, predicate</b> ]<br><br>This structure requires that each message contains:<ul><li>a symbolic reference to the targeted group of objects = subject</li><li>a symbolic reference to the desired behavior = verb</li><li>an optional set of symbolic references to other objects and behaviors = predicate</li></ul><br>Because of these requirements, Assemblage does NOT guarantee delivery of any message. Nor does it provide any implicit return address for messages. It also does not ensure order of delivery. While an individual implementation may provide facilities for consistency, ordering, and delivery assurance, the underlying system does not. <br><br>What Assemblage does provide:<ul><li>a Network object which relays messages between any two connected points</li><li>a Wire object which relays messages between two points</li><li>a Hub object which relays a message to 0 or more points</li><li>a Switch object which relays a message to a named point</li><li>a Storage object which stores and sends named data</li><li>a Display object which renders data on a screen</li><li>a Mouse object that sends messages based on the state of a mouse</li><li>a Keyboard object that sends messages when a key is pressed or released</li><li>a Touchpad object that sends messages when the pad is touched</li><li>an Accelerometer object that sends a message when the object moves</li><li>a Microphone object that sends messages when audio is captured</li><li>a Camera object that sends messages when video is captured</li></ul><br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

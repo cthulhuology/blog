@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Unary Message Passing Systems</h1>
+<p>In working on the JS language engines, I&#39;ve been thinking about currying in an object oriented language context. If you view a language as a set of unary message sends to the current object context that transforms the context, the system looks like:<br><br>  O m -> O | O&#39; | O2<br><br>That is to say applying m to O will produce any of:<ul><li>no effect</li><li>transform the object&#39;s internal state</li><li>produce a new object context</li></ul><br>If you think of the object as a function that maps the message to a new object<br><br>  O(m) -> O&#39;<br><br>Then O&#39; is itself a function which will map the next message:<br><br>  O&#39;(m&#39;) -> O&#39;&#39;<br><br>Which is exactly how my current code works. There is a one object deep stack with additional contexts created for generated messages.  Since nested contexts can always be expressed as a sequence of operations on a stack, the only real constraints are the sequencing of side effects.  For example if generating the outer most object instantiates a database session that all nested contexts implicitly require we may not be able to defer initialization. Similarly, if an object requires a forward reference to a delegate for dynamic dispatch, we may have an initialization race condition if instantiating the delegate could trigger behavior of the object containing the forward reference. While nothing in our message passing idiom prevents us from working around these design flaws, it can be difficult to accommodate assumptions made aboutthe ordering of side effects in 3rd party code. <br><br>To make this more concrete, let&#39;s consider how Numbers can be made to perform arithmetic with only unary operations. Take the number 2:<br><br>  2 + -> function(x) <img src=" return 2 + x " alt=" return 2 + x " /><br>  2 + 3 -> (function(x)<img src="return 2+x" alt="return 2+x" />)(3) -> 5<br><br>This is straight forward partial application, where the result of applying a message to a numerical object is a function object which will map the next message to an arithmetic value, namely 5 in this case.  If you look at it from the standpoint of doing this in forth, + * - / mod and the like all generate new CFA calls to a constant operation. It is important to note that if we go down this route, we are generating a new little bit of functional code each step of the way.  <br>  <br><br>  <br><br><br><br><br><br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

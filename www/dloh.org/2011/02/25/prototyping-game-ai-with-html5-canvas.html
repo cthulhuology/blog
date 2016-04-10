@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Prototyping Game AI with HTML5 Canvas</h1>
+<p>I am working on a new game project with a friend of mine who has about 6 weeks until his next commitment takes up all of his time. Having more than a few pokers in the fire myself, I found myself wanting a quick tool for visualizing the behavior of the game AI without having to write a bunch of tools. Pop out Phos, and I have an effective tool for computing behaviors and displaying them in 2d without all of the distractions of the eventual 3d environment. <br /><br />Since we are targeting the Unity3d engine, I can write my code in JavaScript and be certain to will work. The key bit is adding an Update() function in a setInterval timer, and coding everything to be retargetable to the transform API of the target platform. But where things stupidly easy, I can rely upon the browser debugging tools to allow me to edit and manipulate the live objects without running the full 3d editing environment. <br /><br />Right now I am working on 6 types of AIs which all have their own emotional states and characteristic pathing methods. Each of these 6 types interact with the other AIs based on their emotional state and social interactions. They also have a reaction to both the player and items in the environment which influences their decisions. Finally they have a limited memory of where they have been and use that to influence future decisions. <br /><br />These multiple levels of complexity mean I need a clear tool to explore their behaviors. I want to make sure hot spots are hot, cold spots are cold, and safe zones are safe.  Using canvas, I can quickly blit sprites all over the map and have alpha mapped trials follow them. After a few minutes of running I end up with different areas quickly showing up as hot zones, and the empty areas are equally easy to spot. Saving the images to png data urls make it easy to screenshot each run and archive in a key value store. I can then combine the image maps to see progress over time. <br /><br />While all of these things can be done using other tools, HTML5 canvas also makes it possible to share the simulation trivially with the other team members for their opinion. We can also use it to sketch up level designs and build the data sets which will eventually drive the actual game engine. Having built quite a few sim tools over the years, I have found the ability to quickly translate concept to working code to be the critical barrier. Any time spent not solving your particular problem is time wasted. While not 100% productive, the time I&#39;ve spent in canvas land has produced much faster results than working in the target platform itself.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

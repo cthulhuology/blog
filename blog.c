@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 	int f;
 	str* p;
 	str* e;
-	str* indexp = ref("./www/index.html",16);
+	str* indexp = ref("/index.html",11);
 	str* buffer = in();		// read the initial request in
 	alarm(10);			// timeout in 10 seconds
 //	fprintf(stderr,"%s\n", buffer->data);
@@ -69,9 +69,9 @@ int main(int argc, char** argv) {
 	parse_request(buffer);		// parse the initial request
 	p = www(host(),request.path);
 	f = exists(p);
-	e = etag(f ? p : indexp);
+	e = etag(f ? p : www(host(),indexp));
 	if (not_modified(e)) respond_304(p, e);
-	else respond_200(f ? p : indexp, e);
+	else respond_200(f ? p : www(host(),indexp), e);
 	return 0;
 }
 

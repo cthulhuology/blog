@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Thoughts on the Future of Programming</h1>
+<p>> On Tue, Jul 19, 2011 at 1:36 AM, Ken &#39;classmaker&#39; Ritchie <classmaker@gmail.com> wrote:<br>> Break the program free from its representation? How, other than by transforming one representation to another? Actually, certain transformations might yield great benefits, in perception or execution! <br><br>That&#39;s the entire point of our current complier / editor technology stack:<br><br>  * The human interprets a program in the context of their knowledge of the programming language, its libraries, and general culture.<br>  * The compiler interprets a program in the context of a specific machine architecture and instruction set.<br>  * The computer interprets a program as a sequence of electrical impulses traveling through  the system.<br><br>The limits of each layer in the stack force certain compromises on the realm of possible transformations.  Since human computing power is still relatively more plentiful, we shift the majority of the burden to the human layer for understanding.  But as computing becomes more ubiquitous in the material world we can start entertaining programs like:<br><br>   to toggle is to turn the led on for 1000 ms and then turn it off ;<br><br>Now this program is understandable by even my 4 year old.  She helps me build circuits for fun and she&#39;s loves playing with leds and motors.  The hardest thing for her to grasp is ms but she calls that "really really fast fast", but she knows what a second is.  Now if I add a little color to this program, I actually have one programming environment that can interpret it as is:<br><br>    to <span style="color: red">toggle</span> is to turn the led <span style="color: green">on</span> for <span style="color: green">1000 ms</span> and then turn it <span style="color: green">off ;</span><br><br>If you notice, I&#39;ve highlighted the salient terms.  And I&#39;m cheating here because this code is taken directly from <a href="http://colorforth.com/primer.htm ">Chuck Moore&#39;s Colorforth Primer</a> but with embedded comments making it into a more literate style.  The colorforth system can interpret this code because some of the semantic information is tagged on each word to describe its role in the representation.  But there is no reason that a sufficiently complex system could not do the following:<br><br>  * perform a statistical analysis to determine the probability that each term in the sentence is significant<br>  * compile the most probable variations into object code<br>  * ask a human which one does the right thing<br><br>If you apply a similar rigor to the definition of test code you could engineer reliable software systems for which there is no program in the traditional sense.  The specification of the system is informal, subject to vagaries in interpretation, and in effect not a lot different from handing off a spec to a bunch of programmers in another country who don&#39;t speak your language :)<br><br>While it might be helpful to have a formal language and jargon to talk about specific constructs.  And it might be better to write everything in a more formal linguistic style to improve the odds of getting the correct interpretation, it would not be a prerequisite for use.  While you are transforming one representation to another, a sentence to object code, the gap between the human mental model and the computer is bridged through artificial understanding.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

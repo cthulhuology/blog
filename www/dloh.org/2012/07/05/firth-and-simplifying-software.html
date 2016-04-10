@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a class="fa" href="/index.html"><img class="title" src="/title-2.png"></a>
+</header>
+<main>
+<h1>Firth and Simplifying Software</h1>
+<p>As the x86_64 port of Firth nears usability, I&#39;m already planning the ARMv6 port.  With my Raspberry Pi looped back to my Mac, the port will be cross compiled from Firth. The reason for that is most of the Firth code right now is bootstrap code, meant to get the base system image running. Once the core image is complete with multiple threads of execution, multiple dictionaries, and a system wide lexicon, I will abandon much of the hand coded assembler in favor of Firth object code.  The reason for the hand coded assembler at the start is that it allows me to grow the VM iteratively, without relying upon imperfect definitions.  As I implement bits in assembler, I prove out the desIgn and then refactor into Firth instructions.  When I encounter a set of instructions that are difficult to implement using the VM instructions, it provides an opportunity to rethink both the design of the VM and the application itself. <br><br>Rethinking The VM<br><br>One of the common problems facing every designer is knowing when a design is too simple.  Some design decisions restrict what is easy to accomplish.  If a significant number of opportunities for simplification across the code base exist by a slight increase in complexity of the VM, it can be a net win to extend the VM. Great examples of these sorts of instructions are stream oriented memory access instructions. Reading or writing from a series of adjacent locations can be done with a handful of instructions and a couple special purpose memory address reflgisters. Many processors even have streaming instructions designed specifically for these purposes.  As a result, these sorts of changes can help the VM better exploit the underlying platform and simplify the application. Both are good justifications for added complexity in the base design. <br><br>Rethinking The Software<br><br>Sometimes, however, the problem being solved in software needs only be solved once. In these cases, attempting to expand the scope of the VM will not reduce the complexity, merely shift it. Similarly, the solution may not bare enough corresponce to the problem to qualify as a good fit. This is often the case when a more generalized solution is applied to a specific problem.  The generalized solution is functional in that it may accomodate all of the edge cases for the specific problem at hand, but may also introduce complexity to solve edge cases which do not exist in the specific problem. Take for example strings of ASCII text as a source file format. Consider that to manage source code in this form you typically need:<ul><li>a parser, lexer, and tokenizer to generate </li><li>an abstract syntax tree which is processed into</li><li>an intermediary runtime language which is optimized by</li><li>a term rewriting engine which feeds into</li><li>a compiler that does machine translation </li></ul><br>You end up with several representations of the same thing before getting something usable by the machine. The simpler approach is for the editor to directly manipulate a structured representation, which is directly compiled by the just in time environment.  The net effect is skipping the AST and going straight to the IRL, and allowing the compiler to rely upon edit time macro expansions and refactoring to optimize the source.   This is radically different from a traditional environment as the programmer&#39;s tools make explicit at edit time what optimizations are being performed.  This allows the programmer to tune their software by understanding the underlying representation. </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>
