@@ -202,13 +202,20 @@ void print_request() {
 	out(request.body);
 }
 
-int not_modified(str* tag) {
+str* find_header(str* s) {
 	int i;
-	str* n = ref("If-None-Match",13);	
 	for (i = 0; i < request.headers; ++i)
-		if (eq(n,request.header[i*2]))
-			return eq(tag,request.header[i*2+1]);
-	return 0;
+		if (eq(s,request.header[i*2]))
+			return request.header[i*2+1];
+	return empty();
+}
+
+str* host() {
+	return find_header(ref("Host",4));
+}
+
+int not_modified(str* tag) {
+	return eq(tag, find_header(ref("If-None-Match",13)));	
 }
 
 void clear_request() {

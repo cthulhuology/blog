@@ -26,8 +26,8 @@ void timeout(int s) {
 	exit(0);
 }
 
-str* www(str* s) {
-	return concat(ref("./www/",6),s);
+str* www(str* h, str* s) {
+	return concat(ref("./www/",6),concat(h,s));
 }
 
 void respond_304(str* p, str* e) {
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
 	clear_request();		// ensure request is clear
 	clear_response();		// ensure response is clear
 	parse_request(buffer);		// parse the initial request
-	p = www(request.path);
+	p = www(host(),request.path);
 	f = exists(p);
 	e = etag(f ? p : indexp);
 	if (not_modified(e)) respond_304(p, e);
