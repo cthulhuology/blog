@@ -10,7 +10,7 @@ run:
 
 publish:
 	./generate
-	rsync -avz ./ dave@dloh:~/blog
+	rsync -avz ./ dave@dloh.org:~/blog
 
 dev:
 	CFLAGS=

@@ -286,13 +286,13 @@ int render(str* doc) {
 
 str* _header = NULL;
 void header() {
-	if (! _header) _header = read_file(ref("./www/header.html",17));
+	if (! _header) _header = read_file(ref("./www/dloh.org/header.html",26));
 	out(_header);
 }
 
 str* _footer = NULL;
 void footer() {
-	if (! _footer) _footer = read_file(ref("./www/footer.html",17));
+	if (! _footer) _footer = read_file(ref("./www/dloh.org/footer.html",26));
 	out(_footer);
 }
 
