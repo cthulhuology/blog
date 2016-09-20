@@ -61,7 +61,7 @@ echo: echo.c
 
 .PHONY: clean
 clean:
-	rm -f server http md
+	rm -f server http md blog
 
 
 .PHONY: test tests
