@@ -1,3 +1,6 @@
+* [/2016/10/20/Another-Virtual-Machine.html|Another Virtual Machine]
+* [/2016/10/4/Fighting-History.html|Fighting History]
+* [/2016/09/20/Building-Xilli.html|Building Xilli]
 * [/2016/09/19/Rethinking-Software-Services.html|Rethinking Software Services]
 * [/2016/03/14/assembling-forth.html|Assembling Forth]
 * [/2016/02/29/sdlforth.html|SDL2 Forth]
