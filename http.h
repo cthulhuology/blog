@@ -36,6 +36,9 @@ int version(char* s);
 int request_line(char* s);
 void respond();
 void sp();
+void clear_request();
+void clear_response();
+void parse_request(str* s);
 
 extern struct _request {
 	str* method;

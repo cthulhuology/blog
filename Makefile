@@ -12,8 +12,9 @@ publish:
 	./generate
 	rsync -avz ./ dave@dloh.org:~/blog
 
+CFLAGS=-static
+
 dev:
-	CFLAGS=
 	$(MAKE) monitor
 	$(MAKE) server
 	$(MAKE) http
@@ -21,11 +22,11 @@ dev:
 	$(MAKE) blog
 
 prod: clean
-	CFLAGS=-O3 $(MAKE) monitor
-	CFLAGS=-O3 $(MAKE) server
-	CFLAGS=-O3 $(MAKE) http
-	CFLAGS=-O3 $(MAKE) md
-	CFLAGS=-O3 $(MAKE) blog
+	CFLAGS=-static -O3 $(MAKE) monitor
+	CFLAGS=-static -O3 $(MAKE) server
+	CFLAGS=-static -O3 $(MAKE) http
+	CFLAGS=-static -O3 $(MAKE) md
+	CFLAGS=-static -O3 $(MAKE) blog
 
 monitor: monitor.c
 	gcc $(CFLAGS) -o monitor monitor.c
@@ -61,7 +62,7 @@ echo: echo.c
 
 .PHONY: clean
 clean:
-	rm -f server http md blog
+	rm -f server http md blog monitor generate echo worker lspath mkpath 
 
 
 .PHONY: test tests
