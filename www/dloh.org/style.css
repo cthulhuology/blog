@@ -4,12 +4,23 @@ footer, header, hgroup,
 main, nav, section,
 summary { display: block; }
 
+@font-face {
+	font-family: 'Orbitron-Bold';
+	src: url('/orbitron-bold-webfont.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Raleway-Thin';
+	src: url('/raleway_thin-webfont.woff') format('woff');
+}
+
 
 body {
 	background: black;
 	color: white;
-	font-family: "Lucida Console", Monaco, monospace;
+	font-family: 'Raleway-Thin';
 	font-size: 14pt;
+	letter-spacing: 2px;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
 	background-image: url(/dUJluxy-1.jpg);
@@ -21,7 +32,6 @@ body {
 	margin: 0;
 	padding: 0;
 	line-height: 1.5em;
-
 }
 
 main {
@@ -35,7 +45,7 @@ h4, h5, h6 {
 	-o-font-feature-settings: 'dlig' 1, 'liga' 1, 'lnum' 1, 'kern' 1;
 	color: #E2E2E2;
 	 margin: 0 0 0.4em 0;
-	font-family: "Open Sans", sans-serif;
+	font-family: "Orbitron-Bold", sans-serif;
 	text-rendering: geometricPrecision;
 	line-height: 1.5em;
 }
@@ -56,14 +66,14 @@ p {
 	 -o-font-feature-settings: 'liga' 1, 'onum' 1, 'kern' 1;
 	 margin: 1em 0 1em 0;
 	 text-rendering: geometricPrecision;
-	 color: #C3C1C5;
+	 color: #D3D1D5;
 
 }
 
 
 li {
 	margin: 0.4em 4em;
-	color: #A0A0A0;
+	color: #C0C0C0;
 }
 
 pre {
@@ -80,11 +90,11 @@ blockquote {
 }
 
 a {
-	color: #A4A4A4;
+	color: #C4C4C4;
 	transition: color 0.3s ease;
 	margin: 1em;
 	text-decoration: none;
-	border-bottom: 1px solid #A4A4A4;
+	border-bottom: 1px solid #C4C4C4;
 }
 
 span {

@@ -1,3 +1,4 @@
+* [2017/01/16/Forgotten-Knowledge-Assemlby-Techniques.html|Forgotten Knowledge of Assembly Techniques]
 * [/2016/10/20/Another-Virtual-Machine.html|Another Virtual Machine]
 * [/2016/10/4/Fighting-History.html|Fighting History]
 * [/2016/09/20/Building-Xilli.html|Building Xilli]
