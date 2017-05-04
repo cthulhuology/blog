@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Jawas 2 : The Revengening</h1>
+<p>Last night I pushed up the first days hacking on Jawas 2. This is now the 8th year of work on this platform, so I have decided to do yet another rewrite from scratch.  The primary reason for scrapping the old code is a shift in focus. The original server code base focused on doing things in scripts and databases, and was tooled heavily towards making that sort of server side processing easier. But in the past 8 years, my design choices have heavily shifted my focus towards doing all of that processing on the client side. <br /><br />Jawas 2 will be a next generation application server, with a view slanted towards the unix tradition. Its primary role will be to distribute documents across a group of servers which function as a single logical entity. It will do this using HTTP/1.1 exclusively to perform synchronization between the nodes in a group. <br /><br />The implementation details on the backend will be primarily non-blocking IO with kqueue based event driven request processing. The underlying data store will be a tmpfs / ram file system (HFS+ on Mac, UFS on BSD), with only open, close, and mmap used to access contents. Writing to the sockets will be handled by writev, and iovecs will be used for all parsing. Each client connection will be forked into it&#39;s own process, and the process will persist as long as the socket is kept alive. <br /><br />The important features that Jawas 2 will focus on will be full support for HTTP methods, especially the CRUD suite. It will also support request pipelining, chunked transfer encoding, and gzip compression. Finally, it support distribution by relaying messages to all nodes in a user defined peer group. This will enable building applications that scale well on unreliable nodes. <br /><br />What Jawas 2 won&#39;t do that 1 did well: it won&#39;t have server side processing and integrations with scripting languages; it won&#39;t have automatic database bindings; it won&#39;t do fancy URI routing and provide a base application framework.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

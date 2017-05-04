@@ -26,8 +26,8 @@ void timeout(int s) {
 	exit(0);
 }
 
-str* www(str* s) {
-	return concat(ref("./www/",6),s);
+str* www(str* h, str* s) {
+	return concat(ref("./www/",6),concat(h,s));
 }
 
 void respond_304(str* p, str* e) {
@@ -60,18 +60,18 @@ int main(int argc, char** argv) {
 	int f;
 	str* p;
 	str* e;
-	str* indexp = ref("./www/index.html",16);
+	str* indexp = ref("/index.html",11);
 	str* buffer = in();		// read the initial request in
 	alarm(10);			// timeout in 10 seconds
 //	fprintf(stderr,"%s\n", buffer->data);
 	clear_request();		// ensure request is clear
 	clear_response();		// ensure response is clear
 	parse_request(buffer);		// parse the initial request
-	p = www(request.path);
+	p = www(host(),request.path);
 	f = exists(p);
-	e = etag(f ? p : indexp);
+	e = etag(f ? p : www(host(),indexp));
 	if (not_modified(e)) respond_304(p, e);
-	else respond_200(f ? p : indexp, e);
+	else respond_200(f ? p : www(host(),indexp), e);
 	return 0;
 }
 

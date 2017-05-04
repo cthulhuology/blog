@@ -10,7 +10,7 @@ run:
 
 publish:
 	./generate
-	rsync -avz ./ dave@dloh:~/blog
+	rsync -avz ./ dave@dloh.org:~/blog
 
 dev:
 	CFLAGS=
@@ -61,7 +61,7 @@ echo: echo.c
 
 .PHONY: clean
 clean:
-	rm -f server http md
+	rm -f server http md blog
 
 
 .PHONY: test tests

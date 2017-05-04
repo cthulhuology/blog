@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Fighting History</h1>
+<p>In working on several projects recently, I have become increasingly unhappy with
+the state of tooling and it's relationship with the GNU/Linux ecosystem.  One of
+the things I tried to do was bootstrap a minimal Linux system with different 
+C compilers:</p>
+<li><a href="http://gcc.gnu.org/">GCC</a></li>
+<li><a href="http://pcc.ludd.ltu.se/">PCC</a></li>
+<li><a href="http://bellard.org/tcc/">TCC</a></li>
+<li><a href="http://git.suckless.org/scc/">SCC</a></li>
+<p>And what I discovered while doing this is that a tremendous amount of code assumes
+that you are using GCC and GLIBC.  GNU code is particularly horrible when it comes
+to doing non-standard "standard" things.  In many cases, the more pendantic you 
+set your compiler settings, even with gcc.  There is also a considerable amount of
+code duplication.  Probably the worst piece of software is <a href="https://www.gnu.org/software/gnulib/">gnulib</a>
+, which attempts to provide a gnuism layer on non-gnu libc.  It itself often requires
+patching because it fails to be portable!</p>
+<p>For those who are curious what sorts of bad behavior are baked into the core tools
+of their system, we have some wonderful examples:</p>
+<li><a href="https://wiki.linuxfoundation.org/networking/iproute2">iproute2</a> </li>
+<li><a href="http://net-tools.sourceforge.net/">net-tools</a></li>
+<li><a href="https://w1.fi/wpa_supplicant/">wpa_supplicant</a></li>
+<li><a href="https://www.freedesktop.org/wiki/Software/pkg-config/">pkg-config</a></li>
+<li><a href="https://www.gnu.org/software/groff/">groff</a> </li>
+<li><a href="http://man-db.nongnu.org/">man-db</a> </li>
+<p>Iproute2 ships with it's own  linux kernel headers, which it attempts to use over the kernel supplied ones.
+Net-tools has a few C syntax issues in addition to having some GLIBC specific header non-sense, while missing limits.h.
+Wpa_supplicant assumes you're using OpenSSL, and requires significant patches to work with LibreSSL, while making horrible
+assumptions about your linker behavior. Pkg-config makes unsafe use of formatted output in an attempt to test the locale 
+capabilites of the system, and is questionable at the best of times.  Groff mixes C and CPP in horrible ways
+resulting in failure to compile entirely with compilers other than GCC, and  failing to link with GCC if any sanity 
+checking flags are applied.  Man-db ships with broken gnulib and getopt code and doesn't work with other libcs other than 
+glibc, which if ironic since gnulib only exists to make it portable.</p>
+<p>All of these packages are prime examples of software in desperate need of replacing.
+In the case of groff / man-db, I simply replaced them with the excellent <a href="http://mdocml.bsd.lv/">mdocml</a>
+which is portable, and compiles both on Linux and BSD.  It also has a great example
+of doing the:</p>
+<li>./configure</li>
+<li>make</li>
+<li>make install</li>
+<p>without abusing automake, autoconf, and libtool.  And let's make no mistake, there
+is nothing but abuse when it comes to those there abominations.  They do little to
+nothing for portability, and are a legacy born out of GNU incestuous behavior.  The GNU ecosystem
+has developed pathological idiomatic behavior.  It has so heavily infected the GNU/Linux ecosystem
+that most people kinda just shrug an ignore it.  Projects like <a href="http://suckless.org">Suckless</a> are
+sane reactions against this sort of behavior.  In comparison, it was possible to compile sbase and ubase
+with a couple different C compilers, once issues with libc were ironed out.</p>
+<p>There is a common idiom used by all of the tools that actually work nicely in a portable fashion:</p>
+<li>environment variables for overriding settings</li>
+<li>a sane makefile architecture</li>
+<li>a generated header file for code configuration</li>
+<p>One of the great failures of the automake, autoconf, and especially libtool set, is they have too many
+layers of indirection.  Projects ship with multiple layers of configuration vairables aliased by layers
+of generated makefiles and configs, but then don't honor them due to hard coded values in templates or
+libtool scripts.  For example, several projects offer ./configure --enable-static as an option, but then
+hard code -Wl,export-dynamic in their libtool script!  Get to the end of compilation, and it tries to
+generate a set of .so files even though the compiler and platform don't support them!</p>
+<p>Similar behavior is being exhibited by the systemd crowd as well, where their tools are also pathologically
+idiomatic.  The sheer antagonism towards other systems exhibited by some of the developers in that community
+is repugnant.  Where as GNU made it a bad habit to build upon it's own idiomatic behaviors, the systemd 
+crowd are explicitly antagonistic to the BSDs and other open platforms.  I can easily see them creating an
+even more insular ecosystem of institutionalized poor design decisons.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

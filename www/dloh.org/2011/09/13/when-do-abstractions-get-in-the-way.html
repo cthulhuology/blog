@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>When Do Abstractions Get In The Way</h1>
+<p>Over the past few days, I&#39;ve been writing a lot. I&#39;m about 3 chapters into my latest book, and I am still wading through the basics. Why has it taken so many pages to get to a point where the book is almost ready to start?  Why do I feel compelled to drag my reader through a morass of abstractions, caveats, and history there of?<br><br>Because I am trying to make it concrete. <br><br>Rather than focus on the semantics and the idealized representation, I am walking through actual code, focusing on the bits one can see. Rather than get into the theory, I focus on the history, the sets of accidents that define how we got into our current mess. Often in the process of learning things, it is more useful to know what begot what and who did what, than to know what someone&#39;s actual reasoning was. The reason is reality. Causality tends to trump all reason. <br><br>For example take any idiosyncratic behavior in a specification, where the style of the thing is radically different from it&#39;s predecessor. In general the reason for the change is historical, where by the commingling of two previously extant things results in an unsatisfactory compromise.  XHTML Is a great example only overshadowed by CSS.   Think about all of the historical baggage we carry with us that is a product of the divorce between style and substance. The bastard offspring are still confused about their roles. We may have slain the blink tag, but just try to remove bold or italics. <br><br>We have anachronisms built into nearly everything we do. Convention is rarely based upon a well reasoned and researched rationale. Convention is the mere aggregation of culture, a pattern repeated enough times by enough individuals that it acquires an independent identity. Languages become popular because they appeal to a preexisting cultural bias, and not because they are quantitatively better, like most people don&#39;t date someone because their particular genetic makeup will have the maximum potential for successful offspring. (we in fact have a cultural bias against this we call "playing god" even though we do it with nearly every other species we find useful).  Ruby became popular because it was Perlish enough but with a Smalltalkish OO built in. People who felt like OO in Perl was too painful switched to Ruby. Those who wanted Lisp w/ syntax were already busy programming in Python. And the ones who didn&#39;t enjoy programming in the first place were writing Java anyways. (gluttons for punishment)<br><br>If you focus too much on the abstraction, you&#39;ll miss the very human reason things are this way and not some other. <br><br><br><br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

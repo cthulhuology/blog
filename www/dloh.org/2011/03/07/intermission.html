@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Intermission</h1>
+<p>One of the key concepts behind the design of any system is that of repeated application. By using an a-historical process, one can reduce risk of catastrophic failure by relying upon a general pattern of behavior being well established. When a system fails, this should be a historic event, when the normal operation is suspended and an exceptional event occured. The study of history allows us to identify root causes of failure, but can not shed light on the humdrum banality of normal modes of operation. <br /><br />Well built systems treat failure as q normal mode of operation, and avoid historic failures by normalizing operation to expect everyday failures. Poorly built systems do not account for failure as a mode of operation and produce significant degradation of service as a result. Take for example a bridge in an earthquake. If tolerances do not account for a sufficient degree of lateral and vertical movement of the road way, we will read about it in the news. But if the system is well engineered and built to treat earthquakes as a normal mode of operation, then we don&#39;t see headlines about how it didn&#39;t fall down. <br /><br />When thinking about your systems, it is important to think about the normal modes of operation in terms of how developers will interact with it. Engineering in levels of priviledge, roles and responsibilities, and apropos skills will ensure that development can be treated as a normal mode of operation. Limiting your junior developers to cosmetic or non-critical functionality is wise. Designing a system of interfaces to empower them while isolating the tricky bits is wiser. Ensuring that your senior developers can build infrastructure without understanding the full system is important, but so is ensuring that each can contribute in accordance their areas of expertise is more important. Designing systems where subject matter experts can exploit their skills requires a great deal of flexibility on the part of the system designer. <br /><br />Finally, building teams that work well and respect each other depends upon how you engineer the political structures which guide your development process. If developers do not have choices, they can not develop their better judgement. Proscribing solutions is rarely effective, but designing systems so that the correct path is the easy path is.   Without the assumption that your developers are professionals capable of making reasonable decisions at their level of expertise is critical to building a team that works. Failure to acknowledge the limitations of those individuals, however is certain doom. As with most design decisions, you want to rely upon a repeatable process, but acknowledge the peculiar context in which the entire system must function.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

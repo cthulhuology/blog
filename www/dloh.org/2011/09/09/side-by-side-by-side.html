@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Side by Side by Side</h1>
+<p>Years ago, back in the days of VGA and 486dx2 processors,  I spent a lot of time in apps written by hand in assembler. To today&#39;s programmers this sounds ridiculous.  My screen was typically 3 panels of text; one for code, one for registers, and one for hex dumps of the binary. This seemed like a really good idea at the time.  I didn&#39;t need a bunch of windows, just 3 well laid out zones side by side by side. <br><br>Some embedded developments I play with are traditional Forths. These programming environments don&#39;t suffer files gladly. Rather real men edit raw blocks of memory bare knuckled and raw. Since we edit a screen of memory at a time, there&#39;s little room on screen for comments. That&#39;s ok, because each of these environments has a "shadow block". For eacheven numbered  page of source, there is an odd numbered shadow block of documentation. It is like writing code on the front of a 3x5 card, and your docs on the back. This seemed like a good idea at the time. <br><br>In Self we can add annotations to just about any object in the system. These documents are presented in collapsible sections adjacent to their code blocks. As the code blocks themselves are collapsable too, the whole interface is made up of little panels of slots, their definitions, and the associated annotations. Since each reference also produces a visible link which draws a line to it&#39;s target, we can trace explicit relationships easily. This seemed like a good idea at the time. <br><br>So what do I do all day?  Program in vi, keep a separate window for docs, and nothing is shadowed, linked, or debuggable. Well it seemed like a good idea at the time. </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

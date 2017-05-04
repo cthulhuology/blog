@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Erlang as a Model Object Oriented Language</h1>
+<p>The more I program in Erlang, the more I am convinced it is a model language for Object Oriented Programming.  If you replaced the word "process" with the word "object", you&#39;ll discover a world of pure message passing object orientation with strict encapsulation.   The pattern matching,  proper tail recursion, anonymous first class functions, and  list comprehensions are all just window dressing. <br><br>Probably the easiest way to get thinking about it is:<br><br>  Object allot init. == spawn(Object,init,<a href=""></a>).<br><br>Spawn allocates a new process. From the Object Oriented Programmer&#39;s perspective, spawn allocates a new object of the supplied type (Erlang module) and invokes the initialization routine. If you were writing this in Objective-C it would look like:<br><br>   <a href=" Object allot init "> Object allot init </a>;<br><br>Because the spawn(M,F,A) form allows for passing a list of arguments to init function, it allows the initialization function to set initial state:<br><br>  Counter allot init: 1<br><br>Would be expressed as:<br><br>  spawn(Counter,init,<a href="1">1</a>).<br><br>Where Counter:init/1 would look something like:<br><br>init(Seed) -><br>    put(seed,Seed),<br>    count().<br><br>This design, squirrels away internal state in the process dictionary which is only accessible to the process itself.  From this point on, the only way to mutate the state of this object is to send it messages.   From this point on we are going Pure Object Oriented (POO).  If we have a main loop that can spawn new objects we get something like this:<br><br>main() -><br>  receive <br>    <a href=" Sender, new "> Args </a> -> <br>        Sender ! spawn(?Module,init,Args), main();<br>    ...<br>  end.<br><br>This allows any instance to create a new instance of the same type.  More over, as we can program entirely by sending messages to existing objects once we make this method dispatch fully dynamic:<br><br>  main() -><br>    <a href=" Sender, Method "> Args </a> -> <br>        case erlang:get(Method) of<br>            Function when is_function(Function,length(Args)) -><br>                erlang:apply(Function,Args);<br>            _ -> does_not_understand(Method)<br>        end,<br>        main().<br><br>This sort of dispatch looks for a function of the correct arity in the process dictionary and dynamically invokes it if found. If not found or of wrong arity, the does_not_understand handler is invoked.  Typically, a DNU will sasl log the missend, or invoke the debugger. This makes tracking down bugs in development easy and allows for altering production behavior to be consumer friendly. <br><br>With dynamic dispatch in play, we can easily define new behaviors at run time:<br><br>    put(does, fun(Method,Function) when is_function(Function) -><br>        erlang:put(Method,Function) end),<br><br>With this method attached we can say:<br><br>  O ! <a href=" self(), does, hi, fun() -> io:format("hello world!") end"> self(), does, hi, fun() -> io:format("hello world!") end</a>.<br><br>At which point we can send another message to the object O:<br><br>    O ! <a href=" self(), hi "> self(), hi </a>.<br><br>And the string "hello world!" will be printed to the console.  Using this functionality, we can dynamically replace behaviors at run time.  Say we have a delay of 50000 milliseconds that we want to reduce to 5000.  We could initially define the behavior as:<br><br>  O ! <a href=" self(), does, delay, fun() -> 50000 end "> self(), does, delay, fun() -> 50000 end </a>.<br><br>and then when we want to reduce the delay send:<br><br>    O ! <a href=" self(), does, delay, fun() -> 5000 end "> self(), does, delay, fun() -> 5000 end </a>.<br><br>Rather than changing a hidden property and providing accessors for that property, we can merely supply a function with the desired response. This technique supports a more complex event model, wherein each invocation of a method may trigger a chain of events.   For example, say we want a method to turn off a series of lights:<br><br>    put(off, fun() ->  <a href=" O ! [ self(), off "> O ! [ self(), off </a> || O <- get(lights)() ] end ),<br><br>If we have lights  be a method, it can be used to query the current lighting configuration. But we can also manipulate it to return different presets:<br><br>   put(house, fun() -> put(lights, fun() ->  <a href="1,2,4,5,6,8,9">1,2,4,5,6,8,9</a> end) end),<br>   put(stage,fun() -> put(lights, fun() -> <a href=" 3,7"> 3,7</a> end) end),<br>   put(all, fun() -> put(lights, fun() -> <a href="1,2,3,4,5,6,7,8,9">1,2,3,4,5,6,7,8,9</a> end) end),<br><br>Each behavior may define, enable, or disable other behaviors. This fluidity of interface allows objects to adapt to their circumstances, providing only those capabilities relevant to the current state of the object. For example, consider a File object, initially it may only have one method:<br><br>  File ! <a href=" open, "file name" "> open, "file name" </a>.<br><br>The process of opening the file will remove the ability to open the file (as opening again is either an error or no-op), and provide new methods:<br><br>  File ! <a href=" read, Bytes "> read, Bytes </a>.<br>  File ! <a href=" write, Data "> write, Data </a>.<br>  File ! <a href=" close "> close </a>.<br><br>If we read or write, we may not alter the topology of the Objects&#39;s interface, but in the case of close, it will revert back to accepting only open again:<br><br>  File ! <a href=" close "> close </a>,<br>  File ! <a href=" open, "some_other.file" "> open, "some_other.file" </a>.<br><br>The sequence of mutations defines a state machine which limits the possibility of spurious interactions that lead to undefined behavior.  If your objects ignore unexpected or erroneous messages, your systems can often survive an entire category of aggregation bugs that result from combining pre-existing modules in unexpected ways. <br><br>Let&#39;s pretend you are building a GUI and each widget in your GUI responds to a set of state transition events:<br><br>   Widget ! show.<br>   Widget ! hide.<br>   Widget ! draw.<br><br>And due to requirement changes, the designer decides to implement two new state transitions:<br><br>  Widget ! <img src=" slide, DX " alt=" slide, DX " />.<br>  Widget ! <img src=" fade, DT " alt=" fade, DT " />.<br><br>In which each widget is to perform a translation or opacity transitions over some region or time.  Now initially, these behaviors will not exist on any widgets, and in a normal programming model, with immutable class interfaces, it would be difficult to incrementally implement these methods on a one by one basis, and test in an interactive environment.  In fact, one would need to add stubs or guards in inappropriate places to ensure that each object could safely receive these messages, prior to any investigation.  With mutable interfaces, however, we can add the transition methods one by one, and interactively test our changes.  If at some later point, we get a requirement to swap out the behavior on an object or two, we can implement those state transitions on an ad hoc basis.   And since this is Erlang, we can always do it live from a remote machine on the other side of the world!<br><br>By adopting a behavioral model of Objects, implementing a Self style slots object via process dictionaries, and limiting all communication between objects to strict message passing (no shared state), we can write Erlang that is a model for all Object Oriented Programming Languages.  More over, the core of this requires no programming constructs outside of the core language and preserves all of the benefits of the functional approach. Avoidance of such dubious practices as inheritance, in favor of a more ad hoc construction of objects, promotes flexibility and adaptability over a misguided goal of completeness. I would argue any Class system is predicated on a faulty assumption that objects can be made complete or finalized, born out of a mathematical hubris rather than empirical analysis.  But if one looks at the 30+ year history of Smalltalk, there is ample evidence to the contrary. <br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

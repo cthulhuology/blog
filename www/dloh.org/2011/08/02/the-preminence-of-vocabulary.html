@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>The Preminence of Vocabulary</h1>
+<p>A few days ago I was writing about some of the fundamental concepts that keep my brain continuously turning.  Probably the most important of these is Vocabulary. Most programs fail at legibility not because the programmer abused the language syntax. They fail because the programmer gave too few clues to his intent by both not refactoring and by not choosing his words carefully. When you write a program it is for two primary audiences. The first audience is you and the second is your fellow programmers. You need to be able to inspect it, understand it, and maintain it.  If you can&#39;t do this, then your comrades-in-arms won&#39;t be able to save you either. <br><br>The secondary audience for the program is the compile/runtime environment which must translate your instructions into some sort of performant machine representation suitable to your chosen architecture. In other words, the program you write is used by another program to write a new program(s) that the machine will interpret. If your language targets an intermediate high level runtime environment or abstract virtual machine, you may find two or three additional layers of translation between your program and the bare metal.  JIT trace compilers will actually modify the machine representation based on the paths actually taken. Specializing OO compilers will generate new versions of branches based on the types of objects in use. All of these translation techniques further separate your mental model from the underlying reality. The point is not worrying about optimization is futile, but rather that is must take a back seat to more primary concerns such as writing such that you will understand what you wrote 6 months from now.  <br><br>One way people have tried to make this easier is by naming conventions.  And if you follow these your methods will be named just like everyone else&#39;s and will be no better than the status quo. Conventions have a funny way of failing, they lull you into an expectation of uniformity where none actually exists. Look at .length, .length(), .size, .size() in Java. Depending on the implementation of a class or runtime construct (for which no proper class exists), it can be any of the above. As a convention, it isn&#39;t terribly consistent as some classes also offer a third contender .capacity, .capacity() which are the size or length of the actual thing, not just the subset you are using. All of these things exists to allow a programmer to micro-manage some detail of the implementation on a specific instance ofthe VM. This seems like a good thing if you need to optimize for memory footprint or array performance. But what it botches is providing a consistent interface with well defined words that do the right thing every time. <br><br>Take .length property access vs. .length() method invocation. The original argument for .length is property access is fast and avoids a potential vtable lookup (or some nonsense to that effect).  The use of .length() should only be used when the size is unknown and requires computation like walking a list (or similar nonsense). </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

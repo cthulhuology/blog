@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>One Billion Processes</h1>
+<p>When I started out programming in the 80s as a kid, I dreamed of the day when I would have networking problems. In the 90s, I finally had networking problems and had legitimate access to several computer networks around the world. I programmed MUDs and ran mailing lists, majordomo and lambdamoo were my friends. Self was the cool project I got to play with in the Solaris and Mac labs.  I did a lot of horrible things with CGI, apache modules, and JavaScript in iframes. Linux was my main desktop from &#39;94 on until 2004.  I wrote a lot of C that bound to Perl, Python, Ruby, Java, Lisp, Ocaml, and Erlang. Wrote too much C++. And by 2000 had several servers scattered in data centers. When EC2 came out everything went into the cloud. <br><br>Back in about &#39;94 I wrote a compiler for a language that was best described as Forth meets Lisp meets TCL. I knew enough x86 assembler to write a basic Forth from memory in a hex editor. I used that approach to build a compiler for a language with a Lisp inspired implementation.  The object model was similar to TCL&#39;s with the exception that each object had it&#39;s own process slice, and ran in it&#39;s own green thread. I wrote a basic MUD in it, and some VGA graphics drawing bits, and eventually lost interest in favor of building content for lambdamoo. I have probably rewritten that original system 30 times or so by now. My disk drives are littered with compilers and assemblers for variations on the language. <br><br>It has gone by lots of names and incarnations, lang, firth, newscript. I&#39;ve written it in assembler, C, Lisp, Forth, C++, Ocaml, Perl, Perl, and more Perl. I have also written it in itself multiple times. I have done raw machine code versions. And each time I work on it, it shifts around in a circle. Forth -> Lisp -> ML -> Elang -> JavaScript -> Smalltalk -> Self -> Forth. <br><br>There is a tension between building a system that is sufficiently low level to capture the machine interface and sufficiently high level to make programming easy. At some level of abstraction and formality, the systems becomes too fragile. Once your implementation maps to sufficiently complex code, it becomes incredibly difficult to develop accurate intuitions about how the system will behave. Below a certain threshold in the other direction you can&#39;t develop enough velocity to get anything done. The lack of metaprogramming kills any attempts to build sustainable systems. The difficulties of chasing down instruction coding issues or pipeline thrashing take too much away from building beautiful systems. <br><br>I find myself constantly on the cusp of revisiting this project. I am looking forward to a time in the next couple years where 256 core ARM chips and 144 core low power Forth chips issue in an age of ubiquitous processing. When you have thousands of cores per blade, and billions of cores per data center, and the cost of shuffling data on and off chip becomes to great, how do you program efficient systems?  How do you write programs consisting of billions of tiny self contained objects, coded to run efficiently in on die RAM attached to a core with limited bus access?  Well I actually have been modeling that since &#39;94, and know how to build the tools that can build those programs. I am just waking for hardware to catch up. <br><br>Last night I was implementing a Erlang style messaging layer for Self objects. I have begun hacking my VM to support distributed messages. I am looking forward to a time when it can be made to run on lots of little ARM cores. But I need to refactor the system into smaller and smaller components. As I work on this project, fighting with 100k lines of C++, projects like Klien start looking appealing. And after a bit, returning to NewScript looks like a good idea. In any event, the next NewScript will look like Erlang meets Self meets Forth. And that may stick once the hardware catches up. </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

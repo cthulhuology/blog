@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Simple Solutions are Subtle</h1>
+<p>These days it is hard to tell at first glance if something is "simple" or not:<br><br>  App.add(&#39;/foo&#39;, function(req,res,next) <img src="<br>          res.send(&#39;bar&#39;);<br>  " alt="<br>          res.send(&#39;bar&#39;);<br>  " />)<br><br>Simple right?  Request http://localhost/foo in your web browser and get back the word &#39;bar&#39;. What could be simpler?<br><br>Well looking at this we are dealing with a Sinatra style framework, which implies a path router of some kind. We are passing a first class function object as a parameter which may enclose state from the surrounding scope. We all know how scoping works right?  The language is also JavaScript probably running on NodeJS, which means our HTTP processing stack is async, and since we&#39;re running in a framework, probably getting important things handled for us like gzip compression by middleware. This means we are writing a layer on an onion. <br><br>NodeJS itself uses V8 which compiles C++ classes on the fly in order to just in time compile JavaScript to native code. This code runs in a memory sandbox, and communicates with the underlying OS through shims written in C++. These shims themselves are often calling into system libraries which abstract the underlying OS calls. Key to all this is a segmented proccess model where privileged code executes the necessary commands to the hardware independently of the user space program. <br><br>Drilling down we often find layers of virtual device drivers which abstract interfaces to actual devices. Some virtual devices such as the loopback network device have no hardware associated with them at all. When we connect to localhost, we use the sockets, transfer data between processes, but never really send any traffic over the net. <br><br>And that is just to get the 3 byte 1/2 way!<br><br>It is a simple example but actually much more complex than one might suspect. <br><br>Things worth remembering before saying some large scale distributed system is complex. </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

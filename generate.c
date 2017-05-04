@@ -70,7 +70,7 @@ void dir_month(str* year) {
 
 void dir_year() {
 	push(_in_path, ref("./content",9));
-	push(_out_path, ref("./www",5));
+	push(_out_path, ref("./www/dloh.org",14));
 	list* years = sort(listpath(path(_in_path)));
 	each(years,dir_month);
 	pop(_in_path);
@@ -79,7 +79,7 @@ void dir_year() {
 
 void indexes() {
 	char* args[] = { NULL };
-	run("./md",input(ref("./nav.md",8)),output(ref("./www/index.html",16)),args);
+	run("./md",input(ref("./nav.md",8)),output(ref("./www/dloh.org/index.html",25)),args);
 }
 
 #ifdef GENERATE

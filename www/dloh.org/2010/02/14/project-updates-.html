@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Project Updates!</h1>
+<p>It has been an insanely busy winter.  And my hiatus from updating this blog, has mostly been a product of working 14-16 hour days.  That being said, a few of my favorite projects are about to see new life:<br /><br /><ul><br /><li>Jawas 2.0<br /><p>A very new version of Jawas has recently entered into production use by a new company, and the source code will be made available under GPL3 real soon now. The current code base is 4599 lines of C.  Some major infrastructure changes have occured including:</p><br /><ul><br /><li>New Memory Management</li><br /><li>Lua & Luajit support</li><br /><li>Lua native database interface</li><br /><li>64bit native support</li><br /><li>Faster streaming</li><br /><li>UDP based interprocess communications protocol</li><br /></ul><br /></li><br /><li>Adhoc 2.0 & Phos 2.0<br /><p>Adjoc.js and Phos.js are seeing a substantial update as I prepare to release a few new tools into the wild.  Now that I&#39;ve actually pushed out a few production quality applications on these code bases, I have a number of improvements that are have yet to be released.  I made a minor patch to the github repo tonight, but there is a  whole new version in the works.  I won&#39;t say anything more than "think flash replacement".</p><br /><ul><br /><li>New inter-object messaging system</li><br /><li>Object sharing system w/ cryptographically signed code</li><br /><li>Persistence across multiple systems</li><br /></ul><br /></li><br /><li>WTFP - What The F<i>K Protocol<br /><p>Both the new Jawas and the new Adhoc Object System have support for a new internet protocol known as WTFP.  I am working on browser plugins for WTFP so that all of my favorite platforms will have native support.  For a vague description think of FSP meets UFTP, and throw in a nice punch a hole through your firewall P2P layer.  Except it isn&#39;t intended for sharing movies or long form content, but rather lots of little bits of code.  Coming soon to a browser near you:</p><br /><ul><br /><li>WTFP for Webkit</li><br /><li>WTFPd for Linux / BSD / Mac OS X</li><br /></ul><br /></li><br /></u</i></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Another Virtual Machine</h1>
+<p>Six days ago, I started working on <a href="https://github.com/cthulhuology/avm">Another Virtual Machine</a>.
+So far I've logged about 10 hours on it and have:</p>
+<li>an Interpreter (in C)</li>
+<li>an Assembler (in C)</li>
+<li>a partial implemenation in verilog</li>
+<p>A couple days ago, I got the first assembled program to run on the interpreter, and had
+it execute correctly.  In about another 10 hours, I expect to have a working verilog version
+in simulation, and possibly synthesized on an FPGA.  At that point, I can start working on
+what I'm actually interested in.</p>
+<h2>A Few Word on Methodology</h2>
+<p>One of the main keys to success with this project is the methodology.  The process is
+incremental and constructive, building a series of simulations with ever greater degrees
+of specification.  Over time, the successive revisions will tease out details necessary
+to make the design work in reality:</p>
+<li>a high level emulation and tool chain</li>
+<li>a gate level simulation and self test</li>
+<li>a physical level simulation and hardware test rig</li>
+<li>an asic implemenation with tool and test chain</li>
+<p>The high level emulation allows for testing and playing with logical constructs and 
+behaviors.  It is cheap to do an experiment entirely in software, and easy to test the
+state machine with previously saved state.  In contrast to hardware, it is much 
+easier to get your software emulation into a known state.  This also allows for the
+development of the software tool chain before there is even a gate level simulation.
+Being able to write your test kit using what will be the production toolchain gives
+more confidence in the feasability of using the instruction architecture in production.</p>
+<p>The gate level simulation in EDA software, provides a view into the timing issues you
+will have with the output of your HDL.  There's a world of difference between the 
+software simulation and the hardware simulation. At least with the software 
+simulation verifying the behavior, you can reduce your problem search space to the
+translation of HDL to a netlist.  Ideally, your Power On Self Test (POST) that runs
+under software emulation will run just as well on your simulation.  </p>
+<p>Moving onto a physical level simulation using an FPGA provides another level of 
+confirmation.  By synthesizing your netlist into a functioning physical design 
+allows for the next stage of tooling.  Specifically, the FPGA board will allow
+you to develop a physical test rig for driving inputs to the POST.  While the
+FPGA is likely to have very different physical characteristics from your target
+package, you can design a breakout board that allows you to emulate that piece
+of the tooling.  With that you can design and build a physical test rig for 
+proving out your ASIC implementation.</p>
+<p>The last billion steps of moving from a GDS file to actual package silicon is 
+a whole nother world.  Here's where physics and chemistry and the characteristics
+of the manufacturing process take over.  This is also where things start getting
+expensive.  $5k+ for a small sample run becomes the norm, and each revision 
+will cost at least as much.  If all of the design bits up front have been working
+to this point, getting across the finish line is a matter of time and money,
+lots of money.</p>
+<h2>A Few Reasons For Doing This</h2>
+<p>Given the cost in time and treasure, it would seem I should have a good reason for
+doing this.  And while that is debateable, I'll try to describe the problem space
+in which I'm interested.  </p>
+<p>Most modern CPUs are designed to run legacy programs.  These programs and programming
+styles were born out of the limitations of the systems on which they ran.  Typically,
+they are derived from software that ran on machines in which a single processor could
+run a single instruction at a time, and that processor had to be shared by multiple
+users.  Computers were expensive and had t be shared.</p>
+<p>The net result is we ended up with large operating systems that attempted to share
+computer resources across multiple simultaneous users and programs.  As computers
+got smaller and cheaper, we kept running software written for ye olden days.  And
+as the physical limits of reality were reached by manufacturing, we started adding
+more and more CPUs to ever cheaper computers.  But the software is stuck in the
+mainframe world.</p>
+<p>If you want to build the future applications, you need machines with not 1000 cores,
+but 10k, 100k, 1MM cores.  And these cores aren't going to be running Linux.  In
+fact, these cores are going to be more like Objects in OO programming languages,
+communicating over physical buses via messages.  Biomimetic programs are good 
+targets for these sorts of systems.  Burning a few thousand cores to recognize
+things in the real world will become common in the world of robots.  And the
+general purpose programming models will not apply, as no sane person is going to 
+ask a few robot retina cells to process a spreadsheet some fraction of the time.</p>
+<p>The instruction set I'm building is a MISC computer designed for streaming data.
+While the processors will be small, they will be capable of doing useful work,
+and the designs can be sized to fit the desired workload.  The goal is to have
+a design which could support having 1k cores with reconfigurable message buses
+in hardware.  By interconnecting multiple cores, the design will be able to 
+scale horizontally to 10k, 100k, 1MM cores.</p>
+<p>Rather than focus on building hardware for existing applications, I am looking
+at designing hardware for future applications, systems which recognize and 
+interact with reality on a physical level.  Having worked with speech and 
+image recognition at global scale, I feel like I've developed a gut feeling 
+for what should work in smaller packages, if only I had the hardware.  This 
+design is an experiment to test if that feeling is on track.</p>
+<h2>Where We're Going There Are No Roads</h2>
+<p>Looking at the ambition, it would seem daunting given that not only am I designing
+the processor, but also the tooling to program the processor, and also the 
+programming methodology for the target applications.  The design is going to 
+consist of tens of thousands of independent processors communicating via message
+passing, similar to an Erlang program, but without the luxury of OTP.  But the
+reality is that the ambition allows me to dump all of the shit I don't need.</p>
+<p>For programming languages, Aaron commented "your assembler looks a lot like Forth",
+to which I replied it was.  By using the meta properties of a language like Forth,
+I can have the assembler be the low level Forth operators, and the instruction set 
+architecture directly supports Forth constructs.  My Forth tool chain can directly
+compile to the instruction set architecture and much of the core is directly
+implemented in the hardware design.</p>
+<p>For operating systems, I am not going to have one.  Rather, I am going to focus
+on the ROM code for the message routing layers.  By controlling what messages
+get passed to which cores, I can provide basic OS level services (process isolation,
+hardware access, etc), but through a message broker architecture.  Additionally,
+since the cores will be small enough, the object model for the program components
+will be similary reduced.  There is no need for object linking and embedding when
+each processor is running a single object.  Technologies like DCOM are a poor 
+facimilie of the processor based messaging.</p>
+<p>Lastly, the hardware interfaces will also be designed to take advantage of the
+hardware itself.  As I am designing a familiy of related processors, I intend
+to extend the internal message passing to the peripherals.  Keyboard, mice,
+stylus, cameras, microphones, laser range finders, servos, etc. will all have
+integrated microprocessors which will work the same way.  The hardware will send
+messages and the other objects will respond if they are interested.  Having
+object oriented hardware will place the device drivers where they belong,
+in the device itself.</p>
+<p>So the ambition is to reinvent all of modern computing for the future.  It 
+should only take a few months at most :)</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Conceptual Restructuring of My Personal Information Space</h1>
+<p>While working on a rather fun project to turn <a href="http://github.com/basho/riak_pipe">riak_pipe</a> into the basis for a prototype of a new video transcoding farm, it struck me that:<br><br><li>there are few good tutorials on building complicated Erlang projects using rebar<li>I promised a set of tutorials on using CouchDB for my new blog software<li>somewhere along the line,  I totally forgot to follow up on the style applied at a distance concept<br><br>So I&#39;m going to start reworking the blog code to do a few different things to address all three of these issues stated above:<br><br><li>I&#39;m going to redo the interface to match www.dloh.org, in terms of a large flat 2D space of nigh infinite extent<li>All of the styles on the pages are going to be applied out of band, and will be fungible via code updates<li> I&#39;m going to move the www.dloh.org code into CouchDB bit by bit and reuse it across the blog<li>When I do each piece I&#39;m going to write a small tutorial (or put up a screen cast) describing what I&#39;ve done<li> Onomatic will also receive some love in a series of posts as I bring online a few new VMs<li>All of my code is going to be written in the blog<li> I am going to release my new compilation tools that are based on the ideas I&#39;ve bandied about behind the Self build server<li> Eventually, I&#39;ll write a build tool that creates a github release of specific tagged sets of code<br><br>This all sounds much more ambitious than it is.  In reality, this blog already runs a minified version of the Phos code base without any of the fancy canvas and device support.  Nearly all of the style is applied via javascript, I&#39;m just going to use my new favorite CSS via JSON trick to break out all of the style elements into separate documents.  I&#39;m also going to write a view in CouchDB that maps timestamp (and document size) to a 2D coordinate, so I&#39;ll start laying out my articles on one big wall, instead of tucked behind little links.  Finally, I need to finish Onomatic so that I can release another piece of software anyways, and that will mean cleaning up that code base, and fixing the rebar bits.  Finally, since I&#39;m going to move my code into the cloud, I might as well produce a highly literate version of it, so I&#39;m going to be borrowing from my NewScript demo heavily, and producing a new kind of code editor.<br><br>Eventually the topology of the site will be 2D but the backend is going to have a load balancer and 2 VMs, which will be running couchdb (for indexed documents), riak (for bucketing builds), onomatic (for application routing), ConnServer (because I want intelligent agents running the site), and either nodejs or jawas2 (which are very similar in concept, just jawas2 will be written in  Self).  Basically, over the next couple months, I&#39;d like to have my environment working on the iPad, iPhone, & most Android tablets.  I&#39;d like it to be accessible anywhere.  And I&#39;d like it to be manageable through direct manipulation.  I&#39;m probably going to even use the NewScript app&#39;s Plan9-esque block creation method for writing new stories.  The idea of also being able to draw lines between related stories really appeals to me.<br><br> </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

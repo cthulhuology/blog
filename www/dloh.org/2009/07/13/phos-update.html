@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Phos update</h1>
+<p>I&#39;ve pushed a bit of a small update for Phos.  It has a new addition that is inspired by the Smalltalk port.  So in addition to being able to say:<br /><blockquote><pre><br />a(Circle).at(100,100).radius(40)<br /></pre></blockquote><br />You can now just a easily say<br /><blockquote><pre><br />A.circle().at(100,100).radius(40)<br /></pre></blockquote><br /><br />The addition of the <b>A</b> and <b>An</b> generator objects aren&#39;t actually an advantage over the old syntax, as they actually require an additional character, but do at least it now is capitalized like an English sentence would be.  The other nice feature is you can inspect the A object and see all of the things you can instantiate.<br /><br /><h3>Adhoc JS</h3><br /><br />Some of the new features that will appear in the next generation of this JS library, which will be broken out for general use with other web frameworks, include:<br /><br /><h5>Object Names</h5><br /><blockquote><pre><br />A.circle().named(&#39;Bob&#39;)<br /></pre></blockquote><br /><br />This will allow you to directly name your objects using a function call during, rather than having to assign it to a variable.<br /><br /><h5>Ad Hoc Object Methods</h5><br /><blockquote><pre><br />A.circle().has(&#39;greets&#39;).of( function (x) <img src=" alert(&#39;Hi &#39;.append(x,&#39;! My name is &#39;, this.name() " alt=" alert(&#39;Hi &#39;.append(x,&#39;! My name is &#39;, this.name() " />).<br /></pre></blockquote><br /><br />This will allow for the creation of object specific behavior without creating a generalized prototype.<br /><br /><h5>Ad Hoc Object Cloning</h5><br /><blockquote><pre><br />An.object().from(Bob)<br /></pre></blockquote><br /><br />This will allow you to copy all or part of the properties of an object, making for easy ad hoc multiple inheritance.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

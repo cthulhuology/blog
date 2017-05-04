@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Building Better Systems: Part 2</h1>
+<p>Once we acknowledge that the driving force is Political and not technological, we can design our systems to account for this consideration. Rather than design tech that works against beauty and efficiency to solve political problems, we can design our political systems to minimize their impact on the details of our technology. The rule one needs to adopt is design political solutions to political problems, and design technical solutions to technical problems, not technical solutions for political problems. <br /><br />Take for example the issue of code merging. We have a great many tools which seek to address managing change to code across a distributed group of developers. This is a technical solution to a political problem. Our development strategy requires more than one user to touch the same set of bits.  This means that there is no ownership other than a communal one. An individual can not own a file, or else all development surrounding the functionality espoused by that code is dependent on that one person. <br /><br />But this problem is not a technical one. In a linked language, the computer will associate a symbol table entry for each routine. These symbols could all be versioned and tagged for each individual developer. You could also compile each function as a separate module, or even one library per developer. The technology itself is perfectly capable of linking a version of every developer&#39;s work. The problem is not technical, the problem is one of organizing developers and then sharing their work. <br /><br />Say we replaced all of the source control tools and each published our code to a server. Let&#39;s then say we had a build script that could identify, link, and build an arbitrary set of artifacts from these servers and piece together all possible variations of a program. Since we are at it let us also assume that one could build a test suite in the same fashion. So I could mix and match functional units from hundreds of programmers without altering any code. <br /><br />Did we solve a political problem with this design? Nope!  Did we solve a technical problem with this design?  Yes. Politically we still need someone to manage the build process and define the test suite. We still need developers to agree to naming conventions and use of shared resources. What we solved was the problem of merging by defining the module level at which a code merge could occur to be the native ABI layer. We still have all of the political problems of what do we do when we want to use code from two programmers with in compatible changes. We have not solved the problem of organizing programmers such that they don&#39;t all edit the same logical function. We have done nothing to address the problem of developers missunderstanding or arguing over the shared ontology or design idioms. We did not even solve the problem of code ownership in the final product, merely created a system where by a developer could own their build. <br /><br />In the end, these problems are political, in that they relate to the organization and relationships between people and their utilization of shared resources. Techological tools can aid in sharing, help identify ownership, and ease the burden of synthesis of the final work output. But they can not solve the human part of the equation. <br /><br />For a political problem we need political tools.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

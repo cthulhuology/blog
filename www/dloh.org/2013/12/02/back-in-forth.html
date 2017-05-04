@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Back in Forth</h1>
+<p>For the past few weeks, I&#39;ve been spending about a third of my time programming in <a href="Http:/:forth.org">Forth</a>.   Originally, I was playing around with <a href="http://4e4th.com">4€4th</a> on the MSP430.  The MSP430 is a lovely little chip with just enough RAM to be interesting.  At 1 to 16MHz and a hardware UART, it has that first computer feeling.  The 4€4th package takes up about half the available space, leaving just enough for something interesting.  My goal for this board is to act as an aggregator for sensor data, as the chip w/ a basic board runs about $4.  Forth makes that tiny space feel spacious. <br><br>On a whim, about 3 weeks ago I bought some rather retro reading:<ul><li><a href="http://www.forth.com/forth/fph.html">Forth Programmers Handbook</a></li><li><a href="http://www.forth.com/forth/fat.html">Forth Application Techniques</a></li></ul><br>And found it wonderfully remedial. There were a few features of Forth I had totally forgotten over the years. I started programming when fig-forth83 came out.  When the 1994 ANSI standard, I got a part-time gig as a C programmer and only whipped out Forth for fun over the next 20 years. On two occasions I got to professionally use my Forth skills, once building a custom Postscript application, and the other building an interpreter for a game engine.  But for the better part of the past 20 years, Forth has been a hobby. <br><br>The past two weeks, however, I&#39;ve begun seriously reevaluating that relationship.  Part of the reason for this is I am now writing code for 4 architectures simultaneously.  Most of the languages I&#39;ve been using don&#39;t even fit on two of the boards I&#39;m building applications with, and while I have C cross-compilers for each, I&#39;ve found JTAG debugging C code to be lacking in elegance. <br><br>So thinking back in my past, why not dredge up a tool from the bottom of my bag of tricks?  So I started implementing a couple applications in Forth. The first (or second) is a <a href="http://github.com/cthulhuology/amqp.fs">AMQP wire protocol encoding app</a>.   The goal here is to encode AMQP frames and send them over wifi to a RabbitMQ server elsewhere in the cloud.  I may also use them to shuttle structured data between apps on a 2-wire bus between components.  It looks like an operational stack will take 4k of RAM to run, but with some streaming techniques, I may be able to stay below that.  Right now I&#39;m working on the socket code for the test rig, but hope to have basic.publish messages working soon. <br><br>The second application (or first to finish) is a <a href="http://github.com/cthulhuology/http.fs">HTTP/1.1 webserver</a> written in Forth.  This code took a couple hours to write, but a couple days to figure out how to make gforth explain why bind(2) was failing.  That required an excursion into libffi and learning the hackish way gforth binds to C with auto-generated stub files in ~/.gforth/... and chasing my tail until rm -rf ~/.gforth/ solved the problem.  The end result of that process of hating gforth to accepting it as a useful tool. <br><br>The HTTP server uses a few fun tricks from an article I read once, but can&#39;t seem to find again. Rather than implementing a parser, and doing a lot of work managing data structures like Apache, or building giant ass request / response objects like Node, I just <b>evaluate</b> the HTTP request as Forth code.  This works incredibly well, and even use evaluation to do the dynamic dispatch of the path routing.  There are some basic security measures left to implement, like locking down the dictionary to a HTTP only word list, but that problem has been solved in Forth for at least 30 years.   I will probably make the path parsing and dispatch code more complicated to do more things, and process longer paths (currently limited to 255 chars) but for a simple embedded webserver that runs in about 4k, it is pretty impressive.  In about 200 lines of Forth, I should be able to implement a high performance, modern web server, and that makes me seriously question why shouldn&#39;t I use Forth as my daily language of choice. </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

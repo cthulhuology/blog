@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Programming the Internet of Things</h1>
+<p>In certain circles there is a lot of excitement about  messaging protocols like AMQP and MQTT.   If you like B2B messaging like writing FX software for financial institutions, or just like building swarms of robots that coordinate via packet radio, there&#39;s something there for you. <br><br>One of the key bits of both AMQP and MQTT is that they are payload agnostic. You can shovel JSON data, or bitmaps, or memory dumps, and the protocol just doesn&#39;t care.  This is great for building applications, but it leaves a gap for middleware to help broker the interactions which drive communication. <br><br>My take on this has been two approach:<ul><li>ship Forth code over the MQ and drive behavior (MQTT)</li><li>ship s-exp in JSON and eval on the receiver (AMQP)</li></ul><br>The reasoning behind each is simple:<ul><li>on my embedded boards I run Forth and C&C is done with Forth</li><li>on my web based apps, the AMQP exchange communicates between web apps that all parse JSON, and I can always map <a href=" object, method, args... "> object, method, args... </a> to a backend object or module method invocation. </li></ul><br>There are advantages to each scheme.  In the case of Forth, the vocabulary of the dictionary defines which words from the message are acknowledged. Unlike most Forth systems, if a word is undefined or not a number, mine simply ignores it. This allows for messages to get sent to the wrong place, and as long as the domain of each component does not overlap with the domain of another routing errors are avoidable. <br><br>Where this scheme works really well is when you have a single wireless signal that you are broadcasting across many receivers, some of which you want to act in concert. By evaluating only the words you know from the stream you can send a single stream of instructions to control and coordinate multiple physical systems through what amounts to selective hearing. I call this a Grandpa Protocol, but it may have a technical name in literature that I have yet to find. <br><br>The other side of the fence works in a similar fashion in that objects only respond to the methods they have, but also I tend to map exchanges and queues to groups of related objects.  The exact topology depends upon the requirements (do something in parallel on a fanout exchange or dispatch to workers from a shared queue, etc) but the fundamental concept is a method call is just a message send, and objects communicate by sending messages.   The JSON encoded s-expression just makes translating these message sends to multiple languages trivial with well behaved off the shelf libraries available for everything but the dynamic method call. I&#39;ve now implemented this pattern in C, C++, Java, Forth, Erlang, JavaScript, Lisp, Python, Ruby, Perl, Smalltalk, Self, and Ocaml.  Languages which natively support dynamic dispatch are much easier, but most any language that can fork on a test can support this. (ie most programming languages which are not DSLs)<br><br>Having a methodology for communicating between objects is more important than the transport mechanism that gets the message there. Having a methodology that is essentially "ship LISP code!" is absolutely the simplest thing that you can do that will work. The theoretical underpinnings are solid, the invocation semantics are clear and well defined, and you aren&#39;t tied to any particular implementation of the underlying object system. <br><br>So in summary:<ul><li>Objects are implemented in any language and attached to a messaging transport layer</li><li>The program is the communications between Objects which are the messages in flight</li><li>These messages are simply symbolic expressions which each object interprets in its own idiosyncratic way</li><li> Each object is a black box that speaks LISP (or scheme or clojure or JavaScript)</li></ul><br>And that&#39;s it. A simple methodology that works with any payload agnostic messaging protocol that allows a network of things to cooperate and effectively communicate. <br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

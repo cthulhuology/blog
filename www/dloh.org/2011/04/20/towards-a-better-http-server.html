@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Towards a Better HTTP Server</h1>
+<p>So I have been playing around with different implementations of my Self HTTP server, and have a couple different parsers. This is the "I can&#39;t tell you how many"th web server I&#39;ve written. C, C++, Perl, Python, Ruby, Lua, JavaScript, Erlang, Ocaml, Forth, Lisp, Smalltalk, Java are just a few languages I&#39;ve written webservers in over the years. Not because there aren&#39;t perfectly serviceable production webservers out there, but because I view that functionality as the de minimis for any networked application. Being able to handle a request for a resoure over a TCP/IP connection just isn&#39;t so hard as to require a ton of code and a battle worn library. Some times all you end up using it for is to say "ping". <br><br>With the Self implementation, I am using mmap, writev, and kqueue/epoll for all of the low level socket wrangling. Based on my tests I saturate my machine with 66% of the CPU in system space just flooding my network card (which craps out before anything else). So as with most projects, using a slow application language has no appreciable effect on production throughput. I say similar behavior 12+ years ago with game libraries and Perl. SDL Perl with OpenGL bindings would crush my soundcard and graphics chipset, adding only about 3% overhead to the runtime, but saving hundreds of hours in compile/run/debug cycles which made it possible to build game building tools on a budget as well. When time to market is directly correlated to the remaining funds in your personal bank account, you will take the 3% hit all the way to the bank. <br><br>In doing this parser, I&#39;ve been playing around with using built-ins vs. "doing what I&#39;d do in a LLL". Most of these trade offs have to do with canonicalization of strings. In Self, immutable strings are made canonical by storing in a central lexicon. Like atoms in Lisp, identity comparisons can be used to short circuit linear scans. This can be huge as dynamic dispatch based on discovering a selector in a string can be worrisomely expensive. Self&#39;s two stage compilation approach helps remedy this cost for code that is run more than once, but for data that is often never even looked at, I would prefer to never pay that cost at all. <br><br>In C I would tend to use a offset and length struct to map out the interesting bits of the buffer. This means in a single linear scan of a HTTP request, I can parse the whole thing into tokens, and then use a handful of macros to access elements in a <img src=" char*, size_t " alt=" char*, size_t " /><a href=""></a> token array. It doesn&#39;t modify the source data, and works well when working with partial requests, as you can always pause and resume parsing when you have more data. The size of the token arraycan be fixed to a hardware page size, and you can let the OS and paging hardware help map additional pages if you need more than a few hindered header entries. <br><br>The Self like parser makes prett heavy use ofthe built-in tokenizing methods. AsTokensSeparatedByCharactersIn: is a verbose if not simple way of doing things. It alone can slice and dice the tokens out of a HTTP header, though it is not at all useful for parsing a chunked data set. I haven&#39;t done much with pattern matching in Self, but that could be an interesting challenge in and of itself. The main downside I see with these messages is you need to know ahead of time the completeness of your dataset. Backtracking requires copying portions of the buffer into new string objects, and parsing those. In the trivial case where you recieve all of the request in a simple payload the code is much simpler. <br><br>I look forward to evaluating how the creation and extension of Self objects impacts the performance. If the simplest solution is also the fastest that poses a very interesting possibility. But if the complex solution is both faster and more robust, that would lead me to believe that an alternate set of abstractions might be in order. </p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

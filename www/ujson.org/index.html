@@ -1,0 +1,62 @@
+<html>
+<head><title>ujson - microjson protocol for microcontroller messaging</title></head>
+<body>
+<main>
+<h1>What is ujson?</h1>
+<p>ujson (pronounced microjson) is a protocol designed to make it easy to exchange
+data between microcontrollers, gateway units, and application servers in real time.
+The protocol defines a wire format, schemas for structured and unstructured payloads,
+messaging behavior, and data discovery.  It has been developed experimentally using
+real world deployments of many different microcontroller architectures connected by 
+unreliable radio networks.</p>
+
+<h1>What is the ujson use case?</h1>
+<p>When using microcontrollers with only few kilobytes of RAM, every bit counts.
+A typical use case for a ujson application is a collection of inexpensive ($2-$4)
+microcontrollers communicating with a WiFi or LoRa module over SPI.  Each of the
+controllers may be connected to several sensors or actuators.  The ujson protocol
+is used to communicate between the microcontrollers and with the upstream 
+application server via the radio connection.  As such ujson is designed to 
+traverse multiple constrained physical, local, and wide area networks.</p>
+
+<h1>How does ujson relate to JSON?</h1>
+<p>The design of ujson wire format is such that it can be translated to and from JSON
+without loss of information.  The ujson protocol, however, supports finer grained
+levels of specification for binary data, and allows for direct encoding of structured
+data via a schema mechanism.  At the same time, it also allows for the sort of
+ad hoc spare data structures enabled by JSON's array and object types.  As such
+the ujson schema definitions similar to an ASN.1 formal notation for JSON data.
+You can think of it as Google Protocol Buffers for JSON.</p>
+
+<h1>Why support binary data?</h1>
+<p>One of the common problems for embedded applications is that it becomes extremely
+expensive to generate and parse semi-structured data.  The state machines necessary
+to parse arbitrary text data in a constrained environment often exceeds the complexity
+of the primary application itself.  As such, supporting the same data types the
+microcontroller works with natively allows us to avoid the additional overhead.
+By moving the meta-data to the schema format, it also allows us to push the interpretation
+of the data to the receiving application.  Avoiding generating and sending redundant
+meta-data reduces the workload and duty cycles of the embedded components saving 
+battery life.</p>
+
+<h1>Why have formal schemas?</h1>
+<p>The ujson protocol not only defines schemas for message data but also a protocol
+for exchanging schemas.  This means a microcontroller can actually announce the
+meta-data for it's messages using the ujson wire protocol. Applications both
+server side and embedded can use this schema discovery mechanism to either validate
+the interchange format or use it to dynamically parse data over time.  As the
+ujson schema format is also designed to be embedded in an embedded application, 
+this makes managing multiple generations of devices and application versions 
+possible, as each generation can specify the meaning of the data in an application
+agnostic machine readable format.</p>
+
+<h1>Where can I find the code?</h1>
+<p>The current alpha-quality reference implementation can be found at
+<a href="https://github.com/cthulhuology/ujson">https://github.com/cthulhuology/ujson</a></p>
+
+
+
+
+</main>
+</body>
+</html>

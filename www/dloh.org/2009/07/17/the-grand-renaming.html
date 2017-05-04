@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>The Grand Renaming</h1>
+<p>Today&#39;s project was convert selfish.js to adhoc.js, and apply the <i>Grand Renaming</i> throughout.   The process used removed the old <i>let</i> function and replaced it with the <i>from</i> derivation.  Additionally, the variable assignments were replaced with <i>named</i> and <i>plural</i> function calls, which more clearly designate what happens.  Using these features Objects can now assign themselves a proper name.    What this means in practical terms, is that each object definition is technically a single statement.  For example consider:<br /><br /><blockquote><pre><br />An.object().named(&#39;Device&#39;).plural(&#39;Devices&#39;).from(<img src="<br />  dispatch: function(n,e) { <br />    App.widgets.every(function(w,i) { try { if (w.can(n)) w[n](Event.init(e)) " alt="<br />  dispatch: function(n,e) { <br />    App.widgets.every(function(w,i) { try { if (w.can(n)) w[n](Event.init(e)) " /> catch(e) <img src="" alt="" /> });<br />    return this;<br />  }, <br />});<br /></pre></blockquote><br /><br />This is just one statement, that constructs a new object, with a names Device and Devices (the plural form), and derives from an object with a dispatch function, that takes a name of an event, and an event object, and applies it to every widget that can process the named event.  This is actually the dispatch loop of the entire environment.  <br /><br /><h3>Porting Territory</h3><br /><br />I&#39;m beginning to port the Smalltalk visualization tools developed for Squeak to the Phos/Adhoc.js environment.  The idea is the same, to create a circle for each object, and then display relevant data about the relationships between objects based on the contents of their methods.   For the time being, the base Territory widget is constructed for a given object using the following code:<br /><blockquote><pre><br />An.object().named(&#39;Territory&#39;).from(Circle, <img src="<br />  init: function(x) { <br />    var target = x.name();<br />    return this.clone().copy({<br />      target:  target,<br />    " alt="<br />  init: function(x) { <br />    var target = x.name();<br />    return this.clone().copy({<br />      target:  target,<br />    " />).radius(window<a href="target">target</a>.slots()).instance().here();<br />  },<br />});<br /></pre></blockquote><br /><br />What this does is create a new Territory object deriving from Circle, it then changes the initialization routine to set the radius to the number of slots in the  target object passed to the initialization routine, and returns an instance underneath the cursor.  To create a Territory for a Box object one could say:<br /><br /><blockquote><pre><br />A.territory(Box);<br /></pre></blockquote><br /><br />The primary advantage of these single line constructor sentences is it allows most object initialization code to be wrapped up in a simple string that can be directly evaluated to initiate a new core object.  The way that <i>named</i> works is it not only binds the global name of the object, but also registers a constructor function in the A and An objects.  This makes it possible to write your own archetypal objects and have them work as if they were core code.<br /><br /><h3>Using external code</h3><br /><br />One of the things I&#39;ve been doing in my own projects is using the adhoc.js method <i>use</i> to include other files at runtime from my local repository.  I&#39;ve been working on a book on programming, and have been developing interactive exercises.  Rather than merely read about how various parts of the computer work, you can directly manipulate simulations of the code.  For example, in the chapter discussing combinatorial logic, there is an example of how an OR gate works.  To instantiate an or gate the following code is used:<br /><blockquote><pre><br />use(&#39;book.js&#39;);<br />An.orgate();<br /></pre></blockquote><br /><br />This will create an or gate whose inputs can be clicked on to turn them on and off.    The gate fully supports drag and drop, and can easily be joined to other gates to produce any combination of circuits imaginable.  And the full simulation works in your web browser.  However, the really cool thing is that the gate is built up of a series of components stored in a number of different files.  So the code for it looks something like:<br /><br /><blockquote><pre><br />An.object().named(&#39;Gate&#39;).from(Component,<img src=" ...  " alt=" ...  " />).use(&#39;bit.js&#39;,&#39;connector.js&#39;)<br /></pre></blockquote><br /><br />So the files <i>bit.js</i> and <i>connector.js</i> are imported and the objects that they contain are used as components in the gate.  The individual Bit objects represent bits and can be toggled on and off, and the Connector objects represent wires which connect the bits that represent the gates inputs and outputs.  The gate also loads an image to represent the logic diagram symbol, which is read in using the Image object.  Everything can be interacted with, moved, and controlled using a mouse, and the wire traces are automatically routed by the wire objects.  Learning to build circuits using combinatorial logic couldn&#39;t be any more easy and fun!</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

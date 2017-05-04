@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Why A New Language</h1>
+<p>A friend of mine, this weekend while examining <a href=greenarrays.com>a new Green Arrays dev board</a> with 288 cores, asked me why I spent so much time abusing other languages and didn&#39;t just implement my own. Now part of the inspiration for this question as the board sitting in front of us. Chuck Moore has not only designed the programming language, wrote his own CAD system, he also designed the chips as well. The question of could a skilled practitioner of the art build the full thing himself?  The answer was undeniably yes (assuming he had access to a fab facility and could afford the wafer runs). <br><br>My answer to his question was that I was more interested in establishing the techniques necessary to program the types of systems, so if I could bend any existing language to my will, it was a short jump to running my code anywhere. Moreover, each experiment would allow me to better understand the problem space, and remove barriers to thinking by forcing myself to overcome orher&#39;s implicit assumptions.   That being said, I still have a good idea of what my preferred language would look like:<ul><li>it would have words and numbers and punctuations</li><li>a word would be <a href="A-Za-z">A-Za-z</a><a href="A-Za-z">A-Za-z</a><b></li><li>a number would be [0-9]</li><li>and punctuation would be all other printable character combinations, usually . , ? ! &#39; " - : ; —</li><li>Objects may have Proper Names and those Names start with a Capital Letter</li><li>Object proper names may consist of more than one word like David Goehrig</li><li>indefinite articles a and an may be placed in front of a proper name to refer to the category of object</li><li>a categorical Refernce may also include adjectival guards to narrow the subset, a green Book, a categorical Reference</li><li>the definite the may be placed infront of a proper name to refer to the categorical example, the Good, the State, the President</li><li>additional categorical logic words like all, none, no, some, one, can be used to operate upon sets of objects, all good Children goto Bed</li><li>all words and punctuation are message sends</li><li>each message send occurs in the current context, and is sent to the noun of last address</li><li>new context can be created by referring to more objects</li><li>each object resides in it&#39;s own context and communicate only with its neighbors (objects it can refer to by name or category)</li><li>an object in it&#39;s time may play many parts, and may change it&#39;s category repeatedly</li><li>no object may violate the space of any other object</li><li>objects communicate only via message passing</li></ul><br>And that&#39;s about it. <br><br</b></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

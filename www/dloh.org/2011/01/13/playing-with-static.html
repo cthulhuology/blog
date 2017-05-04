@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Playing with Static</h1>
+<p>So one of the best design decisions I feel I made with Phos was the representation of objects as a chain of transformations. In this way the description could be easily stored as a static resource, and yet reliably reconstruct the state when restored in the environment. Doing this however requires understanding relationships in terms other than references, and requires that you properly manage the assignment of Proper Nouns in your application. <br /><br />The notion of static here is on familiar to REST applications in general as a resource can be both &#39;well named&#39; and embody an entity that changes over time. For example, Dave Goehrig, is a well named entity that many databases reference by name, even though he is not the same Dave Goehrig he was 5 10 15 20 years ago. (though he would love a cyclic reference to occur in his space time continuum).  <br /><br />The bit that I&#39;ve been playing with to great effect is to start taking each of the slices in time, and making them uniquely named by assigning a UUID. I then map the transition between states in another state machine object that maintains a sequence of UUIDs over time. This allows each entity to be unique, allow the continuum to be an external reference frame, and allows us to compare, transform, and reset the state machine itself. <br /><br />The primary purpose of this is to make managing programming of a live system as simple as possible. When the goal is to distribute and synchronize the processing of millions of parallel nodes, it becomes increasingly important to have your sysytem capable of manipulating many parts of the world asynchronously. Other parts of the world build sychonicity by generating continuum objects that represent a sequence of states. The third then can transform these continuums to generate objects which capture useful state. These key frame objects are the documents of note, the output you care about. <br /><br />All this is true of current programming methods. While the computer is capable of entering a mind numbing number of states, there are only a handful we are ever really interested in. Most programs exhibit very few unique continuums or flows, and few of hose ever produce valuable output. Thin of vim while editing code. You care about your undo buffer and what is on the screen while editing, but it is the end file that you really care about in the end.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

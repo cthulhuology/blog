@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>A language for parallel programming</h1>
+<p>I love it when very smart people make very silly statements, such as "we don&#39;t have a language for modeling highly concurrent systems". The reason why I find this humorous is that for the history of language humans have used it to model the most highly concurrent system of which they are aware, their place in the universe. Our brains developed to model and manage a fully realtime, highly concurrent, dynamic environment; one filled with all sorts of things that want to eat us, kill us, fuck us, or buy us lunch (or any combination thereof). <br><br>Take the sentence:<br>  <br>  While I was talking, you were staring off into space, thinking about what you were going to say next. <br><br>In this sentence, we model two actors, both performing a continous ongoing action, and one actor explicitly multitasking. "While I was talking" is a subordinate clause in the imperfect subjunctive. The verb talking is imperfect because the action is not complete during the frame of reference. The clause is subjunctive in that it contextualizes the primary predicate with regards tithe speaker, the relation being defined by the preposition "while". . The main subject of the sentence is a 2nd person pronoun, referencing the audience of the speaker. This is no different from any local variable or formal parameter in any number of programming languages, and is a basic form of indirect symbolic reference.<br><br>The subject of the sentence is engaged in two parallel tasks, one is an imperfect motor control task, "staring", while the other an imperfect task,"thinking", with an optative subtask, "going to say".  Not only are we modeling ongoing state, but also modeling its relationship to potential future states. Since the subject of the sentence may not say what they were going to say, out language allows us to account for potentially discarded work in an untamed branch. <br><br>Probably most significant is the fact this entire sentence is in the past tense. Because of this, we are able to model the previous state of the system, and describe it&#39;s behavior after the fact. It is as if one could say in a running system, here were some additional values now can I have the answer?  This sort of modeling may not be useful with current computers, but may be a natural fit for quantum devices<br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

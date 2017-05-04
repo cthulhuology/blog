@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Plumbing vs Architecture</h1>
+<p>One of the things I have noticed repeatedly over the years, at multiple companies, with very many different teams, is a general confusion between architecture and plumbing. In a building these two things are obvious. Plumbing is a utility which moves stuff (water, waste, gas) around a building. Architecture is the arrangement of structural and decorative elements and the interactions between them and the user. Plumbing is incredibly important, but it is a narrow concern and a design consideration, not a design goal. One may design their plumbing to carry a certain capacity, support certain pressure range, but these design considerations will interact with a host of other structural, asthetic, and financial considerations. When you model and design for those combinations of concerns, you are engaging in architecture. <br><br>There is also a common confusion over the difference between architecture and engineering. In physical trades making tactile goods these distinctions are more clear. An engineer may design a functional component to operate within some specified parameters, wherethe architect will select the correct component based on the design objectives. An architect may spec out the requirements for a component that requires custom fabrication, but these cases are usuallythe exception to the rule. Off the shelf, tried and tested designs are generally favorable due to their predictability and lower costs.<br><br>  Many shops that are engineer heavy tend to favor building from scratch for the same reasons woodworkers prefer building furniture to shopping at Ikea, that is to say personal satisfaction. In these cases the role of architecture is often overshadowed by the politics of labor relations.  My suspicion is that the different roles played by people within an organization shape the relative weights of the values placed upon each part. Too many people in any one role creates deadlock. Too few people in any one position creates imbalance. Jobs which require more labor and less reflection, naturally trend towards destabilizing the balance. The only solution falls to managers being mindful of the importance of balancig these concerns, or in other words being stewards of an organization&#39;s political architecture. How many small to mid sized companies think that way?<br><br></p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>
