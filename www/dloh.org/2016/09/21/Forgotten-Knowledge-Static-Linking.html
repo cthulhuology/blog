@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Forgotten Knowldge Static Linking</h1>
+<p>The past few nights, I have been researching what the current state of the
+art is when it comes to the building of a static toolchain.  As much of my
+knowledge of static linking of elf on Linux comes from hand coded i386 and 
+x86_64 assembler, my personal information is largely on how the kernel 
+actually handles the elf file format (what it uses, what it ignores, what
+it doesn't care about). My knowledge of how binutils and gcc handle static
+linking is much more limited, as I have largely delegated that knowledge
+to musl-gcc.  So I wanted to make sure that I wasn't opening a can of worms
+that wouldn't have me hacking on gcc internals before long.</p>
+<p>What I found suprising is that there is precious little written about how
+gcc and ld-linux actually operate, especially when it comes to how they
+use the elf file format.  Instead, there are a lot of people writing 
+opinion pieces like mine:</p>
+<li><a href="https://ro-che.info/articles/2016-09-09-static-binaries-scientific-computing">https://ro-che.info/articles/2016-09-09-static-binaries-scientific-computing</a></li>
+<li><a href="https://www.akkadia.org/drepper/no_static_linking.html">Static Linking Considered Harmful</a></li>
+<li><a href="http://sta.li/faq">Stali FAQ</a></li>
+<li><a href="http://harmful.cat-v.org/software/dynamic-linking/">Dynamic Linking</a></li>
+<p>This state of affairs is rather deplorable, as it demonstrates we have
+reached a point where these core technical decisions are largely a matter
+of religion and historical accident than data and reason.  Finding a
+half decent description of how things function will take you to pages 
+like:</p>
+<li><a href="http://www.ibm.com/developerworks/library/l-dynamic-libraries/">Anatomy of Linux dynamic libraries</a></li>
+<li><a href="http://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html">Shared Libraries</a></li>
+<li><a href="http://tldp.org/HOWTO/Program-Library-HOWTO/dl-libraries.html">Dynamically Loaded (DL) Libraries</a></li>
+<li><a href="http://man7.org/linux/man-pages/man8/ld.so.8.html">ld-linux man page</a></li>
+<p>But all of them give only the most superficial descriptions of how the
+linker actually works.  Having implemented dynamic linked elf files
+by hand in assembler, I find the gap in information readily available
+and what is required to be huge.  Reading the opinion pieces, I also
+get the feeling that most of the parties weighing in, while well 
+educated on the subject, would also be hard pressed to explain
+to ordinary programmers what and why these systems work they way they do.</p>
+<p>In fact, the GNU toolchain has so many peculiar implemenation details
+that are taken for granted across the board, it is incredibly difficult 
+not to get the feeling that the current state of the art is just layers 
+of cruft compacted so hard through years of abuse.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dave's Life On Hold</title>
+<meta name="description" content="Tales from the edge of the future..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/style.css" />
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-71410771-1', 'auto');
+ga('send', 'pageview');
+</script>
+</head>
+<body>
+<div class="content">
+<header>
+<a href="/index.html"><h1>DAVE'S LIFE ON HOLD</h1></a>
+</header>
+<main>
+<h1>Forgotten Knowledge of Assembly Techniques</h1>
+<p>I have spent my free time for the first two weeks of 2017 reading old Forth implementations.  Nothing says fun like reading x86 assembly and
+Forth listings.  The Forth listings I've been reading are in no particular order:</p>
+<li><a href="https://www.Forth.com/swiftForth/">SwiftForth</a></li>
+<li><a href="http://git.annexia.org/?p=jonesForth.git;a=blob_plain;f=jonesForth.S;hb=HEAD">jonesForth</a></li>
+<li><a href="http://www.exemark.com/FORTH/eForthOverviewv5.pdf">eForth Overview</a></li>
+<li><a href="http://home.iae.nl/users/mhx/eForth.html">eForth</a></li>
+<li><a href="https://github.com/jamesbowman/swapForth">swapForth</a></li>
+<li><a href="https://github.com/nornagon/espForth">espForth</a></li>
+<li><a href="http://www.merlintec.com/download/color.html">colorForth</a></li>
+<li><a href="http://www.greenarraychips.com/home/documents/greg/cf-releases.htm">arrayForth</a></li>
+<p>When you read enough implementations you end up finding gems of programming in unexpected places.  After years of reading output of
+C and C++ compilers, you grow accustomed to the piles of compiler generated goop.  Debugging compiler errors becomes an exercise in
+understanding the horrors of how compilers translate language constructs to actual machine code.  While most developers simply assume their
+code is wrong, and rewrite it until it works, I find I run into legitimate compiler bugs about every 18 months.  While reading that 
+compiler generated shit you rarely see code that makes use of the more esoteric instructions of a given processor.  Rather it is all
+very much LCD.  Not so with hand coded Forth implementations!</p>
+<p>Take for example how Bill Muench grabs the carry flag for UM+</p>
+<p><pre>
+	xor cx,cx
+	..
+	rcl cx,1
+	..
+	push cx
+</pre></p>
+<p>If you read the Intel instruction manual, you'll find that rcl and rcr include the carry flag in the rotation.  I can't remember the last
+time I saw a C program what used this instruction, let alone used it in this way.  In fact, aside from using some GCC directives, it is nearly
+impossible to access the carry flag state in C.  In a similar fashion, jonesForth uses the setcc instructions for setting flags, in the 
+definition of comparison words like '=':</p>
+<p><pre>
+	pop %eax
+	pop %ebx
+	cmp %ebx,%eax
+	sete %al
+	movzbl %al,%eax
+	pushl %eax 
+</pre>
+	
+This is just a simple example of grabbing the associated flag and making available for calculation.  You won't see this instruction used in
+most C programs, as the compiler will typically only use conditionals for branching, in the form of jcc instructions.  On rare occasions when
+you have an expert C programming using == to do a conditional calculation the compile a set of branches, or if optimizations a cmovcc operation 
+if static analysis can reduce the calcuation to a choice.  But you'd be hard pressed to find a C program that ever generates a setcc instruction.</p>
+<p>But the brilliant insights into assembly programming aren't limited to just use of instructions ignored in popular software.  Take Chuck Moore's
+tail call optimization code.  The default behavior of the colorForth compiler is to assmble a call to a word:</p>
+<p><pre>
+	e8 addr 
+</pre></p>
+<p>But Chuck's code for ; looks to see if the last instruction compiled was a call to a function, and if so simply rewrites one bit, changing the 
+call to a jump:</p>
+<p><pre>
+	e9 addr
+</pre></p>
+<p>This look back optimization is incredibly cheap to perform and results code that supports proper tail recursion.  The colorForth code is full of
+similar pithy code.  The two branch instruction in color Forth if (0branch in jonesForth) and -if (branch if not signed, aka 0>= 0branch) are
+compiled as</p>
+<p><pre>
+	74 2, here
+	79 2, here
+</pre></p>
+<p>These effectively compile</p>
+<p><pre>
+	jz 0
+	jns 0
+</pre></p>
+<p>respectively and place the address of the next instruction on the stack.  The word "then" pops this address off the stack, subtracts 1, and
+updates the 8bit jump address.  This compile and patch style is not only clever in its efficiency, but also in how it reduces an open ended
+problem to a simpler form.  Since Chuck only allows for a 255 byte offset through his choice of instructions, if/then pairs can not span 
+huge amounts of code.  But since Forth by definition is to be highly factored, this limitation is not a practical problem, only a theoretical one.</p>
+<p>Similar reasoning can be found in eForth, which requires 31 primitives to be implemented for a processor so that the whole system can be
+bootstrapped.  The total lines of assembler to implement these 31 primites is roughly 200.  Probably my favorite of those 31 primitives is the
+"!io" word which initializes the serial io hardware such as a UART.  The definition of !io on DOS as:</p>
+<p><pre>
+	CODE !IO $NEXT
+</pre></p>
+<p>which is essentially a no-op as all of the IO was setup to use the DOS interrupt handler 21h and no setup was necessary.  But if you're porting
+this system to an embedded processor, you might have to set some flags here to enable the pins and set a baud rate if configurable.  Once setup,
+eForth would read your programs from the serial line and interprgt them.  This is about the simplest tethered development environment one can
+imagine.  Loading your code is just copy and pasting into your terminal.</p>
+<p>Having spent the better part of the past 3 years developing embedded applications on a wide range or processors and boards ranging from 8bit
+processors to massive FPGA packages, I have to say the state of the art in 1983 still beats the pants off most current toolchains.  Reading
+a collection of old and modern Forths, I have rekindled my appreciation for the craftsmanship that went into these systems.  The choices made
+by each of these craftsmen was based on experience and a deep knowledge of their medium.  And it is this craftmanship that stands in stark 
+contrast to most of modern computing, with it's slap dash assume inifinite resources on a generic architecture approach.</p>
+<p>Perhaps paradoxically, reading all of these assembly listings has also brought me to the realization that writing a Forth in C or assembly is
+an assbackwards idea.  The general argument in favor of writing the initial kernel in C or assembly is you can port it to a new architecture.
+But as Bill and Chuck have shown, you can port the kernel of Forth to a new CPU in less Forth code than you would in assembler.  The only 
+prerequisite is knowledge of the machine's instruction set.  In the world of mainstream programming, knowledge of your hardware's instruction set
+is an anathema.  But every bit of code you ever produce will be reduced to that very medium.  The entire point of writing the program was to
+generate that machine code, so that the machine can do useful work. </p>
+<p>Personally, I've decided my next several experiments are going to be writing Forths in Forth for a set of processors that I am currently playing
+with.  I would like to adapt many of the techniques I've rediscovered to implement a modern x86_64 Forth.  I would also like a nice ARM 
+Forth for my various ARM based computers.  And I'd like a proper Forth for the Xtensa architecture, so all my esp8266 modules would be useful.
+The core concepts I'd like to capture:</p>
+<li>separate memory spaces for source, dictionary, code, and data</li>
+<li>direct threaded code with proper tail recursion</li>
+<li>minimal processor dependent kernel, implemented directly in Forth for each CPU</li>
+<li>optional support for both host operating systems and bare metal implementations</li>
+<p>For operating systems like Linux, the output should be an ELF program with separate sections for the source code, dictionary, executable code,
+and data segment.  Based on all the research I've done, the full system should weigh in at less than 1kloc (~200loc/arch, + 300-400 common code).
+This seems like a reasonable goal for 2017 as far as side projects go.</p>
+</main>
+<footer>
+<hr>
+<figure class="logo"></figure>
+<section id="share" class="share"></section>
+<section class="copyright"><a href="mailto:dave@dloh.org">&copy; 2016 David J. Goehrig</a></section>
+</footer>
+</div>
+<script>
+	twitter = document.createElement("a")
+	twitter.className = "fa fa-twitter"
+	twitter.href = "https://twitter.com/intent/tweet?text=Dave%27s%20Life%20On%20Hold&amp;url=" + document.location.href;
+	twitter.onclick = function() {
+		window.open(this.href, 'twitter-share', 'width=550,height=235');
+		return false;
+	}
+	twitter.innerHtml = '<span class="hidden">Twitter</span>'
+
+	facebook = document.createElement("a")
+	facebook.className = "fa fa-facebook"
+	facebook.href = "https://www.facebook.com/sharer/sharer.php?u=" + document.location.href;
+	facebook.onclick = function() {
+		window.open(this.href, 'facebook-share','width=580,height=296');
+		return false;
+	}
+	facebook.innerHtml = '<span class="hidden">Facebook</span></a>'
+
+	goog = document.createElement("a")
+	goog.className = "fa fa-google"
+	goog.href = "https://plus.google.com/share?url=" + document.location.href;
+	goog.onclick = function() {
+		window.open(this.href, 'google-plus-share', 'width=490,height=530');
+		return false;
+	}
+	goog.innerHtml = '<span class="hidden">Google+</span></a>'
+
+	sh = document.getElementById("share");
+	sh.appendChild(twitter);
+	sh.appendChild(facebook);
+	sh.appendChild(goog);
+</script>
+</body>
+</html>

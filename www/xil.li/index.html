@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>xil.li</title>
+<meta name="description" content="xil.li linux distribution..." />
+<meta name="HandheldFriendly" content="True" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+body {
+	background-color: black;
+	margin: 2em;
+}
+h1 {
+	font: 24pt monospace;
+	color: #606060;
+}
+h2 {
+	font: 20pt monospace;
+	color: #606060;
+}
+h3 {
+	font: 18pt monospace;
+	color: #606060;
+}
+p {
+	font: 16pt monospace;
+	color: #d0d0d0;
+	white-space: pre;
+}
+</style>
+</head>
+<body>
+<h1>xilli linux</h1>
+<p>
+xilli linux is a pragmatic linux distribution for everyday use. 
+
+<i>xilli is pronounce like the english word chilly</i>
+
+Designed with love, xilli linux removes many of the 
+outdated technologies from the typical linux stack.
+
+Our development objectives for xilli are that it be:
+
+	* simple
+	* understandable
+	* manageable
+	* and command-line friendly
+
+</p>
+<h2>Papers &amp; Sources</h2>
+
+<p>
+As xilli is currently under heavy development, it is
+not recommended for daily use yet.  If you want to 
+experiment with getting it running on your system you
+can get all of the sources from <a href="https://github.com/cthulhuology/xilli">github</a>.
+</p>
+
+<p>
+To checkout the source from git, the current public git mirror is:
+
+	git clone https://github.com/cthulhuology/xilli.git
+</p>
+
+<p>
+The README file has the most current instructions on how to
+complie the base system.  Currently it is know to compile on
+Debian Jessie and SteamOS brewmaster.  
+</p>
+
+<h3>xilli concepts</h3>
+<p>
+There are many aspects of xilli linux that are experimental, and
+as such some of the concepts presented are different from other
+linuxes you may be accustomed to.  First off, xilli doesn't follow
+the FHS. Instead it uses the following:
+</p>
+<p>
+root:/# ls -al /
+drwxr-xr-x   21 root     root           4096 Sep 24 15:39 .
+drwxr-xr-x   21 root     root           4096 Sep 24 15:39 ..
+drwxr-xr-x    2 root     root           4096 Sep 24 15:40 bin
+drwxr-xr-x    2 root     root           4096 Sep 24 14:31 boot
+drwxr-xr-x   20 root     root           3540 Sep 24 14:12 dev
+drwxr-xr-x    3 root     root           4096 Sep 24 15:40 etc
+drwxr-xr-x    2 root     root           4096 Sep 24 15:37 home
+drwxr-xr-x    3 root     root           4096 Sep 24 15:29 include
+drwxr-xr-x    2 root     root           4096 Sep 24 15:39 install
+drwxr-xr-x    3 root     root           4096 Sep 24 15:29 lib
+drwxr-xr-x    2 root     root           4096 Sep 24 15:40 libexec
+lrwxrwxrwx    1 root     root              1 Sep 24 14:27 local -&gt; /
+drwx------    2 root     root          16384 Sep 20 22:31 lost+found
+dr-xr-xr-x  203 root     root              0 Sep 24 14:12 proc
+drwxrwxrwt    2 root     root             40 Sep 24 14:13 run
+drwxr-xr-x    2 root     root           4096 Sep 24 15:40 sbin
+drwxr-xr-x    6 root     root           4096 Sep 24 15:09 share
+drwxr-xr-x  284 root     root          12288 Sep 24 15:22 src
+dr-xr-xr-x   13 root     root              0 Sep 24 14:12 sys
+drwxr-xr-x    9 root     root           4096 Sep 24 15:40 tmp
+drwxr-xr-x    8 root     root           4096 Sep 24 03:09 tools
+lrwxrwxrwx    1 root     root              1 Sep 24 03:32 usr -&gt; /
+drwxr-xr-x    3 root     root           4096 Sep 24 15:39 var
+</p>
+<p>The key observations is that from a 3rd party software perspective,
+/, /usr/, and /usr/local/ are equivalent.  Also, /home is root's
+home directory (xilli is single user).  The source code to the system
+is contained in /src, and all of the build tools are in /tools.
+</p>
+<p>Xilli eschews package management software.  Rather to install software
+on xilly one types:
+	
+	/install/package-name
+
+</p>
+<p>This will build from source from the /src/ directory the package 
+int the /tmp/ directory, and install it into /</p>
+
+<p>Eventually, xilli will support:
+
+	/uninstall/package-name
+</p>
+<p>But that is currently a rather low priority, as many useful 
+programs are still not built for xilli, and much of the /src 
+directory still doesn't have build scripts.  All of the build
+instructions are just bash scripts, and are easily read, modified,
+and understood by anyone.
+</p>
+</body>
+</html>
