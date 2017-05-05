@@ -9,7 +9,7 @@ tables:
 	iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
 run:
-	./monitor ./server 0.0.0.0 8080 ./blog
+	./monitor ./server ./blog
 
 publish:
 	./generate
