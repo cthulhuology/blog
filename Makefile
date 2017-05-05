@@ -2,6 +2,9 @@ all :  dev
 
 .PHONY: dev prod publish tables
 
+install:  monitor server blog
+	cp monitor server blog ~/bin/
+
 tables: 
 	iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
 
@@ -27,6 +30,9 @@ prod: clean
 	CFLAGS=-static -O3 $(MAKE) http
 	CFLAGS=-static -O3 $(MAKE) md
 	CFLAGS=-static -O3 $(MAKE) blog
+	CFLAGS=-static -O3 $(MAKE) generate
+	CFLAGS=-static -O3 $(MAKE) lspath
+	CFLAGS=-static -O3 $(MAKE) mkpath
 
 monitor: monitor.c
 	gcc $(CFLAGS) -o monitor monitor.c

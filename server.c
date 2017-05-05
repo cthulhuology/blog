@@ -40,7 +40,7 @@ int done = 0;	// set if the main loop is to be terminated
 // 	prints out a usage message if the two parameters aren't passed
 //
 void usage(int argc, char** argv) {
-	if (argc == 4) return; 
+	if (argc == 2 || argc == 4) return; 
 	fprintf(stderr,"%s: host port service\n", argv[0]);
 	exit(0);
 }
@@ -149,11 +149,14 @@ void monitor(int sock, char* service) {
 //
 int main (int argc, char** argv) {
 	usage(argc,argv);
-	struct addrinfo* server = lookup(argv[1],argv[2]);
+	char* host = argc == 4 ? argv[1] : "0.0.0.0";
+	char* port = argc == 4 ? argv[2] : "8080";
+	char* prog = argc == 4 ? argv[3] : argv[1];
+	struct addrinfo* server = lookup(host,port);
 	signal(SIGHUP,hup);
 	int sock = serve(server);
 	printf("serve %ld\n", getpid());
-	monitor(sock,argv[3]);
+	monitor(sock,prog);
 	freeaddrinfo(server);	// free structure returned by lookup
 	return 0;
 }
