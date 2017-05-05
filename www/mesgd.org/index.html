@@ -18,6 +18,27 @@
 	font-style: normal;
 }
 
+button {
+	border: 2px solid black;
+	font-family: 'Orbitron';
+	font-weight: bold;
+	font-size: 24pt;
+	padding: 0.3em;
+	border-radius: 4px;
+	width: 320px;
+	bottom: 0;
+}
+
+li {
+	display: inline;
+	padding: 2em;
+}
+
+ul {
+	text-align: center;
+	padding-bottom: 2em;
+}
+
 h1 {
 	font-family: 'Orbitron', sans-serif;
 	font-weight: 700;
@@ -32,11 +53,26 @@ h1 {
 h2 {
 	font-family: 'Orbitron', sans-serif;
 	font-weight: 700;
-	font-size: 16pt;
-	text-indent: 2em;
+	font-size: 18pt;
+	text-align: center;
+	border-bottom: 3px solid black;
+	padding-bottom: 0.4em;
+	padding-top: 0.4em;
+	margin-left: 5em;
+	margin-right: 5em;
 }
 
-
+h3 {
+	font-family: 'Orbitron', sans-serif;
+	font-weight: 700;
+	font-size: 18pt;
+	text-align: center;
+	border-bottom: 3px solid black;
+	padding-bottom: 0.4em;
+	padding-top: 0.4em;
+	margin-left: 3em;
+	margin-right: 3em;
+}
 
 body {
 	font-family: 'League Spartan', san-serif;
@@ -51,22 +87,13 @@ div {
 }
 
 #content {
-	display: inline-block;
-	top: auto;
+	display: block;
+	top: 140;
 	height: auto;
-	width: 80%;
-	left: 0%;
-
-}
-
-#sidebar {
-	display: inline-block;
-	position: fixed;
-	left: 80%;
-	width: 20%;
-	height: 100%;
-	color: #303030;
-	border-left: 3px solid black;
+	width: 100%;
+	left: 0;
+	text-align: center;
+	overflow: scroll;
 }
 
 A:link {
@@ -83,72 +110,120 @@ A:visited {
 
 p {
 	margin: 1em;
+	text-align: left;
+}
+
+
+#video {
+	display: inline-block;
+	width: 854px;
+	height: 480px;
+	background-color: black;
+	margin-left: auto
+	margin-right: auto;
+}
+
+#options {
+}
+
+#Hosted {
+	display: inline-block;
+	vertical-align: top;
+	width: 40%;
+	margin: 0;
+	top: 0;
+	height: 640px;
+}
+
+#Source {
+	display: inline-block;
+	vertical-align: top;
+	top: 0;
+	width: 40%;
+	margin: 0;
+	height: 640px;
+	bottom: auto;
 }
 
 </style>
 </head>
 <body>
 <h1>mesgd</h1>
-<div id="content">
-<p>
-<a href="http://mesgd.org/">mesgd</a> is a dynamically configurable message bus supporting content based routing.
-</p>
-<p>
-Written in Erlang, it is designed to run both on a server and on embedded devices.
-</p>
-<p>
-<a href="http://mesgd.org/">mesgd</a> support a number of protocols for messaging such as:
 <ul>
-	<li>WebSockets</li>
-	<li>HTTPS</li>
-	<li>UDP</li>
-</ul>
-</p>
-<p>Multiple protocol support makes it easy to interface between different types of devices, applications, and networks.
-</p>
-<p>
-<a href="http://mesgd.org/">mesgd</a> can convert between data stream encodings on the fly and supports:
-<ul>
-	<li><a href="http://json.org">JSON</a></li>
-	<li><a href="http://ujson">uJSON</a></li>
-	<li>binary data streams</li>
-</ul>
-</p>
-<p>
-Automatic translation between data interchange formats makes it easier to integrate legacy data sources with new APIS and services.
-</p>
-<p><a href="http://mesgd.org/">mesgd</a> support dynamic routing with content based routing rules and access controls.
-</p>
-<p>
-This approach to routing allows for the dynamic creation of complex messaging topologies, automatic scaling and failover, intelligent access control, and simpler administration.
-</p>
-
-<a name="Getting Started"></a>
-<h2>Getting Started</h2>
-
-<a name="Support"></a>
-<h2>Support</h2>
-
-<a name="Contributing">
-<h2>Contributing</h2>
-
-<a name="License"></a>
-<h2>License</h2>
-
-<a name="Contact"></a>
-<h2>Contact</a>
-
-
-</div>
-<div id="sidebar">
-<ul>
-	<li><a href="https://github.com/cthulhuology/mesgd">Source Code</a></li>
-	<li><a href="#Getting Started">Getting Started</a></li>
-	<li><a href="#Support">Support</a></li>
-	<li><a href="#Contributing">Contributing</a></li>
+	<li><a href="#GettingStarted">Getting Started</a></li>
+	<li><a href="#Hosted">Managed Hosting</a></li>
+	<li><a href="#Source">Source Code</a></li>
+	<li><a href="#Tutorials">Tutorials</a></li>
 	<li><a href="#License">License</a></li>
 	<li><a href="#Contact">Contact</a></li>
 </ul>
+
+<div id="content">
+
+<a name="GettingStarted">
+<div id="GettingStarted">
+<div id="video">
+<!-- insert 480p video here -->
 </div>
+<div id="blurb">
+<a href="http://mesgd.org/">mesgd</a> is an open source message bus with content based routing.
+</div>
+</div>
+</a>
+
+<div id="options">
+	<div id="Hosted">
+	<h3>Managed Hosting</h3>
+	<img height="240" width="320" src="hosting.png">
+	<p>
+	We offer a hosted <a href="http://mesgd.org/">mesgd</a> solution
+	for developers who want to get started quickly.  Click the button
+	below, and we will provision a server at &lt;your.company&gt;.mesgd.org 
+	within minutes.
+	</p>
+	<button>Get a Server</button>
+	</div>
+	<div id="Source">
+	<h3>Source Code</h3>
+	<img height="240" width="320" src="source.png">
+	<p>
+	If you want to host <a href="http://mesgd.org/">mesgd</a> yourself
+	or simply run a copy locally for development, click the button
+	below, to download the latest version of the software.
+	</p>
+	<button>Get the Source</button>
+	</div>
+</div>
+
+<a name="Tutorials">
+<h2>Tutorials</h2>
+<div id="Tutorials">
+<ul>
+<li>Javascript</li>
+<li>C / C++</li>
+<li>C#</li>
+<li>Java</li>
+<li>Erlang</li>
+<li>Go</li>
+<li>Ruby</li>
+<li>Python</li>
+<li>Perl</li>
+</u>
+</div>
+</a>
+<a name="License">
+<h2>License</h2>
+<div id="License">
+</div>
+</a>
+
+<a name="Contact">
+<h2>Contact</h2>
+<div id="Contact">
+</div>
+</a>
+
+</div> <!-- content -->
+
 </body>
 </html>
