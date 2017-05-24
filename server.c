@@ -23,8 +23,12 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <signal.h>
-#include <sys/epoll.h>
 #include <sys/wait.h>
+#ifdef LINUX
+#include <sys/epoll.h>
+#else
+#include <sys/kqueue.h>
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // defines
@@ -124,6 +128,9 @@ void process(int client, char* service) {
 //	waits on the socket until there's activity 
 //	and then forks off a process to handle the connection
 //
+
+#ifdef LINUX 
+
 void monitor(int sock, char* service) {
 	int fd, active = 0, client;
 	struct epoll_event ev;
@@ -144,6 +151,21 @@ void monitor(int sock, char* service) {
 	}
 }
 
+#else
+
+void monitor(int sock, char* service) {
+	int fd, active = 0, client;
+	struck kevent ev;
+	fd = kqueue();
+	EV_SET(&ev,sock,EVFILT_READ, EV_ADD|EV_ENABLE,0,0,0);
+	kevent(fd,&ev,1,0,0,0);	// register the read
+	while(!done) {
+		active = kevent(fd,NULL,0,&ev,1,0); // null ts need tocheck
+	}
+
+}
+
+#endif
 
 // main 
 //

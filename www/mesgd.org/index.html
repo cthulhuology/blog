@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 	<title>mesgd.org</title>
@@ -18,7 +17,11 @@
 	font-style: normal;
 }
 
-button {
+.footer {
+	color: white;
+}
+
+.calltoaction {
 	border: 2px solid black;
 	font-family: 'Orbitron';
 	font-weight: bold;
@@ -74,6 +77,14 @@ h3 {
 	margin-right: 3em;
 }
 
+h4 {
+	font-family: 'Orbitron', sans-serif;
+	font-weight: 700;
+	font-size: 18pt;
+	text-align: center;
+
+}
+
 body {
 	font-family: 'League Spartan', san-serif;
 	font-size: 12pt;
@@ -113,6 +124,9 @@ p {
 	text-align: left;
 }
 
+#GettingStarted {
+	padding-bottom: 2em;
+}
 
 #video {
 	display: inline-block;
@@ -124,6 +138,7 @@ p {
 }
 
 #options {
+	padding-bottom: 2em;
 }
 
 #Hosted {
@@ -132,7 +147,6 @@ p {
 	width: 40%;
 	margin: 0;
 	top: 0;
-	height: 640px;
 }
 
 #Source {
@@ -141,8 +155,34 @@ p {
 	top: 0;
 	width: 40%;
 	margin: 0;
-	height: 640px;
-	bottom: auto;
+}
+
+#Tutorials {
+
+}
+
+.tutorial {
+	visibility: hidden;
+	display: none;
+	margin-left: 10em;
+	margin-right: 10em;
+}
+
+#Javascript {
+	visibility: visible;
+	display: block;
+}
+
+#License {
+	text-align: left;
+	margin-left: 10em;
+	margin-right: 10em;
+}
+
+#Contact {
+	margin-top: 3em;
+	background-color: black;
+	color: white;
 }
 
 </style>
@@ -181,7 +221,7 @@ p {
 	below, and we will provision a server at &lt;your.company&gt;.mesgd.org 
 	within minutes.
 	</p>
-	<button>Get a Server</button>
+	<button class="calltoaction">Get a Server</button>
 	</div>
 	<div id="Source">
 	<h3>Source Code</h3>
@@ -191,35 +231,121 @@ p {
 	or simply run a copy locally for development, click the button
 	below, to download the latest version of the software.
 	</p>
-	<button>Get the Source</button>
+	<button class="calltoaction">Get the Source</button>
 	</div>
 </div>
 
-<a name="Tutorials">
+<a name="Tutorials"></a>
+
 <h2>Tutorials</h2>
 <div id="Tutorials">
 <ul>
 <li>Javascript</li>
+<li>Node.js</li>
 <li>C / C++</li>
 <li>C#</li>
+<li>Swift</li>
 <li>Java</li>
 <li>Erlang</li>
+<li>Elixir</li>
 <li>Go</li>
+<li>Lua</li>
 <li>Ruby</li>
 <li>Python</li>
 <li>Perl</li>
 </u>
+<div id="Javascript" class="tutorial">
+<h4>Javascript Tutorial</h4>
+<p>The easiest way to get started using <a href="http://mesgd.org">mesgd</a> is right in your web browser using Javascript.
+Once you have your server running either through the <a href="#Hosted">managed hosting option</a>
+or running your own from <a href="#Source">source</a>, 
+
 </div>
-</a>
+<div id="Node.js" class="tutorial">
+	<h4>Node.js Tutorial</h4>
+</div>
+
+<div id="C" class="tutorial">
+	<h4>C / C++ Tutorial</h4>
+</div>
+
+<div id="CSharp" class="tutorial">
+	<h4>C# Tutorial</h4>
+</div>
+
+<div id="Swift" class="tutorial">
+	<h4>Swift Tutorial</h4>
+
+</div>
+
+<div id="Java" class="tutorial">
+	<h4>Java Tutorial</h4>
+
+</div>
+
+<div id="Erlang" class="tutorial">
+	<h4>Erlang Tutorial</h4>
+</div>
+
+<div id="Elixir" class="tutorial">
+	<h4>Elixir Tutorial</h4>
+</div>
+
+<div id="Go" class="tutorial">
+	<h4>Go Tutorial</h4>
+</div>
+
+<div id="Lua" class="tutorial">
+	<h4>Lua Tutorial</h4>
+</div>
+
+<div id="Ruby" class="tutorial">
+	<h4>Ruby Tutorial</h4>
+</div>
+
+<div id="Python" class="tutorial">
+	<h4>Python Tutorial</h4>
+</div>
+
+<div id="Perl" class="tutorial">
+	<h4>Perl Tutorial</h4>
+</div>
+
+</div>
+
 <a name="License">
 <h2>License</h2>
 <div id="License">
+	Copyright 2017 Open Robotics Company, LLC.
+
+	<br><br>
+	Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+	<br><br>
+	1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+	<br><br>
+	2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+	<br><br>
+	3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+	<br><br>
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 </div>
 </a>
 
 <a name="Contact">
-<h2>Contact</h2>
 <div id="Contact">
+<table>
+<tr>
+	<td width="300"><a href="http://openrobotics.company"><img src="orc-logo-color-on-black-trans_204x100.png"></a></td>
+	<td>
+		<p class="footer">email: <a href="mailto:contact@openrobotics.company">contact@openrobotics.company</a></p>
+		<p class="footer">twitter: <a href="https://twitter.com/OpenRoboticsCo">@OpenRoboticsCo</a></p>
+		<p class="footer">github: <a href="https://github.com/openroboticscompany">https://github.com/openroboticscompany/mesgd</a></p>
+	</td>
+</tr>
+</table>
 </div>
 </a>
 
