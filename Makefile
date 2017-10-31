@@ -11,11 +11,15 @@ tables:
 run:
 	./monitor ./server ./blog
 
+login:
+	$$(aws ecr get-login --no-include-email --region eu-central-1 )
 publish:
 	./generate
-	rsync -avz ./ dave@dloh.org:~/blog
+	docker build -t cthulhuology .
+	docker tag -f cthulhuology:latest 754019368417.dkr.ecr.eu-central-1.amazonaws.com/cthulhuology:latest 
+	docker push 754019368417.dkr.ecr.eu-central-1.amazonaws.com/cthulhuology:latest
 
-CFLAGS=-static
+CFLAGS=-static -DLINUX
 
 dev:
 	$(MAKE) monitor
